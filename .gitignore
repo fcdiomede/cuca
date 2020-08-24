@@ -21,3 +21,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
+env/
+*.pyc
+secerts.sh
+api_results.py
