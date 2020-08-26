@@ -125,21 +125,6 @@ def create_user():
     return jsonify({'status':status})
 
 
-# def upload_to_cloudinary(photo):
-    
-#     current_time = int(time.time())
-#     params_string = f"timestamp={current_time}{CLOUDINARY_API_SECRET}"
-#     hash_string = hashlib.sha256(bytes(params_string, encoding='utf-8')).hexdigest()
-#     print(hash_string)
-
-#     payload={"timestamp": current_time,
-#             "api_key": CLOUDINARY_API_KEY,
-#             "file": photo,
-#             "signature": hash_string}
-
-#     res = requests.get(CLOUDINARY_UPLOAD_URL, params=payload)
-#     print(res)
-
 @app.route('/api/save', methods=['POST'])
 def save_recipe():
     data = request.get_json()
@@ -178,7 +163,6 @@ def save_recipe():
     
     
     return jsonify(data)
-    # return jsonify("Hi!")
 
 
 # @app.route('/api/clear-cookies')

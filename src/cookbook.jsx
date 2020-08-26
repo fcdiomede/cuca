@@ -70,8 +70,25 @@ export function CreateNewCookbook(props) {
 
 export function NewCookbookForm(props) {
 
+    //track what user is entering in fields
+    const [title, setTitle] = React.useState('');
+    const [photo, setPhoto] = React.useState('');
+
+    //cloudinary config
+    const uploadWidget = window.cloudinary.createUploadWidget({ 
+        cloudName: "deglaze", uploadPreset: "cuca-preset" }, (error, result) => {
+            if (result.event === 'success') {
+                setPhoto(result.info.url)
+            }
+         });
+
     //callback after creating cookbook
-    const returnToContainer = (evt) => {
+    const saveCookbook = (evt) => {
+        evt.preventDefault();
+        props.setShowCookbookCreation(false)
+    }
+
+    const cancel = (evt) => {
         evt.preventDefault();
         props.setShowCookbookCreation(false)
     }
@@ -79,17 +96,16 @@ export function NewCookbookForm(props) {
     //newcookbook form
     return (
         <form>
-            <label>Title:</label>
-            <input type='text'
-                id='title'>
-            </input>
-            <label>Cover Img:</label>
-            <input type='file' 
-                id='coverImg'
-                accept="image/png, image/jpg"
-                encType="multipart/form-data">
-            </input>
-            <button onClick={returnToContainer}>Create It!</button>
+            <label>Title</label>
+             <input type='text'
+                     id='title'
+                     onChange={(evt) => setTitle(evt.target.value)}
+                     value={title}></input>
+             <label>Cover Photo</label>
+            <input type='button' onClick={uploadWidget.open} value='Add Cover Image' />
+            <img src={photo}></img>
+            <button onClick={saveCookbook}>Create It!</button>
+            <button onClick={cancel}>Cancel</button>
         </form>
     )
  }
