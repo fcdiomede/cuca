@@ -9,7 +9,6 @@ import {
 import Homepage from './user-profile';
 import Login from './login';
 import Recipes from './recipes';
-import { NewCookbookForm } from './cookbook'
 // import logo from './logo.svg';
 // import './App.css';
 
@@ -59,7 +58,6 @@ function App() {
           <ProtectedRoute path='/recipes' loggedIn={loggedIn} component={Recipes} />
           <Route path='/login' 
                 render={(props) => (<Login {...props} setLoggedIn={setLoggedIn} /> )} />
-          <Route path='/create-new-cookbook' component={NewCookbookForm} />
       </Switch> 
       </div>
   </Router>

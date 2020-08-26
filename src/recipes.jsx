@@ -1,6 +1,6 @@
 import React from "react";
 import { CreateNewCookbook } from "./cookbook";
-import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
+// import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 
 
 

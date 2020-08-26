@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import {CreateNewCookbook, CookbookContainer} from './cookbook';
+import {CreateNewCookbook, CookbookContainer, NewCookbookForm} from './cookbook';
 
 
 //user profile page components
@@ -10,6 +10,9 @@ import {CreateNewCookbook, CookbookContainer} from './cookbook';
 
 //main page component
 function Homepage() {
+
+    const [showCookbookCreation, setShowCookbookCreation] = React.useState(false)
+
 
     // let history = useHistory();
 
@@ -23,8 +26,11 @@ function Homepage() {
 
     return (
         <React.Fragment>
-            <CreateNewCookbook />
-            <CookbookContainer />
+            {showCookbookCreation ? <NewCookbookForm setShowCookbookCreation={setShowCookbookCreation} /> :
+                                     <div>
+                                        <CreateNewCookbook setShowCookbookCreation={setShowCookbookCreation} />
+                                        <CookbookContainer />
+                                     </div>}
         </React.Fragment>
     ) 
 }

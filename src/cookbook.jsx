@@ -55,12 +55,12 @@ export function CookbookContainer() {
       );
 }
 
-export function CreateNewCookbook() {
+export function CreateNewCookbook(props) {
 
-    let history = useHistory();
+    // let history = useHistory();
 
     const goToCreateCookbookForm = () => {
-        history.push('/create-new-cookbook')
+        props.setShowCookbookCreation(true)
     }
 
     return (
@@ -68,7 +68,13 @@ export function CreateNewCookbook() {
     )
 }
 
-export function NewCookbookForm() {
+export function NewCookbookForm(props) {
+
+    //callback after creating cookbook
+    const returnToContainer = (evt) => {
+        evt.preventDefault();
+        props.setShowCookbookCreation(false)
+    }
 
     //newcookbook form
     return (
@@ -83,7 +89,7 @@ export function NewCookbookForm() {
                 accept="image/png, image/jpg"
                 encType="multipart/form-data">
             </input>
-            <button>Create It!</button>
+            <button onClick={returnToContainer}>Create It!</button>
         </form>
     )
  }
