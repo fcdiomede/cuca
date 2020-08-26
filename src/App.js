@@ -1,31 +1,69 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect
+} from "react-router-dom";
+import Homepage from './user-profile';
+import Login from './login';
+import Cookbook from './cookbook';
+import NewCookbookForm from './user-profile'
+// import logo from './logo.svg';
+// import './App.css';
+
+const ProtectedRoute = ({ component: Component, loggedIn, path, ...rest }) => {
+    console.log(loggedIn);
+    return (
+        <Route path={path} {...rest} render={
+          (props) => {
+            if (loggedIn) {
+              return <Component {...props} />
+            } else {
+              return <Redirect to='/login' />
+            }
+          }
+        } />
+      )
+    }
 
 function App() {
 
-  fetch('/hello')
-  .then((res) => res.json())
-  .then((data) => console.log(data))
+  const [loggedIn, setLoggedIn] = React.useState(false)
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  console.log(loggedIn);
+
+  const handleLogout = () => {
+      setLoggedIn(false)
+  }
+
+  return <React.Fragment>
+      <Router>
+      <div>
+      <nav>
+          <ul>
+          <li>
+              <Link to='/'> Home </Link>
+          </li>
+          <li>
+              <Link to='/cookbook'> Cookbooks </Link>
+          </li>
+          <li>
+              <Link to='/login' onClick={handleLogout}> Logout </Link>
+          </li>
+          </ul>
+      </nav>
+      <Switch>
+          <ProtectedRoute exact path='/' loggedIn={loggedIn} component={Homepage} />
+          <ProtectedRoute path='/cookbook' loggedIn={loggedIn} component={Cookbook} />
+          <Route path='/login' 
+                render={(props) => (<Login {...props} setLoggedIn={setLoggedIn} /> )} />
+          <Route path='/create-new-cookbook' component={NewCookbookForm} />
+      </Switch> 
+      </div>
+  </Router>
+</React.Fragment>
 }
 
 export default App;
