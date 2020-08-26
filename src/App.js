@@ -8,8 +8,8 @@ import {
 } from "react-router-dom";
 import Homepage from './user-profile';
 import Login from './login';
-import Cookbook from './cookbook';
-import NewCookbookForm from './user-profile'
+import Recipes from './recipes';
+import { NewCookbookForm } from './cookbook'
 // import logo from './logo.svg';
 // import './App.css';
 
@@ -47,7 +47,7 @@ function App() {
               <Link to='/'> Home </Link>
           </li>
           <li>
-              <Link to='/cookbook'> Cookbooks </Link>
+              <Link to='/recipes'> Recipes </Link>
           </li>
           <li>
               <Link to='/login' onClick={handleLogout}> Logout </Link>
@@ -56,7 +56,7 @@ function App() {
       </nav>
       <Switch>
           <ProtectedRoute exact path='/' loggedIn={loggedIn} component={Homepage} />
-          <ProtectedRoute path='/cookbook' loggedIn={loggedIn} component={Cookbook} />
+          <ProtectedRoute path='/recipes' loggedIn={loggedIn} component={Recipes} />
           <Route path='/login' 
                 render={(props) => (<Login {...props} setLoggedIn={setLoggedIn} /> )} />
           <Route path='/create-new-cookbook' component={NewCookbookForm} />
