@@ -1,6 +1,8 @@
 import React from "react";
 import { CreateNewCookbook } from "./user-profile";
- 
+import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
+
+
 
  function RecipeStep (props) {
      return (
@@ -69,6 +71,7 @@ import { CreateNewCookbook } from "./user-profile";
  }
  
  function RecipieForm (props) {
+
       //track what user is entering in fields
       const [title, setTitle] = React.useState('');
       const [photo, setPhoto] = React.useState('');
@@ -141,15 +144,24 @@ import { CreateNewCookbook } from "./user-profile";
          })
      }
  
-     const handleFile = (evt) => {
-         const file = evt.target.files[0];
-         const fileReader = new FileReader();
-         fileReader.addEventListener('loadend', () => {
-             setPhoto(fileReader.result);
-         });
-         fileReader.readAsDataURL(file);
-     }
+    //  const handleFile = (evt) => {
+    //      const file = evt.target.files[0];
+    //      const fileReader = new FileReader();
+    //      fileReader.addEventListener('loadend', () => {
+    //          setPhoto(fileReader.result);
+    //      });
+    //      fileReader.readAsDataURL(file);
+    //  }
  
+
+     //cloudinary config
+    const uploadWidget = window.cloudinary.createUploadWidget({ 
+    cloudName: "deglaze", uploadPreset: "cuca-preset" }, (error, result) => {
+        if (result.event === 'success') {
+            setPhoto(result.info.url)
+        }
+     });
+
      return (
          <form>
              <label>Title</label>
@@ -158,12 +170,8 @@ import { CreateNewCookbook } from "./user-profile";
                      onChange={(evt) => setTitle(evt.target.value)}
                      value={title}></input>
              <label>Cover Photo</label>
-             <input type='file' 
-                id='coverImg'
-                accept="image/png, image/jpg"
-                encType="multipart/form-data"
-                onChange={handleFile}></input>
-                 <img src={photo} />
+             <input type='button' onClick={uploadWidget.open} value='Add Image' />
+             <img src={photo} alt='Picture of yummy goodness, coming soon!'></img>
              <label>Ready in Mins:</label>
              <input type='text'
                      id='readyMins'
