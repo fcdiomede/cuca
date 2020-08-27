@@ -133,12 +133,15 @@ def save_recipe():
     servings = data["servings"]
     ingredients = data["ingredients"]
     steps = data["steps"]
-    photo = data["photo"]
+
+    #check if user added an image
+    if "photo" in data:
+        photo = data["photo"]
 
 
     cookbook_id = session['cookbook_id']
 
-    saved_recipe = crud.create_recipe(title, cookbook_id, ingredients, time_required, servings)
+    saved_recipe = crud.create_recipe(title, cookbook_id, ingredients, time_required, servings, photo)
 
     recipe_id = saved_recipe.recipe_id
 

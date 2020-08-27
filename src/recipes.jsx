@@ -1,5 +1,6 @@
 import React from "react";
 import { CreateNewCookbook } from "./cookbook";
+import cloudinaryUploader from "./uploadWidget";
 // import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 
 
@@ -141,18 +142,10 @@ import { CreateNewCookbook } from "./cookbook";
          .then((res) => res.json())
          .then((data) => {
              props.setRecipeDetails(data)
+             props.setShowRecipeDetails(true)
          })
      }
- 
-    //  const handleFile = (evt) => {
-    //      const file = evt.target.files[0];
-    //      const fileReader = new FileReader();
-    //      fileReader.addEventListener('loadend', () => {
-    //          setPhoto(fileReader.result);
-    //      });
-    //      fileReader.readAsDataURL(file);
-    //  }
- 
+
 
      //cloudinary config
     const uploadWidget = window.cloudinary.createUploadWidget({ 
@@ -161,6 +154,7 @@ import { CreateNewCookbook } from "./cookbook";
             setPhoto(result.info.url)
         }
      });
+    
 
      return (
          <form>
@@ -171,7 +165,7 @@ import { CreateNewCookbook } from "./cookbook";
                      value={title}></input>
              <label>Cover Photo</label>
              <input type='button' onClick={uploadWidget.open} value='Add Image' />
-             <img src={photo} alt='Picture of yummy goodness, coming soon!'></img>
+             <img src={photo}></img>
              <label>Ready in Mins:</label>
              <input type='text'
                      id='readyMins'
@@ -206,6 +200,11 @@ import { CreateNewCookbook } from "./cookbook";
                                      data-idx={index} 
                                      onClick={deleteStep}
                                      value='Delete' />
+                             {/* <input type='button' 
+                                     data-idx={index} 
+                                     onClick={uploadWidget.open}
+                                     value='Add image to this step!' /> */}
+                            {/* <img src={photo} ></img> */}
                          </li>
                      )
                  }) 
@@ -270,7 +269,8 @@ import { CreateNewCookbook } from "./cookbook";
                                          <BackButton setShowRecipeDetails={setShowRecipeDetails}/>
                                          <RecipieForm recipeDetails={recipeDetails}
                                                      setRecipeDetails={setRecipeDetails}
-                                                         buttonClicked={showRecipeDetails[1]}/>
+                                                         buttonClicked={showRecipeDetails[1]}
+                                                         setShowRecipeDetails={setShowRecipeDetails}/>
                                      </div>}
             
         </React.Fragment>

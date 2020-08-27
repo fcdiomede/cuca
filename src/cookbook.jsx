@@ -12,7 +12,7 @@ function CookbookCover(props) {
         body: JSON.stringify(data), 
         headers: {'Accept': 'application/json',
         'Content-Type': 'application/json'}})
-        .then(() => history.push('/cookbook'));
+        .then(() => history.push('/recipes'));
     }
 
     return (
