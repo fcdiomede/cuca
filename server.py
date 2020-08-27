@@ -135,7 +135,6 @@ def save_recipe():
     steps = data["steps"]
     photo = data["photo"]
 
-    # upload_to_cloudinary(photo)
 
     cookbook_id = session['cookbook_id']
 
@@ -165,16 +164,17 @@ def save_recipe():
     return jsonify(data)
 
 
-# @app.route('/api/clear-cookies')
-# def clear_cookies():
-#     print(session["user_id"])
-#     session.pop("user_id")
-#     print(session["user_id"])
+@app.route('/api/new-cookbook', methods=['POST'])
+def save_cookbook():
+    data = request.get_json()
+    title = data["title"]
+    photo = data["photo"]
 
+    user_id = session["user_id"]
 
-# @app.route('/api/check-cookies')
-# def is_user_id_stored():
-#     return "user_id" in session
+    crud.create_cookbook(title, photo, user_id)
+
+    return jsonify('success')
 
 if __name__ == '__main__':
     connect_to_db(app)

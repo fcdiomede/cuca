@@ -29,7 +29,7 @@ function Homepage() {
             {showCookbookCreation ? <NewCookbookForm setShowCookbookCreation={setShowCookbookCreation} /> :
                                      <div>
                                         <CreateNewCookbook setShowCookbookCreation={setShowCookbookCreation} />
-                                        <CookbookContainer />
+                                        <CookbookContainer showCookbookCreation={showCookbookCreation} />
                                      </div>}
         </React.Fragment>
     ) 

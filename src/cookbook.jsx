@@ -25,7 +25,7 @@ function CookbookCover(props) {
 
 
 //component to hold all cookbook cards
-export function CookbookContainer() {
+export function CookbookContainer(props) {
 
     // make a call to the server to ask for information
     //user's personal cookbooks to appear
@@ -36,7 +36,7 @@ export function CookbookContainer() {
       fetch('/api/user-cookbooks')
       .then((res) => res.json())
       .then((data) => updateCookbooks(data))
-    }, []);
+    }, [props.ShowCookbookCreation]);
 
     const userCookbooks = []
     for (const cookbook of cookbooks) {
@@ -86,6 +86,20 @@ export function NewCookbookForm(props) {
     const saveCookbook = (evt) => {
         evt.preventDefault();
         props.setShowCookbookCreation(false)
+        
+        const data = {
+            'title': title,
+            'photo': photo
+        }
+
+        fetch('/api/new-cookbook', {method: 'POST',
+        body: JSON.stringify(data),
+        headers: {'Accept': 'application/json',
+        'Content-Type': 'application/json'}})
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data)
+        })
     }
 
     const cancel = (evt) => {
