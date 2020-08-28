@@ -143,8 +143,13 @@ function RecipieForm(props) {
         }
     });
 
+    const cancel = () => {
+        history.push('/recipes')
+    }
 
     return (
+        <React.Fragment>
+        <button onClick={cancel}>Cancel</button>
         <form>
             <label>Title</label>
             <input type='text'
@@ -201,6 +206,7 @@ function RecipieForm(props) {
             <button onClick={addStep}>Add Step</button>
             <input type="submit" onClick={save}></input>
         </form>
+        </React.Fragment>
     );
 }
 
