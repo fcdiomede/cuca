@@ -107,7 +107,6 @@ def update_recipe(recipe_id, title, ingredients, time_required,
 
     return recipe
     
-
     
 def delete_recipe_steps(recipe_id):
     current_steps = get_steps_for_recipe(recipe_id)
@@ -123,6 +122,27 @@ def all_recipes():
     return Recipe.query.all()
 
 
+def get_recipe_by_id(recipe_id):
+    """Returns a recipe object that matches id input"""
+
+    return Recipe.query.get(recipe_id)
+
+def get_steps_for_recipe(recipe_id):
+    """Returns steps for a specific recipe"""
+    
+    recipe = get_recipe_by_id(recipe_id)
+
+    return recipe.steps
+
+def delete_recipe(recipe_id):
+    """Marks a recipe as deleted"""
+
+    recipe = get_recipe_by_id(recipe_id)
+    recipe.deleted = True
+
+    db.session.commit()
+
+
 def create_step(recipe_id, step_number, body, media=None):
     """Create and return a recipe step"""
 
@@ -135,15 +155,6 @@ def create_step(recipe_id, step_number, body, media=None):
     return step
 
 
-def get_recipe_by_id(recipe_id):
-
-    return Recipe.query.get(recipe_id)
-
-def get_steps_for_recipe(recipe_id):
-    
-    recipe = get_recipe_by_id(recipe_id)
-
-    return recipe.steps
 
 
 if __name__ == '__main__':
