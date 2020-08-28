@@ -12,9 +12,7 @@ import cloudinaryUploader from "./uploadWidget";
 // import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 
 
-function RecipeDetails() {
-
-    const [recipeDetails, setRecipeDetails] = React.useState(null);
+function RecipeDetails(props) {
 
     let { recipeId } = useParams();
 
@@ -27,23 +25,22 @@ function RecipeDetails() {
             }
         })
             .then(res => res.json())
-            .then(data => setRecipeDetails(data));
+            .then(data => props.setRecipeDetails(data));
     }, [recipeId]);
 
     return (
         <React.Fragment>
-            {recipeDetails ?
+            {props.recipeDetails ?
                 <div>
-                    <EditRecipeButton recipeDetails={recipeDetails}/>
-                    <div> Title: {recipeDetails.title}</div>
-                    <img src={recipeDetails.media} />
-                    <div> ingredients: {recipeDetails.ingredients}</div>
+                    <div> Title: {props.recipeDetails.title}</div>
+                    <img src={props.recipeDetails.media} />
+                    <div> ingredients: {props.recipeDetails.ingredients}</div>
                     <div>
-                        time required: {recipeDetails.time_required}
-                        servings: {recipeDetails.servings}
+                        time required: {props.recipeDetails.time_required}
+                        servings: {props.recipeDetails.servings}
                     </div>
                     <ol>
-                        {recipeDetails.steps.map(step => {
+                        {props.recipeDetails.steps.map(step => {
                         return <li key={step.key}>{step.body}</li>;
                         })}
                     </ol>
@@ -57,27 +54,6 @@ function RecipeDetails() {
 }
 
 
-function EditRecipeButton(props) {
-    let { path, url } = useRouteMatch();
-
-    return (
-        <Router>
-            <div>
-                <Link to={`${url}/edit`}>
-                    <button type="button">Edit</button>
-                </Link>
-
-                <Switch>
-                    <Route exact path={`${path}/edit`}>
-                        <RecipieForm recipeDetails={props.recipeDetails}/>
-                    </Route>
-                </Switch>
-            </div>
-        </Router>
-    );
-}
-
-
 function RecipieForm(props) {
 
     //track what user is entering in fields
@@ -87,6 +63,12 @@ function RecipieForm(props) {
     const [servings, setServings] = React.useState(props.recipeDetails?.servings);
     const [ingredients, setIngredients] = React.useState(props.recipeDetails?.ingredients);
     const [steps, setSteps] = React.useState(props.recipeDetails?.steps?.map(step => step.body));
+
+    //for a new recipe, steps needs to be initalized as an empty array
+    //so that we can loop through and add steps in the recipe form
+    if (steps == null) {
+        setSteps([''])
+    }
 
     console.log(props.recipeDetails);
 
@@ -192,7 +174,7 @@ function RecipieForm(props) {
             <label>Steps:</label>
             <ol>
                 {
-                    steps.map((stepBody, index) => {
+                    steps?.map((stepBody, index) => {
                         return (
                             <li key={`step-${index}`}>
                                 <input type='area'
@@ -252,9 +234,9 @@ function RecipeNav(props) {
     console.log(props.recipes);
 
     let { path, url } = useRouteMatch();
+    let { recipeId } = useParams();
 
     const recipeLinks = [];
-
     for (const recipeId in props.recipes) {
         recipeLinks.push(
             <li>
@@ -270,10 +252,23 @@ function RecipeNav(props) {
                 <ul>
                     {recipeLinks}
                 </ul>
+                <Link to={`${url}/${recipeId}/edit`}>
+                    <button type="button">Edit</button>
+                </Link>
+                <Link to={`${url}/new`}>
+                    <button type="button">New</button>
+                </Link>
 
                 <Switch>
+                    <Route exact path={`${path}/new`}>
+                        <RecipieForm />
+                    </Route>
                     <Route exact path={`${path}/:recipeId`}>
-                        <RecipeDetails />
+                        <RecipeDetails recipeDetails={props.recipeDetails}
+                                        setRecipeDetails={props.setRecipeDetails}/>
+                    </Route>
+                    <Route exact path={`${path}/:recipeId/edit`}>
+                        <RecipieForm recipeDetails={props.recipeDetails}/>
                     </Route>
                 </Switch>
             </div>
@@ -284,22 +279,22 @@ function RecipeNav(props) {
 function Recipes() {
 
     const [recipes, setRecipes] = React.useState([]);
-    const [recipeDetails, setRecipeDetails] = React.useState('');
-    const [showRecipeDetails, setShowRecipeDetails] = React.useState([true]);
+    const [recipeDetails, setRecipeDetails] = React.useState(null);
+    // const [readView, seReadView] = React.useState([true]);
 
     React.useEffect(() => {
         fetch('/api/cookbook-details')
             .then((res) => res.json())
             .then((data) => setRecipes(data));
-    }, [showRecipeDetails]);
-
-    //new button here: route to recipes/new
+    }, []);
 
     return (
         <React.Fragment>
             <h2>This is a cookbook!</h2>
-            <RecipeNav recipes={recipes} />
-            {showRecipeDetails[0] ? <div>
+            <RecipeNav recipes={recipes}
+                        recipeDetails={recipeDetails}
+                        setRecipeDetails={setRecipeDetails} />
+            {/* {readView ? <div>
                 <CreateNewCookbook />
                 <ChangeRecipeButton caption='Edit Recipe'
                     setShowRecipeDetails={setShowRecipeDetails} />
@@ -313,7 +308,7 @@ function Recipes() {
                         setRecipeDetails={setRecipeDetails}
                         buttonClicked={showRecipeDetails[1]}
                         setShowRecipeDetails={setShowRecipeDetails} />
-                </div>}
+                </div>} */}
 
         </React.Fragment>
     );
