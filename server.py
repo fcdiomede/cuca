@@ -129,15 +129,11 @@ def create_user():
 def save_recipe():
     data = request.get_json()
     title = data["title"]
-    time_required = data["readyInMins"]
-    servings = data["servings"]
-    ingredients = data["ingredients"]
-    steps = data["steps"]
-
-    #check if user added an image
-    if "photo" in data:
-        photo = data["photo"]
-
+    time_required = data.get("readyInMins", None)
+    servings = data.get("servings", None)
+    ingredients = data.get("ingredients", None)
+    steps = data.get("steps", None)
+    photo= data.get("photo", None)
 
     cookbook_id = session['cookbook_id']
 
@@ -149,6 +145,7 @@ def save_recipe():
         crud.create_step(recipe_id, index+1, step)
 
     data = {
+            "recipe_id": recipe_id,
             "title": saved_recipe.title,
             "ingredients": saved_recipe.ingredients,
             "time_required": saved_recipe.time_required,

@@ -6,7 +6,8 @@ import {
     useRouteMatch,
     Link,
     BrowserRouter as Router,
-    Switch
+    Switch,
+    useHistory
 } from 'react-router-dom';
 import cloudinaryUploader from "./uploadWidget";
 // import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
@@ -55,6 +56,8 @@ function RecipeDetails(props) {
 
 
 function RecipieForm(props) {
+
+    let history = useHistory();
 
     //track what user is entering in fields
     const [title, setTitle] = React.useState(props.recipeDetails?.title);
@@ -130,8 +133,8 @@ function RecipieForm(props) {
         })
             .then((res) => res.json())
             .then((data) => {
-                props.setRecipeDetails(data);
-                props.setShowRecipeDetails(true);
+                console.log(data);
+                history.push(`/recipes/${data.recipe_id}`)       
             });
     };
 
@@ -280,7 +283,7 @@ function Recipes() {
 
     const [recipes, setRecipes] = React.useState([]);
     const [recipeDetails, setRecipeDetails] = React.useState(null);
-    // const [readView, seReadView] = React.useState([true]);
+    // const [readView, setReadView] = React.useState([true]);
 
     React.useEffect(() => {
         fetch('/api/cookbook-details')
