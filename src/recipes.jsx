@@ -12,13 +12,6 @@ import cloudinaryUploader from "./uploadWidget";
 // import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 
 
-
-function RecipeStep(props) {
-    return (
-        <li>{props.body} </li>
-    );
-}
-
 function RecipeDetails() {
 
     const [recipeDetails, setRecipeDetails] = React.useState(null);
@@ -35,13 +28,13 @@ function RecipeDetails() {
         })
             .then(res => res.json())
             .then(data => setRecipeDetails(data));
-    }, []);
-
+    }, [recipeId]);
 
     return (
         <React.Fragment>
             {recipeDetails ?
                 <div>
+                    <EditRecipeButton recipeDetails={recipeDetails}/>
                     <div> Title: {recipeDetails.title}</div>
                     <img src={recipeDetails.media} />
                     <div> ingredients: {recipeDetails.ingredients}</div>
@@ -63,69 +56,49 @@ function RecipeDetails() {
         ;
 }
 
-function RecipeListItem(props) {
 
-    const { id } = useParams();
+function EditRecipeButton(props) {
+    let { path, url } = useRouteMatch();
 
-    const goToRecipe = () => {
-        fetch(`/api/recipe-details/${props.recipeId}`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((res) => res.json())
-            .then((data) => props.setRecipeDetails(data));
-    };
+    return (
+        <Router>
+            <div>
+                <Link to={`${url}/edit`}>
+                    <button type="button">Edit</button>
+                </Link>
 
-    return <li onClick={goToRecipe}> {props.title} </li>;
+                <Switch>
+                    <Route exact path={`${path}/edit`}>
+                        <RecipieForm recipeDetails={props.recipeDetails}/>
+                    </Route>
+                </Switch>
+            </div>
+        </Router>
+    );
 }
 
-function RecipeList(props) {
-
-    const cookbookRecipes = [];
-    for (const recipeId in props.recipes) {
-        cookbookRecipes.push(
-            <RecipeListItem
-                key={recipeId}
-                recipeId={recipeId}
-                title={props.recipes[recipeId]}
-                setRecipeDetails={props.setRecipeDetails}
-            />
-        );
-    }
-
-    return <ul>{cookbookRecipes}</ul>;
-
-}
 
 function RecipieForm(props) {
 
     //track what user is entering in fields
-    const [title, setTitle] = React.useState('');
-    const [photo, setPhoto] = React.useState('');
-    const [mins, setMins] = React.useState('');
-    const [servings, setServings] = React.useState('');
-    const [ingredients, setIngredients] = React.useState('');
-    const [steps, setSteps] = React.useState(['']);
+    const [title, setTitle] = React.useState(props.recipeDetails?.title);
+    const [photo, setPhoto] = React.useState(props.recipeDetails?.media);
+    const [mins, setMins] = React.useState(props.recipeDetails?.time_required);
+    const [servings, setServings] = React.useState(props.recipeDetails?.servings);
+    const [ingredients, setIngredients] = React.useState(props.recipeDetails?.ingredients);
+    const [steps, setSteps] = React.useState(props.recipeDetails?.steps?.map(step => step.body));
 
     console.log(props.recipeDetails);
 
-
-    React.useEffect(() => {
-        if (props.buttonClicked === 'edit') {
-            setTitle(props.recipeDetails.title);
-            setMins(props.recipeDetails.time_required);
-            setServings(props.recipeDetails.servings);
-            setIngredients(props.recipeDetails.ingredients);
-            const instructions = [];
-            for (const step of props.recipeDetails.steps) {
-                instructions.push(step.body);
-            }
-            setSteps(instructions);
-        }
-    }, []);
+    // React.useEffect(() => {
+    //     if (props.buttonClicked === 'edit') {
+    //         const instructions = [];
+    //         for (const step of props.recipeDetails.steps) {
+    //             instructions.push(step.body);
+    //         }
+    //         setSteps(instructions);
+    //     }
+    // }, []);
 
     const addStep = (evt) => {
         evt.preventDefault();
@@ -299,7 +272,7 @@ function RecipeNav(props) {
                 </ul>
 
                 <Switch>
-                    <Route path={`${path}/:recipeId`}>
+                    <Route exact path={`${path}/:recipeId`}>
                         <RecipeDetails />
                     </Route>
                 </Switch>
@@ -320,20 +293,18 @@ function Recipes() {
             .then((data) => setRecipes(data));
     }, [showRecipeDetails]);
 
+    //new button here: route to recipes/new
 
     return (
         <React.Fragment>
             <h2>This is a cookbook!</h2>
             <RecipeNav recipes={recipes} />
-            {/* <RecipeList recipes={recipes} setRecipeDetails={setRecipeDetails} /> */}
             {showRecipeDetails[0] ? <div>
                 <CreateNewCookbook />
                 <ChangeRecipeButton caption='Edit Recipe'
                     setShowRecipeDetails={setShowRecipeDetails} />
                 <ChangeRecipeButton caption='New Recipe'
                     setShowRecipeDetails={setShowRecipeDetails} />
-                {/* <RecipeDetails recipeDetails={recipeDetails}
-                    setRecipeDetails={setRecipeDetails} /> */}
             </div>
                 :
                 <div>
