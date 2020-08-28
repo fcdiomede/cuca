@@ -73,7 +73,13 @@ def get_cookbook_recipes(cookbook_id):
 
     cookbook = get_cookbook_by_id(cookbook_id)
 
-    return cookbook.recipes
+    cookbook_recipes = Recipe.query.filter( (Recipe.cookbook_id == cookbook_id) &
+                                            (   (Recipe.deleted == None) | 
+                                                (Recipe.deleted == False)
+                                            )
+                                        )
+
+    return cookbook_recipes.all()
 
 
 def create_recipe(title, cookbook_id, ingredients, time_required, servings, 
