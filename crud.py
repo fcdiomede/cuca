@@ -38,16 +38,19 @@ def create_cookbook(title, cover_img, user_id, deleted=False):
 
 
 def all_cookbooks():
-    """Return a list of all cookbooks"""
+    """Return a list of all cookbooks that are not deleted"""
 
-    return Cookbook.query.all() 
+    return Cookbook.query.filter_by(deleted=False).all() 
 
 def cookbooks_by_user_id(user_id):
     """Return a list of all cookbooks for a particular user"""
 
     user = User.query.get(user_id)
 
-    return user.cookbook
+    user_cookbooks = Cookbook.query.filter(Cookbook.user_id == user_id, 
+                                            Cookbook.deleted == False)
+
+    return user_cookbooks.all()
 
 
 def get_cookbook_by_id(cookbook_id):
