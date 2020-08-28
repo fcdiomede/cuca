@@ -73,18 +73,6 @@ function RecipieForm(props) {
         setSteps([''])
     }
 
-    console.log(props.recipeDetails);
-
-    // React.useEffect(() => {
-    //     if (props.buttonClicked === 'edit') {
-    //         const instructions = [];
-    //         for (const step of props.recipeDetails.steps) {
-    //             instructions.push(step.body);
-    //         }
-    //         setSteps(instructions);
-    //     }
-    // }, []);
-
     const addStep = (evt) => {
         evt.preventDefault();
         setSteps([...steps, '']);
@@ -111,6 +99,7 @@ function RecipieForm(props) {
         setSteps(updatedSteps);
     };
 
+
     const save = (evt) => {
         evt.preventDefault();
 
@@ -133,8 +122,8 @@ function RecipieForm(props) {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
-                history.push(`/recipes/${data.recipe_id}`)       
+                props.setRecipeEditCount(props.recipeEditCount + 1);
+                history.push(`/recipes/${data.recipe_id}`);       
             });
     };
 
@@ -264,14 +253,17 @@ function RecipeNav(props) {
 
                 <Switch>
                     <Route exact path={`${path}/new`}>
-                        <RecipieForm />
+                        <RecipieForm recipeEditCount={props.recipeEditCount}
+                                    setRecipeEditCount={props.setRecipeEdits}/>
                     </Route>
                     <Route exact path={`${path}/:recipeId`}>
                         <RecipeDetails recipeDetails={props.recipeDetails}
                                         setRecipeDetails={props.setRecipeDetails}/>
                     </Route>
                     <Route exact path={`${path}/:recipeId/edit`}>
-                        <RecipieForm recipeDetails={props.recipeDetails}/>
+                        <RecipieForm recipeDetails={props.recipeDetails}
+                                        recipeEditCount={props.recipeEditCount}
+                                        setRecipeEditCount={props.setRecipeEditCount}/>
                     </Route>
                 </Switch>
             </div>
@@ -283,20 +275,22 @@ function Recipes() {
 
     const [recipes, setRecipes] = React.useState([]);
     const [recipeDetails, setRecipeDetails] = React.useState(null);
-    // const [readView, setReadView] = React.useState([true]);
+    const [recipeEditCount, setRecipeEditCount] = React.useState(0);
 
     React.useEffect(() => {
         fetch('/api/cookbook-details')
             .then((res) => res.json())
             .then((data) => setRecipes(data));
-    }, []);
+    }, [recipeEditCount]);
 
     return (
         <React.Fragment>
             <h2>This is a cookbook!</h2>
             <RecipeNav recipes={recipes}
                         recipeDetails={recipeDetails}
-                        setRecipeDetails={setRecipeDetails} />
+                        setRecipeDetails={setRecipeDetails}
+                        recipeEditCount={recipeEditCount}
+                        setRecipeEdits={setRecipeEditCount} />
             {/* {readView ? <div>
                 <CreateNewCookbook />
                 <ChangeRecipeButton caption='Edit Recipe'
