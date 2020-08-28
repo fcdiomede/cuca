@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import {CreateNewCookbook, CookbookContainer, NewCookbookForm} from './cookbook';
 
 
@@ -12,17 +11,6 @@ import {CreateNewCookbook, CookbookContainer, NewCookbookForm} from './cookbook'
 function Homepage() {
 
     const [showCookbookCreation, setShowCookbookCreation] = React.useState(false)
-
-
-    // let history = useHistory();
-
-    // fetch('/api/check-cookies')
-    // .then((res) => res.json())
-    // .then((data) => {
-    //     if (!data) {
-    //         history.push('/login')
-    //     }
-    // })
 
     return (
         <React.Fragment>

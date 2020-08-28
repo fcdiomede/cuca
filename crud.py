@@ -2,7 +2,6 @@
 
 from model import db, connect_to_db, Cookbook, Recipe, Step, User
 
-
 def create_user(fname, lname, email, password, 
                 profile_picture="/static/img/chef_hat.png"):
     """Create and return a new user"""
@@ -75,6 +74,34 @@ def create_recipe(title, cookbook_id, ingredients, time_required, servings, medi
 
     return recipe
 
+
+def update_recipe(recipe_id, title, ingredients, time_required, 
+                    servings, media=None):
+    """Update an exisiting recipe"""
+    
+    recipe = get_recipe_by_id(recipe_id)
+
+    recipe.title = title
+    recipe.ingredients = ingredients
+    recipe.time_required = time_required
+    recipe.servings = servings
+    recipe.media = media
+
+    delete_recipe_steps(recipe_id)
+
+    db.session.commit()
+
+    return recipe
+    
+
+    
+def delete_recipe_steps(recipe_id):
+    current_steps = get_steps_for_recipe(recipe_id)
+
+    for step in current_steps:
+        db.session.delete(step)
+    
+    db.session.commit()
 
 def all_recipes():
     """Returns all recipes"""

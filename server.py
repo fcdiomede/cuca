@@ -66,6 +66,7 @@ def get_recipe_steps(recipe_id):
     recipe = crud.get_recipe_by_id(recipe_id)
 
     data = {
+            "recipe_id" : recipe_id,
             "title": recipe.title,
             "ingredients": recipe.ingredients,
             "time_required": recipe.time_required,
@@ -128,6 +129,7 @@ def create_user():
 @app.route('/api/save', methods=['POST'])
 def save_recipe():
     data = request.get_json()
+    recipe_id = data.get("recipeId", None)
     title = data["title"]
     time_required = data.get("readyInMins", None)
     servings = data.get("servings", None)
@@ -135,12 +137,19 @@ def save_recipe():
     steps = data.get("steps", None)
     photo= data.get("photo", None)
 
-    cookbook_id = session['cookbook_id']
-
-    saved_recipe = crud.create_recipe(title, cookbook_id, ingredients, time_required, servings, photo)
-
+    if recipe_id:
+        #if editing the recipe values, update the table row
+        saved_recipe = crud.update_recipe(recipe_id, title, ingredients, 
+                                            time_required, servings, photo)
+    else:
+        #if a new recipe (assumed to not have an id) is created, create a
+        #new entry in recipe table
+        cookbook_id = session['cookbook_id']
+        saved_recipe = crud.create_recipe(title, cookbook_id, ingredients, time_required, servings, photo)
+        
     recipe_id = saved_recipe.recipe_id
-
+    
+    #create the new steps
     for index, step in enumerate(steps):
         crud.create_step(recipe_id, index+1, step)
 

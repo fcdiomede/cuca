@@ -17,6 +17,8 @@ function RecipeDetails(props) {
 
     let { recipeId } = useParams();
 
+    console.log(props.recipeDetails)
+
     React.useEffect(() => {
         fetch(`/api/recipe-details/${recipeId}`, {
             method: 'POST',
@@ -58,6 +60,10 @@ function RecipeDetails(props) {
 function RecipieForm(props) {
 
     let history = useHistory();
+   
+    let recipeId = props.recipeDetails?.recipe_id
+
+    console.log(recipeId)
 
     //track what user is entering in fields
     const [title, setTitle] = React.useState(props.recipeDetails?.title);
@@ -104,6 +110,7 @@ function RecipieForm(props) {
         evt.preventDefault();
 
         const data = {
+            'recipeId': recipeId,
             'title': title,
             'readyInMins': mins,
             'servings': servings,
@@ -198,28 +205,6 @@ function RecipieForm(props) {
     );
 }
 
-function ChangeRecipeButton(props) {
-
-    const showForm = () => {
-        if (props.caption === 'Edit Recipe') {
-            props.setShowRecipeDetails([false, "edit"]);
-        } else {
-            props.setShowRecipeDetails([false, "new"]);
-        }
-    };
-
-    return <button onClick={showForm}>{props.caption}</button>;
-}
-
-function BackButton(props) {
-
-    const hideForm = () => {
-        props.setShowRecipeDetails([true]);
-    };
-
-    return <button onClick={hideForm}>Back to Recipe Details</button>;
-
-}
 
 function RecipeNav(props) {
 
@@ -244,7 +229,7 @@ function RecipeNav(props) {
                 <ul>
                     {recipeLinks}
                 </ul>
-                <Link to={`${url}/${recipeId}/edit`}>
+                <Link to={`${url}/edit`}>
                     <button type="button">Edit</button>
                 </Link>
                 <Link to={`${url}/new`}>
@@ -254,16 +239,16 @@ function RecipeNav(props) {
                 <Switch>
                     <Route exact path={`${path}/new`}>
                         <RecipieForm recipeEditCount={props.recipeEditCount}
-                                    setRecipeEditCount={props.setRecipeEdits}/>
+                                    setRecipeEditCount={props.setRecipeEditCount}/>
+                    </Route>
+                    <Route exact path={`${path}/edit`}>
+                        <RecipieForm recipeDetails={props.recipeDetails}
+                                        recipeEditCount={props.recipeEditCount}
+                                        setRecipeEditCount={props.setRecipeEditCount}/>
                     </Route>
                     <Route exact path={`${path}/:recipeId`}>
                         <RecipeDetails recipeDetails={props.recipeDetails}
                                         setRecipeDetails={props.setRecipeDetails}/>
-                    </Route>
-                    <Route exact path={`${path}/:recipeId/edit`}>
-                        <RecipieForm recipeDetails={props.recipeDetails}
-                                        recipeEditCount={props.recipeEditCount}
-                                        setRecipeEditCount={props.setRecipeEditCount}/>
                     </Route>
                 </Switch>
             </div>
@@ -290,7 +275,7 @@ function Recipes() {
                         recipeDetails={recipeDetails}
                         setRecipeDetails={setRecipeDetails}
                         recipeEditCount={recipeEditCount}
-                        setRecipeEdits={setRecipeEditCount} />
+                        setRecipeEditCount={setRecipeEditCount} />
             {/* {readView ? <div>
                 <CreateNewCookbook />
                 <ChangeRecipeButton caption='Edit Recipe'
