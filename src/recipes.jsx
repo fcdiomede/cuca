@@ -1,5 +1,4 @@
 import React from "react";
-import { CreateNewCookbook } from "./cookbook";
 import {
     useParams,
     Route,
@@ -211,7 +210,6 @@ function RecipeNav(props) {
     console.log(props.recipes);
 
     let { path, url } = useRouteMatch();
-    let { recipeId } = useParams();
 
     const recipeLinks = [];
     for (const recipeId in props.recipes) {
@@ -276,21 +274,6 @@ function Recipes() {
                         setRecipeDetails={setRecipeDetails}
                         recipeEditCount={recipeEditCount}
                         setRecipeEditCount={setRecipeEditCount} />
-            {/* {readView ? <div>
-                <CreateNewCookbook />
-                <ChangeRecipeButton caption='Edit Recipe'
-                    setShowRecipeDetails={setShowRecipeDetails} />
-                <ChangeRecipeButton caption='New Recipe'
-                    setShowRecipeDetails={setShowRecipeDetails} />
-            </div>
-                :
-                <div>
-                    <BackButton setShowRecipeDetails={setShowRecipeDetails} />
-                    <RecipieForm recipeDetails={recipeDetails}
-                        setRecipeDetails={setRecipeDetails}
-                        buttonClicked={showRecipeDetails[1]}
-                        setShowRecipeDetails={setShowRecipeDetails} />
-                </div>} */}
 
         </React.Fragment>
     );
