@@ -76,8 +76,8 @@ def get_cookbook_recipes(cookbook_id):
     return cookbook.recipes
 
 
-def create_recipe(title, cookbook_id, ingredients=None, time_required=None, 
-                    servings=None, media=None, deleted=False):
+def create_recipe(title, cookbook_id, ingredients, time_required, servings, 
+                    media=None, deleted=False):
     """Create and return a new recipe"""
 
     recipe = Recipe(title=title, cookbook_id=cookbook_id, ingredients=ingredients, 
@@ -117,9 +117,10 @@ def delete_recipe_steps(recipe_id):
     db.session.commit()
 
 def all_recipes():
-    """Returns all recipes"""
-
-    return Recipe.query.all()
+    """Returns all recipes not marked as deleted"""
+    
+    return Recipe.query.filter((Recipe.deleted == False)
+                                | (Recipe.deleted == None)).all()
 
 
 def get_recipe_by_id(recipe_id):

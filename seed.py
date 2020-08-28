@@ -37,7 +37,7 @@ for user in users:
         cookbook_img = f"/static/img/cooking_{randint(1,7)}.jpg"
 
         cookbook = crud.create_cookbook(cookbook_title, cookbook_img, 
-                                        user.user_id)
+                                        user.user_id, deleted=False)
 
 #create fake recipes
 cookbooks = crud.all_cookbooks()
@@ -51,8 +51,9 @@ for cookbook in cookbooks:
         media = random_recipe['image']
         ingredients = (", ").join(random_recipe['ingredients'])
 
-        new_recipe = crud.create_recipe(recipe_title, cookbook.cookbook_id, ingredients, time_required, 
-                                servings, media)
+        new_recipe = crud.create_recipe(recipe_title, cookbook.cookbook_id, 
+                                        ingredients, time_required, 
+                                        servings, media, deleted=False)
 
 
         steps = random_recipe['steps']['instructions']
