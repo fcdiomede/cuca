@@ -59,6 +59,15 @@ def get_cookbook_by_id(cookbook_id):
     return Cookbook.query.get(cookbook_id)
 
 
+def delete_cookbook(cookbook_id):
+    """Mark a cookbook as deleted"""
+
+    cookbook = get_cookbook_by_id(cookbook_id)
+    cookbook.deleted = True
+
+    db.session.commit()
+
+
 def get_cookbook_recipes(cookbook_id):
     """Return all recipes associated with a cookbook"""
 
