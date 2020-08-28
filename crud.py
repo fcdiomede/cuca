@@ -25,10 +25,11 @@ def get_user_by_email(user_email):
     return User.query.filter_by(email=user_email).first()
 
 
-def create_cookbook(title, cover_img, user_id):
+def create_cookbook(title, cover_img, user_id, deleted=False):
     """Create and return and new cookbook"""
 
-    cookbook = Cookbook(title=title, cover_img=cover_img, user_id=user_id)
+    cookbook = Cookbook(title=title, cover_img=cover_img, user_id=user_id,
+                        deleted=False)
 
     db.session.add(cookbook)
     db.session.commit()
@@ -63,7 +64,8 @@ def get_cookbook_recipes(cookbook_id):
     return cookbook.recipes
 
 
-def create_recipe(title, cookbook_id, ingredients, time_required, servings, media=None):
+def create_recipe(title, cookbook_id, ingredients=None, time_required=None, 
+                    servings=None, media=None, deleted=False):
     """Create and return a new recipe"""
 
     recipe = Recipe(title=title, cookbook_id=cookbook_id, ingredients=ingredients, 
