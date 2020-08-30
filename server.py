@@ -194,6 +194,15 @@ def save_cookbook():
 
     return jsonify('success')
 
+
+@app.route('/api/delete-cookbook')
+def delete_cookbook():
+    cookbook_id = session["cookbook_id"]
+
+    crud.delete_cookbook(cookbook_id)
+
+    return jsonify('cookbook deleted')
+
 if __name__ == '__main__':
     connect_to_db(app)
     app.run(host='0.0.0.0')

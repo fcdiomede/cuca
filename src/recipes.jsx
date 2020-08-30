@@ -300,10 +300,30 @@ function Recipes() {
             .then((data) => setRecipes(data));
     }, [recipeEditCount]);
 
+
+    let history = useHistory();
+
+    const deleteCookbook = () => {
+        let confirmDelete = window.confirm(
+            `This will delete your entire cookbook.
+            You will lose access to all of its contents. 
+            This action cannot be undone. 
+            
+            Are you sure you wish to continue?`)
+    
+    if (confirmDelete) {
+        fetch('/api/delete-cookbook')
+        .then((res) => {
+            console.log(res);
+            history.push('/');
+        })
+    }
+    }
+
     return (
         <React.Fragment>
             <h2>This is a cookbook!</h2>
-            <button>Delete Cookbook</button>
+            <button onClick={deleteCookbook}>Delete Cookbook</button>
             <RecipeNav recipes={recipes}
                         recipeDetails={recipeDetails}
                         setRecipeDetails={setRecipeDetails}
