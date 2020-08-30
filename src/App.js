@@ -30,8 +30,9 @@ const ProtectedRoute = ({ component: Component, loggedIn, path, ...rest }) => {
 function App() {
 
   const [loggedIn, setLoggedIn] = React.useState(false)
-  const [userData, setuserData] = React.useState({})
+  const [userData, setUserData] = React.useState({})
   
+  console.log('user data', userData);
 
   const handleLogout = () => {
       setLoggedIn(false)
@@ -54,7 +55,8 @@ function App() {
           <ProtectedRoute exact path='/' loggedIn={loggedIn} component={Homepage} />
           <ProtectedRoute path='/recipes' loggedIn={loggedIn} component={Recipes} />
           <Route path='/login' 
-                render={(props) => (<Login {...props} setLoggedIn={setLoggedIn} /> )} />
+                render={(props) => (<Login {...props} setLoggedIn={setLoggedIn}
+                                                      setUserData={setUserData} /> )} />
       </Switch> 
       </div>
   </Router>

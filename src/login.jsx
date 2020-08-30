@@ -85,6 +85,7 @@ function Login(props) {
         .then((data) => {
             if (data.status === "success") {
                 props.setLoggedIn(true);
+                props.setUserData(data.user_data);
                 history.push('/')
             } else {
                 alert('Email/Password combination is incorrect.');
