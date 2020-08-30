@@ -44,7 +44,10 @@ function RecipeDetails(props) {
                     </div>
                     <ol>
                         {props.recipeDetails.steps.map(step => {
-                        return <li key={step.key}>{step.body}</li>;
+                        return (<li key={step.key}>
+                                {step.body}
+                                <img src={step.photo} />
+                            </li>);
                         })}
                     </ol>
                 </div> :
@@ -119,7 +122,7 @@ function RecipieForm(props) {
     const addAbove = (evt) => {
         const updatedSteps = [...steps];
         const addIndex = evt.target.dataset.idx;
-        updatedSteps.splice(addIndex, 0, "");
+        updatedSteps.splice(addIndex, 0, {'body': '', 'photo': ''});
         setSteps(updatedSteps);
     };
 
@@ -162,14 +165,6 @@ function RecipieForm(props) {
         }
     });
 
-
-     //cloudinary config for steps
-     const stepUploadWidget = window.cloudinary.createUploadWidget({ 
-        cloudName: "deglaze", uploadPreset: "cuca-preset" }, (error, result) => {
-            if (result.event === 'success') {
-                console.log(result.info.url)
-            }
-         });
 
     const cancel = () => {
         history.push('/recipes')

@@ -79,7 +79,8 @@ def get_recipe_steps(recipe_id):
     for step in steps:
         data["steps"].append({"key": step.step_id,
                     "num": step.step_number, 
-                    "body": step.body})
+                    "body": step.body,
+                    "photo": step.media})
     
     
     return jsonify(data)
@@ -151,7 +152,7 @@ def save_recipe():
     
     #create the new steps
     for index, step in enumerate(steps):
-        crud.create_step(recipe_id, index+1, step)
+        crud.create_step(recipe_id, index+1, step["body"], step["photo"])
 
     data = {
             "recipe_id": recipe_id,
@@ -167,7 +168,8 @@ def save_recipe():
     for step in steps:
         data["steps"].append({"key": step.step_id,
                     "num": step.step_number, 
-                    "body": step.body})
+                    "body": step.body,
+                    "photo": step.media})
     
     
     return jsonify(data)
