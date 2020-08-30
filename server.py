@@ -175,8 +175,7 @@ def save_recipe():
 
 @app.route('/api/delete-recipe', methods=['POST'])
 def delete_recipe():
-    data = request.get_data()
-    recipe_id = data["recipeId"]
+    recipe_id = request.get_json()
 
     crud.delete_recipe(recipe_id)
 

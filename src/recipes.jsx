@@ -149,8 +149,6 @@ function RecipieForm(props) {
 
     const deleteRecipe = () => {
 
-        const data = {"recipeId" : recipeId}
-
         let confirmDelete = window.confirm(
                 `This will delete your recipe ${title}. 
                 This action cannot be undone. 
@@ -162,13 +160,14 @@ function RecipieForm(props) {
         if (confirmDelete) {
             fetch('/api/delete-recipe', {
                 method: 'POST',
-                body: JSON.stringify(data),
+                body: JSON.stringify(recipeId),
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
-            .then(() => {
+            .then((res) => {
+                console.log(res);
                 props.setRecipeEditCount(props.recipeEditCount + 1);
                 history.push('/recipes');
             })

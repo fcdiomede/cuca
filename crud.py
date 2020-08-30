@@ -144,6 +144,7 @@ def delete_recipe(recipe_id):
 
     recipe = get_recipe_by_id(recipe_id)
     recipe.deleted = True
+    print(recipe.deleted)
 
     db.session.commit()
 
