@@ -30,8 +30,8 @@ const ProtectedRoute = ({ component: Component, loggedIn, path, ...rest }) => {
 function App() {
 
   const [loggedIn, setLoggedIn] = React.useState(false)
-
-  console.log(loggedIn);
+  const [userData, setuserData] = React.useState({})
+  
 
   const handleLogout = () => {
       setLoggedIn(false)
