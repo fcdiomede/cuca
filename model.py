@@ -32,7 +32,7 @@ class Cookbook(db.Model):
     title = db.Column(db.String, nullable=False)
     cover_img = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    deleted = db.Column(db.Boolean)
+    deleted = db.Column(db.Boolean, nullable=False)
 
     user = db.relationship('User')
     recipes = db.relationship('Recipe')
@@ -55,7 +55,7 @@ class Recipe(db.Model):
     time_required = db.Column(db.String)
     servings = db.Column(db.Integer)
     media = db.Column(db.String)
-    deleted = db.Column(db.Boolean)
+    deleted = db.Column(db.Boolean, nullable=False)
 
     cookbooks = db.relationship('Cookbook')
     steps = db.relationship('Step')

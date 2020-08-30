@@ -173,6 +173,16 @@ def save_recipe():
     return jsonify(data)
 
 
+@app.route('/api/delete-recipe', methods=['POST'])
+def delete_recipe():
+    data = request.get_data()
+    recipe_id = data["recipeId"]
+
+    crud.delete_recipe(recipe_id)
+
+    return jsonify("Deleted")
+
+
 @app.route('/api/new-cookbook', methods=['POST'])
 def save_cookbook():
     data = request.get_json()

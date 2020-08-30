@@ -147,9 +147,38 @@ function RecipieForm(props) {
         history.push('/recipes')
     }
 
+    const deleteRecipe = () => {
+
+        const data = {"recipeId" : recipeId}
+
+        let confirmDelete = window.confirm(
+                `This will delete your recipe ${title}. 
+                This action cannot be undone. 
+                To return to previous screen without saving, 
+                try the cancel button instead.
+                
+                Are you sure you wish to continue?`)
+        
+        if (confirmDelete) {
+            fetch('/api/delete-recipe', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(() => {
+                props.setRecipeEditCount(props.recipeEditCount + 1);
+                history.push('/recipes');
+            })
+        }
+    }
+
     return (
         <React.Fragment>
         <button onClick={cancel}>Cancel</button>
+        <button onClick={deleteRecipe}>Delete Recipe</button>
         <form>
             <label>Title</label>
             <input type='text'

@@ -29,7 +29,7 @@ def create_cookbook(title, cover_img, user_id, deleted=False):
     """Create and return and new cookbook"""
 
     cookbook = Cookbook(title=title, cover_img=cover_img, user_id=user_id,
-                        deleted=False)
+                        deleted=deleted)
 
     db.session.add(cookbook)
     db.session.commit()
@@ -74,10 +74,8 @@ def get_cookbook_recipes(cookbook_id):
     cookbook = get_cookbook_by_id(cookbook_id)
 
     cookbook_recipes = Recipe.query.filter( (Recipe.cookbook_id == cookbook_id) &
-                                            (   (Recipe.deleted == None) | 
-                                                (Recipe.deleted == False)
-                                            )
-                                        )
+                                            (Recipe.deleted == False) )
+
 
     return cookbook_recipes.all()
 
@@ -87,7 +85,8 @@ def create_recipe(title, cookbook_id, ingredients, time_required, servings,
     """Create and return a new recipe"""
 
     recipe = Recipe(title=title, cookbook_id=cookbook_id, ingredients=ingredients, 
-                    time_required=time_required, servings=servings, media=media)
+                    time_required=time_required, servings=servings, media=media,
+                    deleted=deleted)
 
     db.session.add(recipe)
     db.session.commit()
@@ -125,8 +124,7 @@ def delete_recipe_steps(recipe_id):
 def all_recipes():
     """Returns all recipes not marked as deleted"""
     
-    return Recipe.query.filter((Recipe.deleted == False)
-                                | (Recipe.deleted == None)).all()
+    return Recipe.query.filter(Recipe.deleted == False).all()
 
 
 def get_recipe_by_id(recipe_id):
