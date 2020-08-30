@@ -9,6 +9,7 @@ import {
 import Homepage from './user-profile';
 import Login from './login';
 import Recipes from './recipes';
+import { ProfilePicture } from './user-profile';
 // import logo from './logo.svg';
 // import './App.css';
 
@@ -32,7 +33,7 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false)
   const [userData, setUserData] = React.useState({})
   
-  console.log('user data', userData);
+
 
   const handleLogout = () => {
       setLoggedIn(false)
@@ -41,6 +42,7 @@ function App() {
   return <React.Fragment>
       <Router>
       <div>
+        {loggedIn ? <ProfilePicture picture={userData.profile_picture} /> : null}
       <nav>
           <ul>
           <li>
@@ -52,7 +54,8 @@ function App() {
           </ul>
       </nav>
       <Switch>
-          <ProtectedRoute exact path='/' loggedIn={loggedIn} component={Homepage} />
+          <ProtectedRoute exact path='/' loggedIn={loggedIn}
+                                          component={() => (<Homepage userName={userData.name} /> )} />
           <ProtectedRoute path='/recipes' loggedIn={loggedIn} component={Recipes} />
           <Route path='/login' 
                 render={(props) => (<Login {...props} setLoggedIn={setLoggedIn}
