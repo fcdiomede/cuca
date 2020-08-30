@@ -9,6 +9,7 @@ import {
     useHistory
 } from 'react-router-dom';
 import cloudinaryUploader from "./uploadWidget";
+import { useState } from "react";
 // import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 
 
@@ -70,24 +71,42 @@ function RecipieForm(props) {
     const [mins, setMins] = React.useState(props.recipeDetails?.time_required);
     const [servings, setServings] = React.useState(props.recipeDetails?.servings);
     const [ingredients, setIngredients] = React.useState(props.recipeDetails?.ingredients);
-    const [steps, setSteps] = React.useState(props.recipeDetails?.steps?.map(step => step.body));
+    const [steps, setSteps] = React.useState(props.recipeDetails?.steps);
 
     //for a new recipe, steps needs to be initalized as an empty array
     //so that we can loop through and add steps in the recipe form
     if (steps == null) {
-        setSteps([''])
+        setSteps([{'body': '', 'photo': ''}])
     }
 
     const addStep = (evt) => {
         evt.preventDefault();
-        setSteps([...steps, '']);
+        setSteps([...steps, {'body': '', 'photo': ''}]);
     };
 
     const handleStepChange = (evt) => {
         const updatedSteps = [...steps];
-        updatedSteps[evt.target.dataset.idx] = evt.target.value;
+        updatedSteps[evt.target.dataset.idx][evt.target.className] = evt.target.value;
         setSteps(updatedSteps);
     };
+
+    const handleImgUpload = (evt) => {
+
+        const index = evt.target.dataset.idx
+        
+        const stepUploadWidget = window.cloudinary.createUploadWidget({ 
+            cloudName: "deglaze", uploadPreset: "cuca-preset" }, (error, result) => {
+                if (result.event === 'success') {
+                    const updatedSteps = [...steps];
+                    updatedSteps[index]['photo'] = result.info.url;
+                    setSteps(updatedSteps)
+                    
+                }
+             });
+        
+        stepUploadWidget.open();
+
+    }
 
     const deleteStep = (evt) => {
         const updatedSteps = [...steps];
@@ -142,6 +161,15 @@ function RecipieForm(props) {
             setPhoto(result.info.url);
         }
     });
+
+
+     //cloudinary config for steps
+     const stepUploadWidget = window.cloudinary.createUploadWidget({ 
+        cloudName: "deglaze", uploadPreset: "cuca-preset" }, (error, result) => {
+            if (result.event === 'success') {
+                console.log(result.info.url)
+            }
+         });
 
     const cancel = () => {
         history.push('/recipes')
@@ -205,13 +233,17 @@ function RecipieForm(props) {
             <label>Steps:</label>
             <ol>
                 {
-                    steps?.map((stepBody, index) => {
+                    steps?.map((step, index) => {
+                        const bodyId = `body-${index}`;
+                        const photoId = `photo-${index}`;
                         return (
                             <li key={`step-${index}`}>
                                 <input type='area'
-                                    value={stepBody}
-                                    id={`step-${index}`}
+                                    value={step.body}
+                                    id={bodyId}
+                                    name={bodyId}
                                     data-idx={index}
+                                    className="body"
                                     onChange={handleStepChange}></input>
                                 <input type='button'
                                     data-idx={index}
@@ -221,11 +253,14 @@ function RecipieForm(props) {
                                     data-idx={index}
                                     onClick={deleteStep}
                                     value='Delete' />
-                                {/* <input type='button' 
-                                     data-idx={index} 
-                                     onClick={uploadWidget.open}
-                                     value='Add image to this step!' /> */}
-                                {/* <img src={photo} ></img> */}
+                                <input type='button' 
+                                     data-idx={index}
+                                     name={photoId} 
+                                     onClick={handleImgUpload}
+                                     value='Add image to this step!' 
+                                     className="photo"
+                                     id={photoId} />
+                                <img src={step.photo}></img>
                             </li>
                         );
                     })
