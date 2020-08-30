@@ -46,9 +46,6 @@ function App() {
               <Link to='/'> Home </Link>
           </li>
           <li>
-              <Link to='/recipes'> Recipes </Link>
-          </li>
-          <li>
               <Link to='/login' onClick={handleLogout}> Logout </Link>
           </li>
           </ul>

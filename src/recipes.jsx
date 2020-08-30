@@ -303,6 +303,7 @@ function Recipes() {
     return (
         <React.Fragment>
             <h2>This is a cookbook!</h2>
+            <button>Delete Cookbook</button>
             <RecipeNav recipes={recipes}
                         recipeDetails={recipeDetails}
                         setRecipeDetails={setRecipeDetails}

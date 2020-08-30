@@ -5,7 +5,7 @@ function CookbookCover(props) {
 
     let history = useHistory()
 
-    const data = {'cookbookId': props.cookbook_id}
+    const data = {'cookbookId': props.cookbookId}
 
     const goToCookbook = () => {
         fetch('/api/set-cookbook', {method: 'POST', 
@@ -36,14 +36,14 @@ export function CookbookContainer(props) {
       fetch('/api/user-cookbooks')
       .then((res) => res.json())
       .then((data) => updateCookbooks(data))
-    }, [props.ShowCookbookCreation]);
+    }, [props.showCookbookCreation]);
 
     const userCookbooks = []
     for (const cookbook of cookbooks) {
         userCookbooks.push(
           <CookbookCover
             key={cookbook.key}
-            cookbook_id={cookbook.key}
+            cookbookId={cookbook.key}
             title={cookbook.title}
             imgUrl={cookbook.imgUrl}
           />
