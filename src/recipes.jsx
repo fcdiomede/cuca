@@ -8,6 +8,7 @@ import {
     Switch,
     useHistory
 } from 'react-router-dom';
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import cloudinaryUploader from "./uploadWidget";
 import { useState } from "react";
 // import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
@@ -197,10 +198,15 @@ function RecipieForm(props) {
         }
     }
 
+    const handleDragEnd = () => {
+        //todo reorder 
+    }
+
     return (
         <React.Fragment>
         <button onClick={cancel}>Cancel</button>
         <button onClick={deleteRecipe}>Delete Recipe</button>
+        <DragDropContext onDragEnd={handleDragEnd}>
         <form>
             <label>Title</label>
             <input type='text'
@@ -225,45 +231,100 @@ function RecipieForm(props) {
                 id='ingredients'
                 onChange={(evt) => setIngredients(evt.target.value)}
                 value={ingredients}></input>
-            <label>Steps:</label>
-            <ol>
-                {
-                    steps?.map((step, index) => {
-                        const bodyId = `body-${index}`;
-                        const photoId = `photo-${index}`;
-                        return (
-                            <li key={`step-${index}`}>
-                                <input type='area'
-                                    value={step.body}
-                                    id={bodyId}
-                                    name={bodyId}
-                                    data-idx={index}
-                                    className="body"
-                                    onChange={handleStepChange}></input>
-                                <input type='button'
-                                    data-idx={index}
-                                    onClick={addAbove}
-                                    value='Add Step Above' />
-                                <input type='button'
-                                    data-idx={index}
-                                    onClick={deleteStep}
-                                    value='Delete' />
-                                <input type='button' 
-                                     data-idx={index}
-                                     name={photoId} 
-                                     onClick={handleImgUpload}
-                                     value='Add image to this step!' 
-                                     className="photo"
-                                     id={photoId} />
-                                <img src={step.photo}></img>
-                            </li>
-                        );
-                    })
-                }
-            </ol>
+                <label>Steps:</label>
+                <Droppable droppableId='step-dnd'>
+                    {(provided) => (
+                        <ol
+                            ref={provided.innerRef}
+                            {...provided.droppableProps}
+                        >
+                            {
+                        steps?.map((step, index) => {
+                            const bodyId = `body-${index}`;
+                            const photoId = `photo-${index}`;
+                                return(
+                                <Draggable draggableId={`step-${index}`}
+                                            index={index}>
+                                {(provided) => (
+                                    <li key={`step-${index}`}
+                    
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                        innerRef={provided}
+                                    >
+                                    <input type='area'
+                                        value={step.body}
+                                        id={bodyId}
+                                        name={bodyId}
+                                        data-idx={index}
+                                        className="body"
+                                        onChange={handleStepChange}></input>
+                                    <input type='button'
+                                        data-idx={index}
+                                        onClick={addAbove}
+                                        value='Add Step Above' />
+                                    <input type='button'
+                                        data-idx={index}
+                                        onClick={deleteStep}
+                                        value='Delete' />
+                                    <input type='button' 
+                                        data-idx={index}
+                                        name={photoId} 
+                                        onClick={handleImgUpload}
+                                        value='Add image to this step!' 
+                                        className="photo"
+                                        id={photoId} />
+                                    <img src={step.photo}></img>
+                                </li>
+                                )}
+                                </Draggable>
+                                )
+                        })
+                    }
+                            {provided.placeholder}
+                        </ol>
+                    )}
+                {/* <ol>
+                    {
+                        steps?.map((step, index) => {
+                            const bodyId = `body-${index}`;
+                            const photoId = `photo-${index}`;
+                            return (
+                                <li key={`step-${index}`}>
+                                    <input type='area'
+                                        value={step.body}
+                                        id={bodyId}
+                                        name={bodyId}
+                                        data-idx={index}
+                                        className="body"
+                                        onChange={handleStepChange}></input>
+                                    <input type='button'
+                                        data-idx={index}
+                                        onClick={addAbove}
+                                        value='Add Step Above' />
+                                    <input type='button'
+                                        data-idx={index}
+                                        onClick={deleteStep}
+                                        value='Delete' />
+                                    <input type='button' 
+                                        data-idx={index}
+                                        name={photoId} 
+                                        onClick={handleImgUpload}
+                                        value='Add image to this step!' 
+                                        className="photo"
+                                        id={photoId} />
+                                    <img src={step.photo}></img>
+                                </li>
+                            );
+                        })
+                    }
+                </ol> */}
+                </Droppable>
             <button onClick={addStep}>Add Step</button>
             <input type="submit" onClick={save}></input>
         </form>
+        </DragDropContext>
         </React.Fragment>
     );
 }
