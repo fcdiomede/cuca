@@ -25,6 +25,24 @@ def get_user_by_email(user_email):
     return User.query.filter_by(email=user_email).first()
 
 
+def get_user_by_id(user_id):
+    """Return a specific user by their id"""
+
+    return User.query.get(user_id)
+
+
+def update_user(user_id, fname, profile_picture):
+    """Update a user's name and profile picture"""
+
+    user = get_user_by_id(user_id)
+    user.fname = fname
+    user.profile_picture = profile_picture
+
+    db.session.commit()
+
+    return user
+
+
 def create_cookbook(title, cover_img, user_id, deleted=False):
     """Create and return and new cookbook"""
 

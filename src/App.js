@@ -9,7 +9,7 @@ import {
 import Homepage from './user-profile';
 import Login from './login';
 import Recipes from './recipes';
-import { ProfilePicture } from './user-profile';
+import { ProfilePicture, UserProfileModal } from './user-profile';
 // import logo from './logo.svg';
 // import './App.css';
 
@@ -32,7 +32,8 @@ function App() {
 
   const [loggedIn, setLoggedIn] = React.useState(false)
   const [userData, setUserData] = React.useState({})
-  
+  const [showUserModal, setShowUserModal] = React.useState(false);
+
   console.log(userData)
 
   const handleLogout = () => {
@@ -42,7 +43,11 @@ function App() {
   return <React.Fragment>
       <Router>
       <div>
-        {loggedIn ? <ProfilePicture userData={userData} /> : null}
+        {loggedIn ? <ProfilePicture userData={userData} 
+                                    setShowUserModal={setShowUserModal} /> : null}
+        {showUserModal ? <UserProfileModal userData={userData}
+                                            setShowUserModal={setShowUserModal}
+                                            setUserData={setUserData} /> : null}
       <nav>
           <ul>
           <li>

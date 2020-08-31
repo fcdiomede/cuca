@@ -180,6 +180,20 @@ def save_recipe():
     return jsonify(data)
 
 
+@app.route('/api/update-user-profile', methods=['POST'])
+def update_user_profile():
+    data = request.get_json()
+    fname = data.get("fname", None)
+    profile_picture = data.get("photo", "/static/img/chef_hat.png")
+
+    user_id = session["user_id"]
+
+    user = crud.update_user(user_id, fname, profile_picture)
+
+    user_data = {"name": user.fname, "profile_picture": user.profile_picture}
+
+    return jsonify(user_data)
+
 @app.route('/api/delete-recipe', methods=['POST'])
 def delete_recipe():
     recipe_id = request.get_json()
