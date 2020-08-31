@@ -77,7 +77,8 @@ function Homepage(props) {
                     return (
                         <React.Fragment>
                             <h1>Welcome, Chef {props.userName}!</h1>
-                            {showCookbookCreation ? <NewCookbookForm setShowCookbookCreation={setShowCookbookCreation} /> :
+                            {showCookbookCreation ? <NewCookbookForm setShowCookbookCreation={setShowCookbookCreation} 
+                                                    mode='new' /> :
                                 <div>
                                     <CreateNewCookbook setShowCookbookCreation={setShowCookbookCreation} />
                                     <CookbookContainer showCookbookCreation={showCookbookCreation} />

@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 
 function CookbookCover(props) {
 
+    const [showCBModal, setShowCBModal] = React.useState(false);
+
     let history = useHistory();
 
     const data = { 'cookbookId': props.cookbookId };
@@ -19,8 +21,8 @@ function CookbookCover(props) {
             .then(() => history.push('/recipes'));
     };
 
-    const editCover = (evt) => {
-
+    const editCover = () => {
+        setShowCBModal(true);
     };
 
     return (
@@ -29,7 +31,11 @@ function CookbookCover(props) {
                 <p>Name: {props.title}</p>
                 <img src={props.imgUrl} />
             </div>
-            <button onClick={editCover}>Edit Cookbook Cover</button>
+            { showCBModal ?
+                            <NewCookbookForm setShowCookbookCreation={setShowCBModal}
+                                            title={props.title} imgUrl={props.imgUrl}
+                                            mode='edit' /> :
+                            <button onClick={editCover}>Edit Cookbook Cover</button>}
         </React.Fragment>
     );
 }
@@ -82,8 +88,8 @@ export function CreateNewCookbook(props) {
 export function NewCookbookForm(props) {
 
     //track what user is entering in fields
-    const [title, setTitle] = React.useState('');
-    const [photo, setPhoto] = React.useState('');
+    const [title, setTitle] = React.useState(props.title);
+    const [photo, setPhoto] = React.useState(props.imgUrl);
 
     //cloudinary config
     const uploadWidget = window.cloudinary.createUploadWidget({
@@ -101,7 +107,8 @@ export function NewCookbookForm(props) {
 
         const data = {
             'title': title,
-            'photo': photo
+            'photo': photo,
+            'mode': props.mode
         };
 
         fetch('/api/new-cookbook', {
@@ -134,7 +141,7 @@ export function NewCookbookForm(props) {
             <label>Cover Photo</label>
             <input type='button' onClick={uploadWidget.open} value='Add Cover Image' />
             <img src={photo}></img>
-            <button onClick={saveCookbook}>Create It!</button>
+            <button onClick={saveCookbook}>Submit</button>
             <button onClick={cancel}>Cancel</button>
         </form>
     );
