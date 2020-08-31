@@ -55,6 +55,20 @@ def create_cookbook(title, cover_img, user_id, deleted=False):
     return cookbook
 
 
+def update_cookbook(title, cover_img, cookbook_id):
+    """Update a cookbook"""
+
+    cookbook = get_cookbook_by_id(cookbook_id)
+
+    cookbook.title = title
+    cookbook.cover_img = cover_img
+
+    db.session.commit()
+
+    return cookbook
+
+
+
 def all_cookbooks():
     """Return a list of all cookbooks that are not deleted"""
 

@@ -203,17 +203,24 @@ def delete_recipe():
     return jsonify("Deleted")
 
 
-@app.route('/api/new-cookbook', methods=['POST'])
+@app.route('/api/save-cookbook', methods=['POST'])
 def save_cookbook():
     data = request.get_json()
     title = data["title"]
     photo = data["photo"]
+    mode = data["mode"]
+    cookbook_id = data.get("cookbookId", None)
 
     user_id = session["user_id"]
 
-    crud.create_cookbook(title, photo, user_id)
+    if mode == "edit":
+        crud.update_cookbook(title, photo, cookbook_id)
+    else:
+        crud.create_cookbook(title, photo, user_id)
 
-    return jsonify('success')
+    cookbook_data = {'title': title, 'photo': photo}
+
+    return jsonify(cookbook_data)
 
 
 @app.route('/api/delete-cookbook')

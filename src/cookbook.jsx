@@ -3,8 +3,6 @@ import { useHistory } from "react-router-dom";
 
 function CookbookCover(props) {
 
-    const [showCBModal, setShowCBModal] = React.useState(false);
-
     let history = useHistory();
 
     const data = { 'cookbookId': props.cookbookId };
@@ -22,7 +20,7 @@ function CookbookCover(props) {
     };
 
     const editCover = () => {
-        setShowCBModal(true);
+        props.setShowCBModal(true);
     };
 
     return (
@@ -31,8 +29,9 @@ function CookbookCover(props) {
                 <p>Name: {props.title}</p>
                 <img src={props.imgUrl} />
             </div>
-            { showCBModal ?
-                            <NewCookbookForm setShowCookbookCreation={setShowCBModal}
+            { props.showCBModal ?
+                            <NewCookbookForm setShowCookbookCreation={props.setShowCBModal}
+                                            cookbookId={props.cookbookId}
                                             title={props.title} imgUrl={props.imgUrl}
                                             mode='edit' /> :
                             <button onClick={editCover}>Edit Cookbook Cover</button>}
@@ -48,12 +47,13 @@ export function CookbookContainer(props) {
     //user's personal cookbooks to appear
 
     const [cookbooks, updateCookbooks] = React.useState([]);
+    const [showCBModal, setShowCBModal] = React.useState(false);
 
     React.useEffect(() => {
         fetch('/api/user-cookbooks')
             .then((res) => res.json())
             .then((data) => updateCookbooks(data));
-    }, [props.showCookbookCreation]);
+    }, [props.showCookbookCreation, showCBModal]);
 
     const userCookbooks = [];
     for (const cookbook of cookbooks) {
@@ -63,6 +63,8 @@ export function CookbookContainer(props) {
                 cookbookId={cookbook.key}
                 title={cookbook.title}
                 imgUrl={cookbook.imgUrl}
+                showCBModal={showCBModal}
+                setShowCBModal={setShowCBModal}
             />
         );
     }
@@ -103,15 +105,15 @@ export function NewCookbookForm(props) {
     //callback after creating cookbook
     const saveCookbook = (evt) => {
         evt.preventDefault();
-        props.setShowCookbookCreation(false);
 
         const data = {
             'title': title,
             'photo': photo,
-            'mode': props.mode
+            'mode': props.mode,
+            "cookbookId": props.cookbookId
         };
 
-        fetch('/api/new-cookbook', {
+        fetch('/api/save-cookbook', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -121,7 +123,7 @@ export function NewCookbookForm(props) {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
+                props.setShowCookbookCreation(false);
             });
     };
 
