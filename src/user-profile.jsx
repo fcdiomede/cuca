@@ -5,7 +5,8 @@ import {CreateNewCookbook, CookbookContainer, NewCookbookForm} from './cookbook'
 //user profile components
 
 export function ProfilePicture(props) {
-    return (<img src={props.picture} />)
+    
+    return (<img src={props.userData.profile_picture} />)
 }
 
 
@@ -14,7 +15,6 @@ function Homepage(props) {
 
     const [showCookbookCreation, setShowCookbookCreation] = React.useState(false)
     
-    console.log('user data', props.userData);
 
     return (
         <React.Fragment>

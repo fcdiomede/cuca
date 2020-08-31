@@ -33,7 +33,7 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false)
   const [userData, setUserData] = React.useState({})
   
-
+  console.log(userData)
 
   const handleLogout = () => {
       setLoggedIn(false)
@@ -42,7 +42,7 @@ function App() {
   return <React.Fragment>
       <Router>
       <div>
-        {loggedIn ? <ProfilePicture picture={userData.profile_picture} /> : null}
+        {loggedIn ? <ProfilePicture userData={userData} /> : null}
       <nav>
           <ul>
           <li>
