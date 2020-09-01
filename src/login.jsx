@@ -32,7 +32,7 @@ function CreateAccount(props) {
         .then((data) => {
             if (data.status === "success") {
                 alert("Success! Account has been created.")
-                history.push('/');
+                history.push(`/user/${data.user_data.user_id}`);
             } else {
                 alert('This user already exists. Try logging in.');
         }
@@ -86,7 +86,7 @@ function Login(props) {
             if (data.status === "success") {
                 props.setLoggedIn(true);
                 props.setUserData(data.user_data);
-                history.push('/')
+                history.push(`/user/${data.user_data.user_id}`)
             } else {
                 alert('Email/Password combination is incorrect.');
         }

@@ -4,12 +4,14 @@ import {
   Switch,
   Route,
   Link,
-  Redirect
+  Redirect,
+  useParams
 } from "react-router-dom";
 import Homepage from './user-profile';
 import Login from './login';
 import Recipes from './recipes';
 import { ProfilePicture, UserProfileModal } from './user-profile';
+import Explore from './explore';
 // import logo from './logo.svg';
 // import './App.css';
 
@@ -40,6 +42,7 @@ function App() {
       setLoggedIn(false)
   }
 
+
   return <React.Fragment>
       <Router>
       <div>
@@ -51,20 +54,24 @@ function App() {
       <nav>
           <ul>
           <li>
-              <Link to='/'> Home </Link>
+              <Link to={`/user/${userData.user_id}`}> Home </Link>
           </li>
           <li>
               <Link to='/login' onClick={handleLogout}> Logout </Link>
           </li>
+          <li>
+            <Link to='/'> Explore </Link>
+          </li>
           </ul>
       </nav>
       <Switch>
-          <ProtectedRoute exact path='/' loggedIn={loggedIn}
+          <ProtectedRoute exact path='/user/:userId' loggedIn={loggedIn}
                                           component={() => (<Homepage userName={userData.name} /> )} />
           <ProtectedRoute path='/recipes' loggedIn={loggedIn} component={Recipes} />
           <Route path='/login' 
                 render={(props) => (<Login {...props} setLoggedIn={setLoggedIn}
                                                       setUserData={setUserData} /> )} />
+          <Route path='/' component={Explore} />
       </Switch> 
       </div>
   </Router>

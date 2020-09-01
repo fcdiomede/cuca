@@ -95,11 +95,12 @@ def authenticate_user():
 
     user = crud.get_user_by_email(email)
 
-    user_data = {"name":'', "profile_picture":''}
+    user_data = {"user_id": '', "name":'', "profile_picture":''}
 
     if user and password == user.password:
         session["user_id"] = user.user_id
         status = "success"
+        user_data["user_id"] = user.user_id
         user_data["name"] = user.fname
         user_data["profile_picture"] = user.profile_picture
     else:
