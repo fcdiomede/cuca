@@ -90,7 +90,7 @@ function RecipieForm(props) {
 
     const handleStepChange = (evt) => {
         const updatedSteps = [...steps];
-        updatedSteps[evt.target.dataset.idx][evt.target.className] = evt.target.value;
+        updatedSteps[evt.target.dataset.idx]["body"] = evt.target.value;
         setSteps(updatedSteps);
     };
 
@@ -120,12 +120,12 @@ function RecipieForm(props) {
     };
 
 
-    const addAbove = (evt) => {
-        const updatedSteps = [...steps];
-        const addIndex = evt.target.dataset.idx;
-        updatedSteps.splice(addIndex, 0, {'body': '', 'photo': ''});
-        setSteps(updatedSteps);
-    };
+    // const addAbove = (evt) => {
+    //     const updatedSteps = [...steps];
+    //     const addIndex = evt.target.dataset.idx;
+    //     updatedSteps.splice(addIndex, 0, {'body': '', 'photo': ''});
+    //     setSteps(updatedSteps);
+    // };
 
 
     const save = (evt) => {
@@ -198,9 +198,33 @@ function RecipieForm(props) {
         }
     }
 
-    const handleDragEnd = () => {
-        //todo reorder 
-    }
+    const reorder = (list, startIndex, endIndex) => {
+        const result = Array.from(list)
+        const [removed] = result.splice(startIndex, 1)
+        result.splice(endIndex, 0, removed)
+        return result
+      }
+
+    const handleDragEnd = (result) => {
+        const { destination, source, draggableId} = result;
+
+        //if there is no destination, exit
+        if (!destination) {
+            return;
+        }
+
+        //check to see if the location of the draggable changed
+        if (
+            destination.droppableId == source.droppableId &&
+            destination.index === source.index
+        ) {
+            return;
+        }
+
+        const newStepIds = [...steps];
+        const updatedStepOrder = reorder(newStepIds, source.index, destination.index)
+        setSteps(updatedStepOrder);
+    };
 
     return (
         <React.Fragment>
@@ -260,10 +284,10 @@ function RecipieForm(props) {
                                         data-idx={index}
                                         className="body"
                                         onChange={handleStepChange}></input>
-                                    <input type='button'
+                                    {/* <input type='button'
                                         data-idx={index}
                                         onClick={addAbove}
-                                        value='Add Step Above' />
+                                        value='Add Step Above' /> */}
                                     <input type='button'
                                         data-idx={index}
                                         onClick={deleteStep}
