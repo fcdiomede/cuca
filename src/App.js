@@ -37,7 +37,8 @@ function SearchBar(props) {
       .then((res) => res.json())
       .then((data) => {
           props.setSearchResults(data)
-          history.push('/search')
+          history.push('/search');
+          setSearchTerm('');
       })
   }
 
