@@ -5,6 +5,7 @@ import requests
 import os
 import time
 import hashlib
+from random import choices
 
 # CLOUDINARY_UPLOAD_URL = "https://api.cloudinary.com/v1_1/deglaze/image/upload"
 # CLOUDINARY_API_KEY = os.environ['API_KEY']
@@ -231,6 +232,24 @@ def delete_cookbook():
     crud.delete_cookbook(cookbook_id)
 
     return jsonify('cookbook deleted')
+
+
+@app.route('/api/random-data')
+def random_data():
+    cookbooks = crud.all_cookbooks()
+
+    random_cookbooks = choices(cookbooks, k=10)
+
+    cookbook_data = []
+    for c in random_cookbooks:
+        cookbook_data.append({"key": c.cookbook_id,
+                            "title": c.title, 
+                            "imgUrl": c.cover_img
+                                })
+
+    print(random_cookbooks)
+
+    return jsonify({'cookbooks':cookbook_data})
 
 if __name__ == '__main__':
     connect_to_db(app)

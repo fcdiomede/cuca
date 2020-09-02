@@ -1,69 +1,96 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-// function CookbookCover () {
-//     <div className="cookbook" onClick={goToCookbook}>
-//                 <p>Name: {props.title}</p>
-//                 <img src={props.imgUrl} />
-//             </div>
-// }
+function CookbookCover(props) {
 
-// //component to hold all cookbook cards
-// export function CookbookContainer(props) {
+    let history = useHistory();
 
-//     // make a call to the server to ask for information
-//     //user's personal cookbooks to appear
+    const data = { 'cookbookId': props.cookbookId };
 
-//     const [cookbooks, updateCookbooks] = React.useState([]);
-//     const [showCBModal, setShowCBModal] = React.useState(false);
+    const goToCookbook = () => {
+        fetch('/api/set-cookbook', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(() => history.push('/recipes'));
+    };
 
-//     React.useEffect(() => {
-//         fetch('/api/user-cookbooks')
-//             .then((res) => res.json())
-//             .then((data) => updateCookbooks(data));
-//     }, [props.showCookbookCreation, showCBModal]);
+    return (
+        <div className="cookbook" onClick={goToCookbook}>
+            <p>Name: {props.title}</p>
+            <img src={props.imgUrl} />
+        </div>
+    );
+}
 
-//     const userCookbooks = [];
-//     for (const cookbook of cookbooks) {
-//         userCookbooks.push(
-//             <CookbookCover
-//                 key={cookbook.key}
-//                 cookbookId={cookbook.key}
-//                 title={cookbook.title}
-//                 imgUrl={cookbook.imgUrl}
-//                 showCBModal={showCBModal}
-//                 setShowCBModal={setShowCBModal}
-//             />
-//         );
-//     }
+//component to hold all cookbook cards
+export function CookbookContainer(props) {
 
-//     return (
-//         <div>{userCookbooks}</div>
-//     );
-// }
+    // make a call to the server to ask for information
+    //user's personal cookbooks to appear
 
-function SearchBar () {
+    const [randomCookbooks, updateCookbooks] = React.useState([]);
+    // const [randomRecipes, updateRecipes] = React.useState([]);
 
-    const [searchTerm, setSearchTerm] = React.useState('')
+    React.useEffect(() => {
+        fetch('/api/random-data')
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data)
+                updateCookbooks(data.cookbooks);
+                console.log(randomCookbooks)
+            });
+    }, []);
+
+    const cookbooks = [];
+    for (const cookbook of randomCookbooks) {
+        cookbooks.push(
+            <CookbookCover
+                key={cookbook.key}
+                cookbookId={cookbook.key}
+                title={cookbook.title}
+                imgUrl={cookbook.imgUrl}
+            />
+        );
+
+    }
+
+    return (
+        <div>
+            {cookbooks}
+        </div>
+    );
+}
+
+function SearchBar() {
+
+    const [searchTerm, setSearchTerm] = React.useState('');
 
     return (
         <form>
             <input type='text'
-                    placeholder = 'Search...'
-                    value={searchTerm}
-                    onChange={(evt) =>setSearchTerm(evt.target.value)}>
-                    </input>
+                placeholder='Search...'
+                value={searchTerm}
+                onChange={(evt) => setSearchTerm(evt.target.value)}>
+            </input>
+            <input type='button'
+                value='Search!' />
         </form>
-    )
+    );
 }
 
-function Explore () {
+function Explore() {
     return (
         <React.Fragment>
             <h1>What's cooking?</h1>
             <SearchBar />
+            <CookbookContainer />
         </React.Fragment>
-    )
+    );
 }
 
 export default Explore;
