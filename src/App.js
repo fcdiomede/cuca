@@ -13,88 +13,11 @@ import Login from './login';
 import Recipes from './recipes';
 import { ProfilePicture, UserProfileModal } from './user-profile';
 import Explore from './explore';
+import { SearchBar, SearchResults } from './explore';
 // import logo from './logo.svg';
 // import './App.css';
 
-function SearchBar(props) {
 
-  const [searchTerm, setSearchTerm] = React.useState('');
-
-  let history = useHistory();
-
-  const handleSearch = () => {
-
-      let data = {'searchTerm': searchTerm}
-
-      fetch('/api/search', {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-          }
-      })
-      .then((res) => res.json())
-      .then((data) => {
-          props.setSearchResults(data)
-          history.push('/search');
-          setSearchTerm('');
-      })
-  }
-
-  return (
-      <form>
-          <input type='text'
-              placeholder='Search...'
-              value={searchTerm}
-              onChange={(evt) => setSearchTerm(evt.target.value)}>
-          </input>
-          <input type='button'
-              value='Search!'
-              onClick={handleSearch} />
-      </form>
-  );
-}
-
-function UserCard(props) {
-
-  let history = useHistory();
-
-  const goToUserPage = () => {
-    history.push(`/user/${props.userId}`)
-  }
-
-  return (
-    <p onClick={goToUserPage}>
-      <h2>{props.fname} {props.lname}</h2>
-      <img src={props.profilePicture} />
-      email : {props.email}
-    </p>
-  )
-}
-
-function SearchResults(props) {
-
-  console.log(props.searchResults)
-
-  const results = []
-  for (const user of props.searchResults) {
-    results.push(
-      <UserCard userId={user.user_id}
-                fname={user.fname}
-                lname={user.lname}
-                profilePicture={user.profile_picture}
-                email={user.email}
-      />
-    )
-  }
-
-
-  return(<div>
-          <h1>Search Results</h1>
-          <div>{results}</div>
-        </div>)
-}
 
 
 const ProtectedRoute = ({ component: Component, loggedIn, path, ...rest }) => {
