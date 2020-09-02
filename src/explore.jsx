@@ -9,11 +9,11 @@ export function SearchBar(props) {
   
     const handleSearch = () => {
   
-        let data = {'searchTerm': searchTerm}
+        const search = {'searchTerm': searchTerm}
   
         fetch('/api/search', {
             method: 'POST',
-            body: JSON.stringify(data),
+            body: JSON.stringify(search),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -21,9 +21,10 @@ export function SearchBar(props) {
         })
         .then((res) => res.json())
         .then((data) => {
-            props.setSearchResults(data)
-            history.push('/search');
+            console.log(data);
+            props.setSearchResults(data);
             setSearchTerm('');
+            history.push('/search');
         })
     }
   
@@ -73,7 +74,8 @@ export function SearchBar(props) {
         />
       )
     }
-  
+    
+    console.log(results);
   
     return(<div>
             <h1>Search Results</h1>
@@ -121,9 +123,7 @@ export function CookbookContainer(props) {
         fetch('/api/random-data')
             .then((res) => res.json())
             .then((data) => {
-                console.log(data)
                 updateCookbooks(data.cookbooks);
-                console.log(randomCookbooks)
             });
     }, []);
 
@@ -149,6 +149,8 @@ export function CookbookContainer(props) {
 
 
 function Explore() {
+    
+
     return (
         <React.Fragment>
             <h1>What's cooking?</h1>

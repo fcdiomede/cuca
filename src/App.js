@@ -4,9 +4,7 @@ import {
   Switch,
   Route,
   Link,
-  Redirect,
-  useParams,
-  useHistory
+  Redirect
 } from "react-router-dom";
 import Homepage from './user-profile';
 import Login from './login';
@@ -74,13 +72,12 @@ function App() {
       <Switch>
           <ProtectedRoute exact path='/user/:userId' loggedIn={loggedIn}
                                           component={() => (<Homepage userName={userData.name} /> )} />
-          <ProtectedRoute exact path='/recipes' loggedIn={loggedIn} component={Recipes} />
-          <ProtectedRoute exact path='/search' loggedIn={loggedIn}
-                                               component={() => (<SearchResults searchResults={searchResults}/> )} />
-         <Route exact path='/login' 
+          <ProtectedRoute path='/recipes' loggedIn={loggedIn} component={Recipes} />
+          <Route exact path='/' component={Explore} />
+          <Route path='/search' component={() => (<SearchResults searchResults={searchResults}/> )} />
+          <Route path='/login' 
                 render={(props) => (<Login {...props} setLoggedIn={setLoggedIn}
                                                       setUserData={setUserData} /> )} />
-         <Route exact path='/' component={Explore} />
       </Switch> 
       </div>
   </Router>

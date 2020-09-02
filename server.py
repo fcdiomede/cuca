@@ -267,6 +267,10 @@ def search():
                                 "profile_picture": user.profile_picture
                                 })
 
+    print("SEARCH RESULTS API RESULTS ----------------------")
+    print(search_results);
+    print("-------------------------------------------------")
+
     return jsonify(search_results)
 
 if __name__ == '__main__':
