@@ -16,7 +16,7 @@ import Explore from './explore';
 // import logo from './logo.svg';
 // import './App.css';
 
-function SearchBar() {
+function SearchBar(props) {
 
   const [searchTerm, setSearchTerm] = React.useState('');
 
@@ -36,7 +36,7 @@ function SearchBar() {
       })
       .then((res) => res.json())
       .then((data) => {
-          console.log(data);
+          props.setSearchResults(data)
           history.push('/search')
       })
   }
@@ -55,8 +55,36 @@ function SearchBar() {
   );
 }
 
-function SearchResults() {
-  return(<h1>Search Results</h1>)
+function UserCard(props) {
+  return (
+    <p>
+      <h2>{props.fname} {props.lname}</h2>
+      <img src={props.profilePicture} />
+      email : {props.email}
+    </p>
+  )
+}
+
+function SearchResults(props) {
+
+  console.log(props.searchResults)
+
+  const results = []
+  for (const user of props.searchResults) {
+    results.push(
+      <UserCard fname={user.fname}
+                lname={user.lname}
+                profilePicture={user.profile_picture}
+                email={user.email}
+      />
+    )
+  }
+
+
+  return(<div>
+          <h1>Search Results</h1>
+          <div>{results}</div>
+        </div>)
 }
 
 
@@ -80,9 +108,7 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false)
   const [userData, setUserData] = React.useState({})
   const [showUserModal, setShowUserModal] = React.useState(false);
-  // const [searchResults, setSearchResults] = React.useState('');
-
-  console.log(userData)
+  const [searchResults, setSearchResults] = React.useState('');
 
   const handleLogout = () => {
       setLoggedIn(false)
@@ -109,7 +135,7 @@ function App() {
             <Link to='/'> Explore </Link>
           </li>
           <li>
-            <SearchBar />
+            <SearchBar setSearchResults={setSearchResults} />
           </li>
           </ul>
       </nav>
@@ -117,11 +143,12 @@ function App() {
           <ProtectedRoute exact path='/user/:userId' loggedIn={loggedIn}
                                           component={() => (<Homepage userName={userData.name} /> )} />
           <ProtectedRoute exact path='/recipes' loggedIn={loggedIn} component={Recipes} />
-          <Route exact path='/login' 
+          <ProtectedRoute exact path='/search' loggedIn={loggedIn}
+                                               component={() => (<SearchResults searchResults={searchResults}/> )} />
+         <Route exact path='/login' 
                 render={(props) => (<Login {...props} setLoggedIn={setLoggedIn}
                                                       setUserData={setUserData} /> )} />
-          <ProtectedRoute exact path='/search' loggedIn={loggedIn} component={SearchResults} />
-          <Route exact path='/' component={Explore} />
+         <Route exact path='/' component={Explore} />
       </Switch> 
       </div>
   </Router>
