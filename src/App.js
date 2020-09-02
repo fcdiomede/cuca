@@ -56,8 +56,15 @@ function SearchBar(props) {
 }
 
 function UserCard(props) {
+
+  let history = useHistory();
+
+  const goToUserPage = () => {
+    history.push(`/user/${props.userId}`)
+  }
+
   return (
-    <p>
+    <p onClick={goToUserPage}>
       <h2>{props.fname} {props.lname}</h2>
       <img src={props.profilePicture} />
       email : {props.email}
@@ -72,7 +79,8 @@ function SearchResults(props) {
   const results = []
   for (const user of props.searchResults) {
     results.push(
-      <UserCard fname={user.fname}
+      <UserCard userId={user.user_id}
+                fname={user.fname}
                 lname={user.lname}
                 profilePicture={user.profile_picture}
                 email={user.email}
@@ -129,7 +137,7 @@ function App() {
               <Link to={`/user/${userData.user_id}`}> Home </Link>
           </li>
           <li>
-              <Link to='/login' onClick={handleLogout}> Logout </Link>
+              <Link to='/login' onClick={handleLogout}> {loggedIn ? "Logout" : "Login"} </Link>
           </li>
           <li>
             <Link to='/'> Explore </Link>
