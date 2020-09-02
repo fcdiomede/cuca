@@ -251,6 +251,24 @@ def random_data():
 
     return jsonify({'cookbooks':cookbook_data})
 
+
+@app.route('/api/search', methods=['POST'])
+def search():
+    data=request.get_json()
+    search_term = data["searchTerm"]
+
+    search_results = []
+    users = crud.search_for_user(search_term)
+    for user in users:
+        search_results.append({"user_id": user.user_id,
+                                "fname": user.fname,
+                                "lname": user.lname,
+                                "email": user.email,
+                                "profile_picture": user.profile_picture
+                                })
+
+    return jsonify(search_results)
+
 if __name__ == '__main__':
     connect_to_db(app)
     app.run(host='0.0.0.0')

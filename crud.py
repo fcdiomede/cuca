@@ -193,6 +193,25 @@ def create_step(recipe_id, step_number, body, media=None):
     return step
 
 
+def search_for_user(search_term):
+    """Search for a user based on a search term"""
+
+    users = []
+
+    similar_first_name = User.query.filter(User.fname.ilike(f'%{search_term}%'))
+    similar_last_name =  User.query.filter(User.lname.ilike(f'%{search_term}%'))
+    similar_email = User.query.filter(User.email.ilike(f'%{search_term}%'))
+
+    users.extend(similar_first_name)
+    users.extend(similar_last_name)
+    users.extend(similar_email)
+
+    #eliminate duplicate results
+    users = set(users)
+
+    return users
+
+
 
 
 if __name__ == '__main__':

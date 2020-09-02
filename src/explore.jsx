@@ -66,28 +66,11 @@ export function CookbookContainer(props) {
     );
 }
 
-function SearchBar() {
-
-    const [searchTerm, setSearchTerm] = React.useState('');
-
-    return (
-        <form>
-            <input type='text'
-                placeholder='Search...'
-                value={searchTerm}
-                onChange={(evt) => setSearchTerm(evt.target.value)}>
-            </input>
-            <input type='button'
-                value='Search!' />
-        </form>
-    );
-}
 
 function Explore() {
     return (
         <React.Fragment>
             <h1>What's cooking?</h1>
-            <SearchBar />
             <CookbookContainer />
         </React.Fragment>
     );
