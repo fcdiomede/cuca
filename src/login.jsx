@@ -96,7 +96,7 @@ function Login(props) {
                 if (data.status === "success") {
                     props.setLoggedIn(true);
                     props.setUserData(data.user_data);
-                    history.push(`/user/${data.user_data.user_id}`);
+                    history.push(`/homepage/${data.user_data.user_id}`);
                 } else {
                     alert('Email/Password combination is incorrect.');
                 }

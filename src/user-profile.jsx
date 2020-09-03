@@ -68,22 +68,38 @@ export function UserProfileModal(props) {
     );
 }
 
+
+//other user's profile view only
+export function UserProfile() {
+    const [user, setUser] = React.useState('')
+
+    let { userId } = useParams();
+
+    React.useEffect(() => {
+        fetch(`/api/user/${userId}`)
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+            setUser(data);
+        })
+    },[])
+
+    return(
+        <React.Fragment>
+            <h1>Chef {user.name}</h1>
+            <img src={user.profile_picture} />
+            <CookbookContainer />
+        </React.Fragment>
+    )
+
+
+}
+
+
 //main page component
 function Homepage(props) {
 
                     const [showCookbookCreation, setShowCookbookCreation] = React.useState(false);
-                    // const [user, setUser] = React.useState('')
-
-                    // let { userId } = useParams();
-
-                    // React.useEffect(() => {
-                    //     fetch(`/api/user/${userId}`)
-                    //     .then((res) => res.json())
-                    //     .then((data) => {
-                    //         console.log(data);
-                    //         setUser(data);
-                    //     })
-                    // },[])
 
                     return (
                         <React.Fragment>

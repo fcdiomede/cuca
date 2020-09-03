@@ -9,7 +9,7 @@ import {
 import Homepage from './user-profile';
 import Login from './login';
 import Recipes from './recipes';
-import { ProfilePicture, UserProfileModal } from './user-profile';
+import { ProfilePicture, UserProfileModal, UserProfile } from './user-profile';
 import Explore from './explore';
 import { SearchBar, SearchResults } from './explore';
 // import logo from './logo.svg';
@@ -56,7 +56,7 @@ function App() {
       <nav>
           <ul>
           <li>
-              <Link to={`/user/${userData.user_id}`}> Home </Link>
+              <Link to={`/homepage/${userData.user_id}`}> Home </Link>
           </li>
           <li>
               <Link to='/login' onClick={handleLogout}> {loggedIn ? "Logout" : "Login"} </Link>
@@ -70,8 +70,9 @@ function App() {
           </ul>
       </nav>
       <Switch>
-          <ProtectedRoute exact path={`/user/${userData.user_id}`} loggedIn={loggedIn}
+          <ProtectedRoute exact path='/homepage/:userId' loggedIn={loggedIn}
                                           component={() => (<Homepage name={userData.name} /> )} />
+          <ProtectedRoute exact path='/user/:userId' loggedIn={loggedIn} component={UserProfile} />
           <ProtectedRoute path='/recipes' loggedIn={loggedIn} component={Recipes} />
           <Route exact path='/' component={Explore} />
           <Route path='/search' component={() => (<SearchResults searchResults={searchResults}/> )} />

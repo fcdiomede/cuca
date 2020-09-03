@@ -51,6 +51,8 @@ export function CookbookContainer(props) {
 
     let { userId } = useParams();
 
+    console.log(userId);
+
     React.useEffect(() => {
         fetch(`/api/user-cookbooks/${userId}`)
             .then((res) => res.json())
