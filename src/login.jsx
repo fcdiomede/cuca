@@ -111,6 +111,10 @@ function Login(props) {
 
     //login form
     return (
+        <div>
+            <h1>Mestre Cuca</h1>
+            <p>/ˈmɛstɾi-ˈkuka/</p>
+            <p>Brazilian slang meaning: Master Chef</p>
         <form>
             <label>Email:</label>
             <input type='text'
@@ -137,6 +141,7 @@ function Login(props) {
                                         </button>
                 </div>}
         </form>
+        </div>
     );
 }
 
