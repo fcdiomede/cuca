@@ -113,8 +113,12 @@ function Login(props) {
     return (
         <div>
             <h1>Mestre Cuca</h1>
-            <p>/ˈmɛstɾi-ˈkuka/</p>
-            <p>Brazilian slang meaning: Master Chef</p>
+            <p>[ˈmɛstɾi-ˈkuka] noun informal</p>
+            <p>Brazilian phrase meaning highly skilled home cook. </p>
+            <p> "Can you believe the delicious dishes
+                Aunt Claudia served for dinner? Look at her go, all
+                Mestre Cuca."
+            </p>
         <form>
             <label>Email:</label>
             <input type='text'

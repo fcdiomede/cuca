@@ -13,6 +13,27 @@ import cloudinaryUploader from "./uploadWidget";
 // import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 
 
+function FavoriteRecipe(props) {
+
+    let recipeId = props.recipeDetails?.recipe_id
+
+    console.log(recipeId);
+
+    const favoriteRecipe = () => {
+        fetch(`/api/favorite/${recipeId}`, {
+            method:'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => res.json())
+            .then((data) => console.log(data))
+    }
+
+    return <button onClick={favoriteRecipe}>Favorite</button>
+}
+
 function RecipeDetails(props) {
 
     let { recipeId } = useParams();
@@ -330,7 +351,7 @@ function RecipeNav(props) {
                 { props.editAccess ? 
                     <Link to={`${url}/edit`}>
                         <button type="button">Edit</button>
-                    </Link> : null }
+                    </Link> : <FavoriteRecipe recipeDetails={props.recipeDetails}/> }
                 { props.editAccess ? 
                     <Link to={`${url}/new`}>
                         <button type="button">New</button>

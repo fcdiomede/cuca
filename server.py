@@ -204,6 +204,46 @@ def save_recipe():
     return jsonify(data)
 
 
+@app.route('/api/favorite/<recipe_id>', methods=['POST'])
+def favorite_recipe(recipe_id):
+
+    recipe = crud.get_recipe_by_id(recipe_id)
+    user_id = session["user_id"]
+
+    title =  recipe.title,
+    ingredients = recipe.ingredients,
+    time_required = recipe.time_required,
+    servings = recipe.servings
+    media = recipe.media
+    steps = []
+    
+    recipe_steps = crud.get_steps_for_recipe(recipe_id)
+
+    for step in recipe_steps:
+        steps.append({"key": step.step_id,
+                    "num": step.step_number, 
+                    "body": step.body,
+                    "photo": step.media})
+
+    user_cookbooks = crud.cookbooks_by_user_id(user_id)
+
+    for cookbook in user_cookbooks:
+        if cookbook.title == "Favorites":
+            cookbook_id = cookbook.cookbook_id
+            break
+    else:
+        favorite_cookbook = crud.create_cookbook(title="Favorites",
+                            cover_img="https://res.cloudinary.com/deglaze/image/upload/v1599161258/Heart_font_awesome_ysrcui.png",
+                            user_id=user_id)
+        cookbook_id = favorite_cookbook.cookbook_id
+    
+    favorite_recipe = crud.create_recipe(title, cookbook_id, ingredients, time_required, servings, media)
+    for index, step in enumerate(steps):
+        crud.create_step(favorite_recipe.recipe_id, index+1, step["body"], step["photo"])
+
+    return jsonify("Success")
+
+
 @app.route('/api/update-user-profile', methods=['POST'])
 def update_user_profile():
     data = request.get_json()
