@@ -63,11 +63,15 @@ def get_cookbook_details():
              "recipes": []}
 
     for recipe in recipes:
-        data[recipes].append({
+        data["recipes"].append({
                             "recipe_id": recipe.recipe_id,
                             "title" : recipe.title
-        )}
-    
+        })
+
+    print("-------COOKBOOK DETAILS---------------")
+    print(data)
+    print("--------------------------------------")
+
     return jsonify(data)
 
 

@@ -95,7 +95,6 @@ export function UserProfile(props) {
 
 }
 
-
 //main page component
 function Homepage(props) {
 

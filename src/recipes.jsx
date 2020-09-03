@@ -316,21 +316,16 @@ function RecipeNav(props) {
 
     let { path, url } = useRouteMatch();
 
-    const recipeLinks = [];
-    for (const recipe in props.recipes) {
-        recipeLinks.push(
-            <li>
-                <Link to={`${url}/${recipe.recipeId}`}>{props.recipes.title}</Link>
-            </li>
-        );
-    }
-
     return (
         <Router>
             <div>
                 <h2>Recipes</h2>
                 <ul>
-                    {recipeLinks}
+                {props.recipes?.map(recipe => {
+                        return (<li key={recipe.recipe_id}>
+                                <Link to={`${url}/${recipe.recipe_id}`}>{recipe.title}</Link>
+                            </li>);
+                        })}
                 </ul>
                 <Link to={`${url}/edit`}>
                     <button type="button">Edit</button>
@@ -361,15 +356,19 @@ function RecipeNav(props) {
 
 function Recipes(props) {
 
-    const [cookbookDetails, setCookbookDetails] = React.useState([]);
+    const [cookbookDetails, setCookbookDetails] = React.useState('');
     const [recipeDetails, setRecipeDetails] = React.useState(null);
     const [recipeEditCount, setRecipeEditCount] = React.useState(0);
 
     React.useEffect(() => {
         fetch('/api/cookbook-details')
             .then((res) => res.json())
-            .then((data) => setCookbookDetails(data));
+            .then((data) => {
+                setCookbookDetails(data);
+            });
     }, [recipeEditCount]);
+
+    
 
     const creator_id = cookbookDetails.creator_id
 
@@ -393,6 +392,8 @@ function Recipes(props) {
         })
     }
     }
+
+    console.log(cookbookDetails);
 
     return (
         <React.Fragment>
