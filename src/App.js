@@ -46,6 +46,7 @@ function App() {
 
 
   return <React.Fragment>
+      <img src="https://res.cloudinary.com/deglaze/image/upload/v1599110001/cuca/Cuca_xgvspu.jpg" alt="Cuca Logo"/>
       <Router>
       <div>
         {loggedIn ? <ProfilePicture userData={userData} 
