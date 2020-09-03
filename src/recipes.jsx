@@ -327,12 +327,15 @@ function RecipeNav(props) {
                             </li>);
                         })}
                 </ul>
-                <Link to={`${url}/edit`}>
-                    <button type="button">Edit</button>
-                </Link>
-                <Link to={`${url}/new`}>
-                    <button type="button">New</button>
-                </Link>
+                { props.editAccess ? 
+                    <Link to={`${url}/edit`}>
+                        <button type="button">Edit</button>
+                    </Link> : null }
+                { props.editAccess ? 
+                    <Link to={`${url}/new`}>
+                        <button type="button">New</button>
+                    </Link> : 
+                    null }
 
                 <Switch>
                     <Route exact path={`${path}/new`}>
@@ -368,11 +371,10 @@ function Recipes(props) {
             });
     }, [recipeEditCount]);
 
-    
 
-    const creator_id = cookbookDetails.creator_id
+    const creatorId = cookbookDetails.creator_id
 
-    const editAccess = (props.userId == creator_id)
+    const editAccess = (props.userId == creatorId)
 
     let history = useHistory();
 
@@ -393,7 +395,6 @@ function Recipes(props) {
     }
     }
 
-    console.log(cookbookDetails);
 
     return (
         <React.Fragment>
@@ -405,7 +406,8 @@ function Recipes(props) {
                         recipeDetails={recipeDetails}
                         setRecipeDetails={setRecipeDetails}
                         recipeEditCount={recipeEditCount}
-                        setRecipeEditCount={setRecipeEditCount} />
+                        setRecipeEditCount={setRecipeEditCount}
+                        editAccess={editAccess} />
 
         </React.Fragment>
     );

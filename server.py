@@ -68,10 +68,6 @@ def get_cookbook_details():
                             "title" : recipe.title
         })
 
-    print("-------COOKBOOK DETAILS---------------")
-    print(data)
-    print("--------------------------------------")
-
     return jsonify(data)
 
 
