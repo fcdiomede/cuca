@@ -1,6 +1,6 @@
 import React from "react";
 import { CreateNewCookbook, CookbookContainer, NewCookbookForm } from './cookbook';
-
+import { useParams } from 'react-router-dom';
 
 //user profile components
 
@@ -72,11 +72,22 @@ export function UserProfileModal(props) {
 function Homepage(props) {
 
                     const [showCookbookCreation, setShowCookbookCreation] = React.useState(false);
+                    // const [user, setUser] = React.useState('')
 
+                    // let { userId } = useParams();
+
+                    // React.useEffect(() => {
+                    //     fetch(`/api/user/${userId}`)
+                    //     .then((res) => res.json())
+                    //     .then((data) => {
+                    //         console.log(data);
+                    //         setUser(data);
+                    //     })
+                    // },[])
 
                     return (
                         <React.Fragment>
-                            <h1>Welcome, Chef {props.userName}!</h1>
+                            <h1>Welcome, Chef {props.name}!</h1>
                             {showCookbookCreation ? <NewCookbookForm setShowCookbookCreation={setShowCookbookCreation} 
                                                     mode='new' /> :
                                 <div>

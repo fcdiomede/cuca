@@ -7,8 +7,9 @@ export function SearchBar(props) {
   
     let history = useHistory();
   
-    const handleSearch = () => {
-  
+    const handleSearch = (evt) => {
+        evt.preventDefault();
+
         const search = {'searchTerm': searchTerm}
   
         fetch('/api/search', {
@@ -35,7 +36,7 @@ export function SearchBar(props) {
                 value={searchTerm}
                 onChange={(evt) => setSearchTerm(evt.target.value)}>
             </input>
-            <input type='button'
+            <input type='submit'
                 value='Search!'
                 onClick={handleSearch} />
         </form>

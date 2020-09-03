@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 function CookbookCover(props) {
 
@@ -49,8 +49,10 @@ export function CookbookContainer(props) {
     const [cookbooks, updateCookbooks] = React.useState([]);
     const [showCBModal, setShowCBModal] = React.useState(false);
 
+    let { userId } = useParams();
+
     React.useEffect(() => {
-        fetch('/api/user-cookbooks')
+        fetch(`/api/user-cookbooks/${userId}`)
             .then((res) => res.json())
             .then((data) => updateCookbooks(data));
     }, [props.showCookbookCreation, showCBModal]);

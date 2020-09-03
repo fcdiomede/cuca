@@ -70,14 +70,15 @@ function App() {
           </ul>
       </nav>
       <Switch>
-          <ProtectedRoute exact path='/user/:userId' loggedIn={loggedIn}
-                                          component={() => (<Homepage userName={userData.name} /> )} />
+          <ProtectedRoute exact path={`/user/${userData.user_id}`} loggedIn={loggedIn}
+                                          component={() => (<Homepage name={userData.name} /> )} />
           <ProtectedRoute path='/recipes' loggedIn={loggedIn} component={Recipes} />
           <Route exact path='/' component={Explore} />
           <Route path='/search' component={() => (<SearchResults searchResults={searchResults}/> )} />
           <Route path='/login' 
                 render={(props) => (<Login {...props} setLoggedIn={setLoggedIn}
                                                       setUserData={setUserData} /> )} />
+
       </Switch> 
       </div>
   </Router>

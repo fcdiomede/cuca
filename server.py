@@ -22,10 +22,9 @@ def root():
 def hello():
     return jsonify("hello")
 
-@app.route('/api/user-cookbooks')
-def get_user_cookbooks():
+@app.route('/api/user-cookbooks/<user_id>')
+def get_user_cookbooks(user_id):
 
-    user_id = session["user_id"]
     
     cookbooks = crud.cookbooks_by_user_id(user_id)
     cookbook_list = []
@@ -109,6 +108,18 @@ def authenticate_user():
 
 
     return jsonify({'status':status, 'user_data':user_data})
+
+
+@app.route('/api/user/<user_id>')
+def get_user_data(user_id):
+    user = crud.get_user_by_id(user_id)
+
+    user_data = {
+                "user_id":user.user_id,
+                "name": user.fname,
+                "profile_picture": user.profile_picture}
+        
+    return jsonify(user_data)
 
 @app.route('/api/create-account', methods=['POST'])
 def create_user():
