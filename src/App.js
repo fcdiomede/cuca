@@ -71,9 +71,9 @@ function App() {
       </nav>
       <Switch>
           <ProtectedRoute exact path='/homepage/:userId' loggedIn={loggedIn}
-                                          component={() => (<Homepage name={userData.name} /> )} />
-          <ProtectedRoute exact path='/user/:userId' loggedIn={loggedIn} component={UserProfile} />
-          <ProtectedRoute path='/recipes' loggedIn={loggedIn} component={Recipes} />
+                                          component={() => (<Homepage userId={userData.user_id} name={userData.name} /> )} />
+          <ProtectedRoute exact path='/user/:userId' loggedIn={loggedIn} component={() => (<UserProfile userId={userData.user_id} /> )} />
+          <ProtectedRoute path='/recipes' loggedIn={loggedIn} component={() => (<Recipes userId={userData.user_id} /> )} />
           <Route exact path='/' component={Explore} />
           <Route path='/search' component={() => (<SearchResults searchResults={searchResults}/> )} />
           <Route path='/login' 

@@ -51,11 +51,22 @@ def set_cookbook():
 def get_cookbook_details():
 
     cookbook_id = session["cookbook_id"]
+    creator = crud.get_user_id_for_cookbook(cookbook_id)
+    creator_id = creator.user_id
+
+    cookbook = crud.get_cookbook_by_id(cookbook_id)
     recipes = crud.get_cookbook_recipes(cookbook_id)
-    data = {}
+
+    data = {"creator_id": creator_id,
+            "title": cookbook.title,
+            "cover_img" : cookbook.cover_img,
+             "recipes": []}
 
     for recipe in recipes:
-        data[recipe.recipe_id] = recipe.title
+        data[recipes].append({
+                            "recipe_id": recipe.recipe_id,
+                            "title" : recipe.title
+        )}
     
     return jsonify(data)
 

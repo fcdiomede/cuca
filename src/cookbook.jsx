@@ -5,6 +5,9 @@ function CookbookCover(props) {
 
     let history = useHistory();
 
+
+    const editAccess = (props.userId == props.creator_id)
+
     const data = { 'cookbookId': props.cookbookId };
 
     const goToCookbook = () => {
@@ -34,7 +37,9 @@ function CookbookCover(props) {
                                             cookbookId={props.cookbookId}
                                             title={props.title} imgUrl={props.imgUrl}
                                             mode='edit' /> :
-                            <button onClick={editCover}>Edit Cookbook Cover</button>}
+            editAccess ? 
+                        <button onClick={editCover}>Edit Cookbook Cover</button> : 
+                        null}
         </React.Fragment>
     );
 }
@@ -69,6 +74,8 @@ export function CookbookContainer(props) {
                 imgUrl={cookbook.imgUrl}
                 showCBModal={showCBModal}
                 setShowCBModal={setShowCBModal}
+                userId={props.userId}
+                creator_id={userId}
             />
         );
     }

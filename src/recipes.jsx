@@ -317,10 +317,10 @@ function RecipeNav(props) {
     let { path, url } = useRouteMatch();
 
     const recipeLinks = [];
-    for (const recipeId in props.recipes) {
+    for (const recipe in props.recipes) {
         recipeLinks.push(
             <li>
-                <Link to={`${url}/${recipeId}`}>{props.recipes[recipeId]}</Link>
+                <Link to={`${url}/${recipe.recipeId}`}>{props.recipes.title}</Link>
             </li>
         );
     }
@@ -359,18 +359,21 @@ function RecipeNav(props) {
     );
 }
 
-function Recipes() {
+function Recipes(props) {
 
-    const [recipes, setRecipes] = React.useState([]);
+    const [cookbookDetails, setCookbookDetails] = React.useState([]);
     const [recipeDetails, setRecipeDetails] = React.useState(null);
     const [recipeEditCount, setRecipeEditCount] = React.useState(0);
 
     React.useEffect(() => {
         fetch('/api/cookbook-details')
             .then((res) => res.json())
-            .then((data) => setRecipes(data));
+            .then((data) => setCookbookDetails(data));
     }, [recipeEditCount]);
 
+    const creator_id = cookbookDetails.creator_id
+
+    const editAccess = (props.userId == creator_id)
 
     let history = useHistory();
 
@@ -393,9 +396,11 @@ function Recipes() {
 
     return (
         <React.Fragment>
-            <h2>This is a cookbook!</h2>
-            <button onClick={deleteCookbook}>Delete Cookbook</button>
-            <RecipeNav recipes={recipes}
+            <h2>{cookbookDetails.title}</h2>
+            <img src={cookbookDetails.cover_img} />
+            { editAccess ? <button onClick={deleteCookbook}>Delete Cookbook</button> :
+                            null}
+            <RecipeNav recipes={cookbookDetails.recipes}
                         recipeDetails={recipeDetails}
                         setRecipeDetails={setRecipeDetails}
                         recipeEditCount={recipeEditCount}

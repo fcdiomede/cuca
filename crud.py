@@ -85,6 +85,15 @@ def cookbooks_by_user_id(user_id):
     return user_cookbooks.all()
 
 
+def get_user_id_for_cookbook(cookbook_id):
+    """return user associated with cookbook id"""
+
+    cookbook = Cookbook.query.get(cookbook_id)
+
+    user = cookbook.user
+
+    return user
+
 def get_cookbook_by_id(cookbook_id):
     """Return cookbook object for specific cookbook id"""
 

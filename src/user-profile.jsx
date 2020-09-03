@@ -70,7 +70,7 @@ export function UserProfileModal(props) {
 
 
 //other user's profile view only
-export function UserProfile() {
+export function UserProfile(props) {
     const [user, setUser] = React.useState('')
 
     let { userId } = useParams();
@@ -88,7 +88,7 @@ export function UserProfile() {
         <React.Fragment>
             <h1>Chef {user.name}</h1>
             <img src={user.profile_picture} />
-            <CookbookContainer />
+            <CookbookContainer userId={props.userId}/>
         </React.Fragment>
     )
 
@@ -108,7 +108,8 @@ function Homepage(props) {
                                                     mode='new' /> :
                                 <div>
                                     <CreateNewCookbook setShowCookbookCreation={setShowCookbookCreation} />
-                                    <CookbookContainer showCookbookCreation={showCookbookCreation} />
+                                    <CookbookContainer showCookbookCreation={showCookbookCreation}
+                                                        userId={props.userId} />
                                 </div>}
                         </React.Fragment>
                     );
