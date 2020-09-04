@@ -355,7 +355,12 @@ def get_user_connections(user_id):
 
 @app.route('/api/follow-user', methods=['POST'])
 def follow_user():
-    return jsonify("Hello")
+    logged_in_user_id = session["user_id"]
+    user_to_follow_id = request.get_json()
+
+    connection = crud.create_connection(logged_in_user_id, user_to_follow_id)
+
+    return jsonify("Success")
 
 
 if __name__ == '__main__':

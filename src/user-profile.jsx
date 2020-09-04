@@ -69,11 +69,12 @@ export function UserProfileModal(props) {
 }
 
 
-function FollowUserButton() {
+function FollowUserButton(props) {
 
     const followUser = () => {
         fetch('/api/follow-user', {
             method:'POST',
+            body: JSON.stringify(props.userId),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -106,7 +107,7 @@ export function UserProfile(props) {
         <React.Fragment>
             <h1>Chef {user.name}</h1>
             <img src={user.profile_picture} />
-            <FollowUserButton />
+            <FollowUserButton userId={userId}/>
             <CookbookContainer userId={props.userId}/>
             <FollowedUsers userId={userId}/>
         </React.Fragment>
