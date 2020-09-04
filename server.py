@@ -355,6 +355,21 @@ def get_user_connections(user_id):
 
 @app.route('/api/check-connection', methods=['POST'])
 def check_connection():
+    logged_in_user_id = session["user_id"]
+    user_following_id = request.get_json()
+
+    logged_in_user = crud.get_user_by_id(logged_in_user_id)
+    
+    #Get the user's current connections
+    connections = logged_in_user.connections
+    
+    #Get each of the user ids associated with the connections
+    for connection in connections:
+        friend_id = connection.friend_id
+        
+        if friend_id == user_following_id:
+            return jsonify(True)
+    
     return jsonify(True)
 
 @app.route('/api/follow-user', methods=['POST'])

@@ -221,6 +221,7 @@ def search_for_user(search_term):
     return users
 
 
+
 def create_connection(user_id, friend_id):
 
     connection = Connection(user_id=user_id, friend_id=friend_id)
@@ -230,6 +231,14 @@ def create_connection(user_id, friend_id):
 
     return connection
 
+
+def delete_connection(user_id, friend_id):
+
+    connection = Connection.query.filter( (Connection.user_id == user_id) &
+                                            (Connection.friend_id == friend_id) ).one()
+
+    db.session.delete(connection)
+    db.session.commit()
 
 
 

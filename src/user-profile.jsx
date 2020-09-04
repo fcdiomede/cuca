@@ -117,14 +117,14 @@ export function UserProfile(props) {
         .then((data) => {
             setCurrentlyFollowed(data);
         })
-    },[])    
+    },[userId])    
 
     return(
         <React.Fragment>
             <h1>Chef {user.name}</h1>
             <img src={user.profile_picture} />
             { currentlyFollowed ? null :
-                                <FollowUserButton userId={userId}/>}
+                                    <FollowUserButton userId={userId}/>}
             <CookbookContainer userId={props.userId}/>
             <FollowedUsers userId={userId}/>
         </React.Fragment>

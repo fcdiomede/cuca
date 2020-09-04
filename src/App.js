@@ -19,7 +19,6 @@ import { SearchBar, SearchResults } from './explore';
 
 
 const ProtectedRoute = ({ component: Component, loggedIn, path, ...rest }) => {
-    console.log(loggedIn);
     return (
         <Route path={path} {...rest} render={
           (props) => {
