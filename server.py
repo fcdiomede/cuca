@@ -314,7 +314,7 @@ def random_data():
     return jsonify({'cookbooks':cookbook_data})
 
 
-@app.route('/api/search', methods=['POST'])
+@app.route('/api/search/users', methods=['POST'])
 def search():
     data=request.get_json()
     search_term = data["searchTerm"]

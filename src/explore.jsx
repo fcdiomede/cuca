@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 export function SearchBar(props) {
 
     const [searchTerm, setSearchTerm] = React.useState('');
+    const [searchItem, setSearchItem] = React.useState('users');
   
     let history = useHistory();
   
@@ -12,7 +13,7 @@ export function SearchBar(props) {
 
         const search = {'searchTerm': searchTerm}
   
-        fetch('/api/search', {
+        fetch(`/api/search/${searchItem}`, {
             method: 'POST',
             body: JSON.stringify(search),
             headers: {
@@ -25,7 +26,7 @@ export function SearchBar(props) {
             console.log(data);
             props.setSearchResults(data);
             setSearchTerm('');
-            history.push('/search');
+            history.push(`/search/${searchItem}`);
         })
     }
   
@@ -36,8 +37,8 @@ export function SearchBar(props) {
                 value={searchTerm}
                 onChange={(evt) => setSearchTerm(evt.target.value)}>
             </input>
-            <select name="search for">
-                <option value="users">Users</option>
+            <select name="search for" onChange={(evt) => setSearchItem(evt.target.value)}>
+                <option value="users" selected>Users</option>
                 <option value="recipes">Recipes</option>
             </select>
             <input type='submit'
