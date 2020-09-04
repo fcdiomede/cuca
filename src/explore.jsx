@@ -4,14 +4,16 @@ import { useHistory } from "react-router-dom";
 export function SearchBar(props) {
 
     const [searchTerm, setSearchTerm] = React.useState('');
-  
+    const [searchItem, setSearchItem] = React.useState('Recipes');
+
     let history = useHistory();
-  
+
     const handleSearch = (evt) => {
         evt.preventDefault();
 
-        const search = {'searchTerm': searchTerm}
-  
+        const search = { 'searchTerm': searchTerm,
+                        'searchItem' : searchItem };
+
         fetch('/api/search', {
             method: 'POST',
             body: JSON.stringify(search),
@@ -20,15 +22,15 @@ export function SearchBar(props) {
                 'Content-Type': 'application/json'
             }
         })
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data);
-            props.setSearchResults(data);
-            setSearchTerm('');
-            history.push('/search');
-        })
-    }
-  
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                props.setSearchResults(data);
+                setSearchTerm('');
+                history.push('/search');
+            });
+    };
+
     return (
         <form>
             <input type='text'
@@ -36,53 +38,57 @@ export function SearchBar(props) {
                 value={searchTerm}
                 onChange={(evt) => setSearchTerm(evt.target.value)}>
             </input>
+            <select name="Search for..." onChange={(evt) => setSearchItem(evt.target.value)}>
+                <option value="users">Users</option>
+                <option value="recipes" selected>Recipes</option>
+            </select>
             <input type='submit'
                 value='Search!'
                 onClick={handleSearch} />
         </form>
     );
-  }
-  
-  function UserCard(props) {
-  
+}
+
+function UserCard(props) {
+
     let history = useHistory();
-  
+
     const goToUserPage = () => {
-      history.push(`/user/${props.userId}`)
-    }
-  
+        history.push(`/user/${props.userId}`);
+    };
+
     return (
-      <p onClick={goToUserPage}>
-        <h2>{props.fname} {props.lname}</h2>
-        <img src={props.profilePicture} />
+        <p onClick={goToUserPage}>
+            <h2>{props.fname} {props.lname}</h2>
+            <img src={props.profilePicture} />
         email : {props.email}
-      </p>
-    )
-  }
-  
-  export function SearchResults(props) {
-  
-    console.log(props.searchResults)
-  
-    const results = []
+        </p>
+    );
+}
+
+export function SearchResults(props) {
+
+    console.log(props.searchResults);
+
+    const results = [];
     for (const user of props.searchResults) {
-      results.push(
-        <UserCard userId={user.user_id}
-                  fname={user.fname}
-                  lname={user.lname}
-                  profilePicture={user.profile_picture}
-                  email={user.email}
-        />
-      )
+        results.push(
+            <UserCard userId={user.user_id}
+                fname={user.fname}
+                lname={user.lname}
+                profilePicture={user.profile_picture}
+                email={user.email}
+            />
+        );
     }
-    
+
     console.log(results);
-  
-    return(<div>
-            <h1>Search Results</h1>
-            <div>{results}</div>
-          </div>)
-  }
+
+    return (<div>
+        <h1>Search Results</h1>
+        <div>{results}</div>
+    </div>);
+}
 
 
 function CookbookCover(props) {
@@ -150,7 +156,7 @@ export function CookbookContainer(props) {
 
 
 function Explore() {
-    
+
 
     return (
         <React.Fragment>

@@ -318,16 +318,20 @@ def random_data():
 def search():
     data=request.get_json()
     search_term = data["searchTerm"]
+    search_item = data["searchItem"]
+
 
     search_results = []
-    users = crud.search_for_user(search_term)
-    for user in users:
-        search_results.append({"user_id": user.user_id,
-                                "fname": user.fname,
-                                "lname": user.lname,
-                                "email": user.email,
-                                "profile_picture": user.profile_picture
-                                })
+
+    if search_item == 'users':
+        users = crud.search_for_user(search_term)
+        for user in users:
+            search_results.append({"user_id": user.user_id,
+                                    "fname": user.fname,
+                                    "lname": user.lname,
+                                    "email": user.email,
+                                    "profile_picture": user.profile_picture
+                                    })
 
     return jsonify(search_results)
 
