@@ -91,6 +91,7 @@ function FollowUserButton(props) {
 //other user's profile view only
 export function UserProfile(props) {
     const [user, setUser] = React.useState('')
+    const [currentlyFollowed, setCurrentlyFollowed] = React.useState('')
 
     let { userId } = useParams();
 
@@ -103,11 +104,27 @@ export function UserProfile(props) {
         })
     },[userId])
 
+    React.useEffect(() => {
+        fetch('/api/check-connection', {
+            method:'POST',
+            body: JSON.stringify(userId),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            setCurrentlyFollowed(data);
+        })
+    },[])    
+
     return(
         <React.Fragment>
             <h1>Chef {user.name}</h1>
             <img src={user.profile_picture} />
-            <FollowUserButton userId={userId}/>
+            { currentlyFollowed ? null :
+                                <FollowUserButton userId={userId}/>}
             <CookbookContainer userId={props.userId}/>
             <FollowedUsers userId={userId}/>
         </React.Fragment>

@@ -353,6 +353,10 @@ def get_user_connections(user_id):
     return jsonify(following_list)
 
 
+@app.route('/api/check-connection', methods=['POST'])
+def check_connection():
+    return jsonify(True)
+
 @app.route('/api/follow-user', methods=['POST'])
 def follow_user():
     logged_in_user_id = session["user_id"]
