@@ -334,10 +334,21 @@ def search():
 
 @app.route('/api/connections/<user_id>')
 def get_user_connections(user_id):
-    data=request.get_json()
-    print(data)
+    user = crud.get_user_by_id(user_id)
 
-    return jsonify('This was a triumph.')
+    connections = user.connections
+
+    following_list = []
+    for connection in connections:
+        friend_id = connection.friend_id
+        friend = crud.get_user_by_id(friend_id)
+        following_list.append({
+            "friend_id": friend_id,
+            "friend_name" : friend.fname,
+            "friend_picture" : friend.profile_picture
+        })
+
+    return jsonify(following_list)
 
 
 if __name__ == '__main__':
