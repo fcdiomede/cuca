@@ -367,10 +367,10 @@ def check_connection():
     for connection in connections:
         friend_id = connection.friend_id
         
-        if friend_id == user_following_id:
+        if int(friend_id) == int(user_following_id):
             return jsonify(True)
     
-    return jsonify(True)
+    return jsonify(False)
 
 @app.route('/api/follow-user', methods=['POST'])
 def follow_user():
@@ -381,6 +381,15 @@ def follow_user():
 
     return jsonify("Success")
 
+
+@app.route('/api/unfollow-user', methods=['POST'])
+def unfollow_user():
+    logged_in_user_id = session["user_id"]
+    user_to_unfollow_id = request.get_json()
+
+    connection = crud.delete_connection(logged_in_user_id, user_to_unfollow_id)
+
+    return jsonify("Deleted")
 
 if __name__ == '__main__':
     connect_to_db(app)

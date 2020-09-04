@@ -81,10 +81,28 @@ function FollowUserButton(props) {
             }
         })
         .then((res) => res.json())
-        .then((data) => console.log(data))
+        .then((data) => props.setCurrentlyFollowed(true))
     }
 
     return(<button onClick={followUser}>Follow</button>)
+}
+
+function UnfollowUserButton(props) {
+
+    const unfollowUser = () => {
+        fetch('/api/unfollow-user', {
+            method:'POST',
+            body: JSON.stringify(props.userId),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then((res) => res.json())
+        .then((data) => props.setCurrentlyFollowed(false))
+    }
+
+    return(<button onClick={unfollowUser}>Unfollow</button>)
 }
 
 
@@ -123,8 +141,10 @@ export function UserProfile(props) {
         <React.Fragment>
             <h1>Chef {user.name}</h1>
             <img src={user.profile_picture} />
-            { currentlyFollowed ? null :
-                                    <FollowUserButton userId={userId}/>}
+            { currentlyFollowed ? <UnfollowUserButton userId={userId}
+                                    setCurrentlyFollowed={setCurrentlyFollowed} /> :
+                                    <FollowUserButton userId={userId}
+                                    setCurrentlyFollowed={setCurrentlyFollowed} />}
             <CookbookContainer userId={props.userId}/>
             <FollowedUsers userId={userId}/>
         </React.Fragment>
