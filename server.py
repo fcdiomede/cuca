@@ -329,11 +329,16 @@ def search():
                                 "profile_picture": user.profile_picture
                                 })
 
-    print("SEARCH RESULTS API RESULTS ----------------------")
-    print(search_results);
-    print("-------------------------------------------------")
-
     return jsonify(search_results)
+
+
+@app.route('/api/connections/<user_id>')
+def get_user_connections(user_id):
+    data=request.get_json()
+    print(data)
+
+    return jsonify('This was a triumph.')
+
 
 if __name__ == '__main__':
     connect_to_db(app)

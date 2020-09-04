@@ -101,6 +101,14 @@ function FollowedUsers(props) {
 
     const [followedUsers, setFollowedUsers] = React.useState('')
 
+    React.useEffect(() => {
+        fetch(`/api/connections/${props.userId}`)
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data)
+        })
+    })
+
     // let history = useHistory();
   
     const goToUserPage = () => {
@@ -135,7 +143,7 @@ function Homepage(props) {
                                     <CookbookContainer showCookbookCreation={showCookbookCreation}
                                                         userId={props.userId} />
                                 </div>}
-                            <FollowedUsers />
+                            <FollowedUsers userId={props.userId}/>
                         </React.Fragment>
                     );
                 }
