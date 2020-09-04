@@ -341,6 +341,7 @@ def search_recipes():
     recipes = crud.search_for_recipe(search_term)
     for recipe in recipes:
         search_results.append({"recipe_id": recipe.recipe_id,
+                                "title" : recipe.title,
                                 "cover_photo": recipe.media,
                                 "time_req": recipe.time_required,
                                 "ingredients": recipe.ingredients

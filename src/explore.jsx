@@ -5,14 +5,14 @@ export function SearchBar(props) {
 
     const [searchTerm, setSearchTerm] = React.useState('');
     const [searchItem, setSearchItem] = React.useState('users');
-  
+
     let history = useHistory();
-  
+
     const handleSearch = (evt) => {
         evt.preventDefault();
 
-        const search = {'searchTerm': searchTerm}
-  
+        const search = { 'searchTerm': searchTerm };
+
         fetch(`/api/search/${searchItem}`, {
             method: 'POST',
             body: JSON.stringify(search),
@@ -21,15 +21,15 @@ export function SearchBar(props) {
                 'Content-Type': 'application/json'
             }
         })
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data);
-            props.setSearchResults(data);
-            setSearchTerm('');
-            history.push(`/search/${searchItem}`);
-        })
-    }
-  
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                props.setSearchResults(data);
+                setSearchTerm('');
+                history.push(`/search/${searchItem}`);
+            });
+    };
+
     return (
         <form>
             <input type='text'
@@ -46,55 +46,84 @@ export function SearchBar(props) {
                 onClick={handleSearch} />
         </form>
     );
-  }
-  
-  function UserCard(props) {
-  
-    let history = useHistory();
-  
-    const goToUserPage = () => {
-      history.push(`/user/${props.userId}`)
-    }
-  
-    return (
-      <p onClick={goToUserPage}>
-        <h2>{props.fname} {props.lname}</h2>
-        <img src={props.profilePicture} />
-        email : {props.email}
-      </p>
-    )
-  }
-  
-  export function UserSearchResults(props) {
-  
-    console.log(props.searchResults)
-  
-    const results = []
-    for (const user of props.searchResults) {
-      results.push(
-        <UserCard userId={user.user_id}
-                  fname={user.fname}
-                  lname={user.lname}
-                  profilePicture={user.profile_picture}
-                  email={user.email}
-        />
-      )
-    }
-    
-    console.log(results);
-  
-    return(<div>
-            <h1>Search Results</h1>
-            <div>{results}</div>
-          </div>)
-  }
+}
 
+function UserCard(props) {
+
+    let history = useHistory();
+
+    const goToUserPage = () => {
+        history.push(`/user/${props.userId}`);
+    };
+
+    return (
+        <p onClick={goToUserPage}>
+            <h2>{props.fname} {props.lname}</h2>
+            <img src={props.profilePicture} />
+        email : {props.email}
+        </p>
+    );
+}
+
+export function UserSearchResults(props) {
+
+
+    const results = [];
+    for (const user of props.searchResults) {
+        results.push(
+            <UserCard userId={user.user_id}
+                fname={user.fname}
+                lname={user.lname}
+                profilePicture={user.profile_picture}
+                email={user.email}
+            />
+        );
+    }
+
+    console.log(results);
+
+    return (<div>
+        <h1>Search Results</h1>
+        <div>{results}</div>
+    </div>);
+}
+
+
+function RecipeCard(props) {
+    let history = useHistory();
+
+    const goToRecipePage = () => {
+        history.push(`/recipes/${props.recipeId}`);
+    };
+
+    return (
+        <p onClick={goToRecipePage}>
+            <h2>{props.title}</h2>
+            <img src={props.coverPhoto} />
+        time required:{props.timeReq}
+        ingredients:{props.ingredients}
+        </p>
+    );
+}
 
 export function RecipeSearchResults(props) {
-    return(<div>
+
+    const results = [];
+    for (const recipe of props.searchResults) {
+        results.push(
+            <RecipeCard recipeId={recipe.recipe_id}
+                title={recipe.title}
+                coverPhoto={recipe.cover_photo}
+                timeReq={recipe.time_req}
+                ingredients={recipe.ingredients}
+            />
+        );
+    }
+
+    return (<div>
         <h1>Search Results</h1>
-        <div>Recipes go here.</div>
-    </div>)
+        <div>{results}</div>
+    </div>);
 }
 
 function CookbookCover(props) {
@@ -162,7 +191,7 @@ export function CookbookContainer(props) {
 
 
 function Explore() {
-    
+
 
     return (
         <React.Fragment>
