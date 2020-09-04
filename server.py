@@ -315,7 +315,7 @@ def random_data():
 
 
 @app.route('/api/search/users', methods=['POST'])
-def search():
+def search_users():
     data=request.get_json()
     search_term = data["searchTerm"]
 
@@ -331,6 +331,22 @@ def search():
 
     return jsonify(search_results)
 
+
+@app.route('/api/search/recipes', methods=['POST'])
+def search_recipes():
+    data=request.get_json()
+    search_term = data["searchTerm"]
+
+    search_results = []
+    recipes = crud.search_for_recipe(search_term)
+    for recipe in recipes:
+        search_results.append({"recipe_id": recipe.recipe_id,
+                                "cover_photo": recipe.media,
+                                "time_req": recipe.time_required,
+                                "ingredients": recipe.ingredients
+                                })
+
+    return jsonify(search_results)
 
 @app.route('/api/connections/<user_id>')
 def get_user_connections(user_id):

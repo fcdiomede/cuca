@@ -65,7 +65,7 @@ export function SearchBar(props) {
     )
   }
   
-  export function SearchResults(props) {
+  export function UserSearchResults(props) {
   
     console.log(props.searchResults)
   
@@ -89,6 +89,13 @@ export function SearchBar(props) {
           </div>)
   }
 
+
+export function RecipeSearchResults(props) {
+    return(<div>
+        <h1>Search Results</h1>
+        <div>Recipes go here.</div>
+    </div>)
+}
 
 function CookbookCover(props) {
 

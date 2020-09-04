@@ -11,7 +11,7 @@ import Login from './login';
 import Recipes from './recipes';
 import { ProfilePicture, UserProfileModal, UserProfile } from './user-profile';
 import Explore from './explore';
-import { SearchBar, SearchResults } from './explore';
+import { SearchBar, UserSearchResults, RecipeSearchResults } from './explore';
 // import logo from './logo.svg';
 // import './App.css';
 
@@ -75,7 +75,8 @@ function App() {
           <ProtectedRoute exact path='/user/:userId' loggedIn={loggedIn} component={() => (<UserProfile userId={userData.user_id} /> )} />
           <ProtectedRoute path='/recipes' loggedIn={loggedIn} component={() => (<Recipes userId={userData.user_id} /> )} />
           <Route exact path='/' component={Explore} />
-          <Route exact path='/search/users' component={() => (<SearchResults searchResults={searchResults}/> )} />
+          <Route exact path='/search/users' component={() => (<UserSearchResults searchResults={searchResults}/> )} />
+          <Route exact path='/search/recipes' component={() => (<RecipeSearchResults searchResults={searchResults}/> )} />
           <Route path='/login' 
                 render={(props) => (<Login {...props} setLoggedIn={setLoggedIn}
                                                       setUserData={setUserData} /> )} />
