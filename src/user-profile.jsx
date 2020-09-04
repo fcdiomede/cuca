@@ -82,7 +82,7 @@ export function UserProfile(props) {
             console.log(data);
             setUser(data);
         })
-    },[])
+    },[userId])
 
     return(
         <React.Fragment>
@@ -103,7 +103,7 @@ function FollowedUserCard(props) {
   
     const goToUserPage = () => {
         // console.log('Sure would be nice to see your friends page, huh?')
-        history.push(`/user/${props.userId}`)
+        history.push(`/user/${props.friendId}`)
     }
 
     return(
@@ -125,14 +125,14 @@ function FollowedUsers(props) {
         .then((data) => {
             setFollowedUsers(data);
         })
-    }, [])
+    }, [props.userId])
 
     const connections = [];
     for (const user of followedUsers) {
         connections.push(
             <FollowedUserCard
                 key={user.friend_id}
-                userId={user.friend_id}
+                friendId={user.friend_id}
                 name={user.friend_name}
                 profilePicture={user.friend_picture}
             />
