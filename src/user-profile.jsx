@@ -69,6 +69,24 @@ export function UserProfileModal(props) {
 }
 
 
+function FollowUserButton() {
+
+    const followUser = () => {
+        fetch('/api/follow-user', {
+            method:'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+    }
+
+    return(<button onClick={followUser}>Follow</button>)
+}
+
+
 //other user's profile view only
 export function UserProfile(props) {
     const [user, setUser] = React.useState('')
@@ -88,6 +106,7 @@ export function UserProfile(props) {
         <React.Fragment>
             <h1>Chef {user.name}</h1>
             <img src={user.profile_picture} />
+            <FollowUserButton />
             <CookbookContainer userId={props.userId}/>
             <FollowedUsers userId={userId}/>
         </React.Fragment>

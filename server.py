@@ -353,6 +353,11 @@ def get_user_connections(user_id):
     return jsonify(following_list)
 
 
+@app.route('/api/follow-user', methods=['POST'])
+def follow_user():
+    return jsonify("Hello")
+
+
 if __name__ == '__main__':
     connect_to_db(app)
     app.run(host='0.0.0.0')
