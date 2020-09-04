@@ -221,6 +221,19 @@ def search_for_user(search_term):
     return users
 
 
+def search_for_recipe(search_term):
+    """Search for a recipe based on a search term"""
+
+    recipes = []
+
+    similar_title = Recipe.query.filter(Recipe.title.ilike(f'%{search_term}%'))
+    similar_ingredients = Recipe.query.filter(Recipe.ingredients.ilike(f'%{search_term}%'))
+
+    recipes.extend(similar_title)
+    recipes.extend(similar_ingredients)
+
+    return recipes
+
 
 def create_connection(user_id, friend_id):
 

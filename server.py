@@ -332,6 +332,8 @@ def search():
                                     "email": user.email,
                                     "profile_picture": user.profile_picture
                                     })
+    else:
+        recipes = crud.search_for_recipe(search_term)
 
     return jsonify(search_results)
 
