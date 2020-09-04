@@ -1,6 +1,6 @@
 import React from "react";
 import { CreateNewCookbook, CookbookContainer, NewCookbookForm } from './cookbook';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 //user profile components
 
@@ -89,7 +89,7 @@ export function UserProfile(props) {
             <h1>Chef {user.name}</h1>
             <img src={user.profile_picture} />
             <CookbookContainer userId={props.userId}/>
-            <FollowedUsers />
+            <FollowedUsers userId={userId}/>
         </React.Fragment>
     )
 
@@ -99,11 +99,11 @@ export function UserProfile(props) {
 
 function FollowedUserCard(props) {
 
-    // let history = useHistory();
+    let history = useHistory();
   
     const goToUserPage = () => {
-        console.log('Sure would be nice to see your friends page, huh?')
-    //   history.push(`/user/${followedUsers.userId}`)
+        // console.log('Sure would be nice to see your friends page, huh?')
+        history.push(`/user/${props.userId}`)
     }
 
     return(
