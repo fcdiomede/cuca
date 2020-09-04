@@ -348,15 +348,14 @@ function RecipeNav(props) {
                             </li>);
                         })}
                 </ul>
-                { props.editAccess ? 
+                { props.viewOnly ? <FavoriteRecipe recipeDetails={props.recipeDetails}/> :
                     <Link to={`${url}/edit`}>
                         <button type="button">Edit</button>
-                    </Link> : <FavoriteRecipe recipeDetails={props.recipeDetails}/> }
-                { props.editAccess ? 
+                    </Link> }
+                { props.viewOnly ? null:
                     <Link to={`${url}/new`}>
                         <button type="button">New</button>
-                    </Link> : 
-                    null }
+                    </Link> }
 
                 <Switch>
                     <Route exact path={`${path}/new`}>
@@ -395,7 +394,7 @@ function Recipes(props) {
 
     const creatorId = cookbookDetails.creator_id
 
-    const editAccess = (props.userId == creatorId)
+    const viewOnly = (props.userId !== creatorId)
 
     let history = useHistory();
 
@@ -421,14 +420,14 @@ function Recipes(props) {
         <React.Fragment>
             <h2>{cookbookDetails.title}</h2>
             <img src={cookbookDetails.cover_img} />
-            { editAccess ? <button onClick={deleteCookbook}>Delete Cookbook</button> :
-                            null}
+            { viewOnly ? null :
+                        <button onClick={deleteCookbook}>Delete Cookbook</button>}
             <RecipeNav recipes={cookbookDetails.recipes}
                         recipeDetails={recipeDetails}
                         setRecipeDetails={setRecipeDetails}
                         recipeEditCount={recipeEditCount}
                         setRecipeEditCount={setRecipeEditCount}
-                        editAccess={editAccess} />
+                        viewOnly={viewOnly} />
 
         </React.Fragment>
     );
