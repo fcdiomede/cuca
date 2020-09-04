@@ -97,17 +97,7 @@ export function UserProfile(props) {
 }
 
 
-function FollowedUsers(props) {
-
-    const [followedUsers, setFollowedUsers] = React.useState('')
-
-    React.useEffect(() => {
-        fetch(`/api/connections/${props.userId}`)
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data)
-        })
-    })
+function FollowedUserCard(props) {
 
     // let history = useHistory();
   
@@ -116,13 +106,43 @@ function FollowedUsers(props) {
     //   history.push(`/user/${followedUsers.userId}`)
     }
 
+    return(
+        <div onClick={goToUserPage}>
+                <h2>{props.name}</h2>
+                <img src={props.profilePicture} />
+        </div>
+    )
+}
+
+
+function FollowedUsers(props) {
+
+    const [followedUsers, setFollowedUsers] = React.useState('Checking who is in the kitchen...')
+
+    React.useEffect(() => {
+        fetch(`/api/connections/${props.userId}`)
+        .then((res) => res.json())
+        .then((data) => {
+            setFollowedUsers(data);
+        })
+    }, [])
+
+    const connections = [];
+    for (const user of followedUsers) {
+        connections.push(
+            <FollowedUserCard
+                key={user.friend_id}
+                userId={user.friend_id}
+                name={user.friend_name}
+                profilePicture={user.friend_picture}
+            />
+        )
+    }
+
     return (
         <div>
             <h2>Sous Chefs</h2>
-            <div onClick={goToUserPage}>
-                <h2>{followedUsers.name}</h2>
-                <img src={followedUsers.profilePicture} />
-            </div>
+            <div>{connections}</div>
         </div>
     )
 }

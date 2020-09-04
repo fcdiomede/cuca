@@ -348,6 +348,8 @@ def get_user_connections(user_id):
             "friend_picture" : friend.profile_picture
         })
 
+    print(following_list)
+
     return jsonify(following_list)
 
 
