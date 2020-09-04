@@ -89,11 +89,36 @@ export function UserProfile(props) {
             <h1>Chef {user.name}</h1>
             <img src={user.profile_picture} />
             <CookbookContainer userId={props.userId}/>
+            <FollowedUsers />
         </React.Fragment>
     )
 
 
 }
+
+
+function FollowedUsers(props) {
+
+    const [followedUsers, setFollowedUsers] = React.useState('')
+
+    // let history = useHistory();
+  
+    const goToUserPage = () => {
+        console.log('Sure would be nice to see your friends page, huh?')
+    //   history.push(`/user/${followedUsers.userId}`)
+    }
+
+    return (
+        <div>
+            <h2>Sous Chefs</h2>
+            <div onClick={goToUserPage}>
+                <h2>{followedUsers.name}</h2>
+                <img src={followedUsers.profilePicture} />
+            </div>
+        </div>
+    )
+}
+
 
 //main page component
 function Homepage(props) {
@@ -110,6 +135,7 @@ function Homepage(props) {
                                     <CookbookContainer showCookbookCreation={showCookbookCreation}
                                                         userId={props.userId} />
                                 </div>}
+                            <FollowedUsers />
                         </React.Fragment>
                     );
                 }
