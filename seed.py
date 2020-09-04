@@ -39,6 +39,16 @@ for user in users:
         cookbook = crud.create_cookbook(cookbook_title, cookbook_img, 
                                         user.user_id, deleted=False)
 
+
+#give each user a random person to follow
+user_ids = [user.user_id for user in users]
+for user_id in user_ids:
+    random_user_id = choice(user_ids)
+    if random_user_id != user_id:
+        crud.create_connection(user_id, random_user_id)
+
+
+
 #create fake recipes
 cookbooks = crud.all_cookbooks()
 

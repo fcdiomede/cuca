@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, connect_to_db, Cookbook, Recipe, Step, User
+from model import db, connect_to_db, Cookbook, Recipe, Step, User, Connection
 
 def create_user(fname, lname, email, password, 
                 profile_picture="/static/img/chef_hat.png"):
@@ -219,6 +219,16 @@ def search_for_user(search_term):
     users = set(users)
 
     return users
+
+
+def create_connection(user_id, friend_id):
+
+    connection = Connection(user_id=user_id, friend_id=friend_id)
+
+    db.session.add(connection)
+    db.session.commit()
+
+    return connection
 
 
 

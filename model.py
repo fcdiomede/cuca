@@ -4,6 +4,20 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+class Connection(db.Model):
+    """A one-way connection between user and users they are following"""
+
+    __tablename__ = 'connections'
+
+    connection_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    friend_id = db.Column(db.Integer)
+
+    user = db.relationship('User')
+
+    def __repr__(self):
+        return f'<Connection follower_id={self.user_id} following={self.friend_id}>'
+    
 
 class User(db.Model):
     """A user."""
@@ -18,6 +32,7 @@ class User(db.Model):
     profile_picture = db.Column(db.String)
 
     cookbook = db.relationship('Cookbook')
+    connections = db.relationship('Connection')
 
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email}>'
