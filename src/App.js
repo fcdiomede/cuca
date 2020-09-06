@@ -54,7 +54,7 @@ function App() {
       <div>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-          <img src="https://res.cloudinary.com/deglaze/image/upload/v1599110001/cuca/Cuca_xgvspu.jpg"
+          <img src="https://res.cloudinary.com/deglaze/image/upload/v1599369799/cuca/cuca-transparent_rckcei.png"
             alt="Cuca Logo"
             class="navbar-brand img-fluid"
             id="Cuca-Navbar-Logo" />
