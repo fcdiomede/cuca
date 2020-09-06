@@ -6,14 +6,16 @@ import { useParams, useHistory } from 'react-router-dom';
 
 export function ProfilePicture(props) {
 
+
+
     const editProfile = () => {
         props.setShowUserModal(true);
     };
 
     const handleLogout = () => {
         props.setLoggedIn(false);
-      };
-    
+    };
+
 
     return (
         <div class="nav-item dropdown dropleft">
@@ -73,18 +75,37 @@ export function UserProfileModal(props) {
     const cancel = () => props.setShowUserModal(false);
 
     return (
-        <form>
-            <label>First Name:</label>
-            <input type='text'
-                id='fname'
-                onChange={(evt) => setFName(evt.target.value)}
-                value={fname}></input>
-            <label>Profile Photo</label>
-            <input type='button' onClick={uploadWidget.open} value='Profile Image' />
-            <img src={photo}></img>
-            <input type='button' onClick={closeModal} value='Save' />
-            <input type='button' onClick={cancel} value='Cancel' />'
-        </form>
+        <div class="modal fade" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="UserProfileModal"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title w-100 font-weight-bold">Update Your Information</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mx-3">
+                        <form class="text-center border border-light p-5" action="#!">
+                            <label>First Name:</label>
+                            <div class="md-form mb-5">
+                                <i class="fas fa-user prefix grey-text"></i>
+                                <input type='text'
+                                    id='fname'
+                                    onChange={(evt) => setFName(evt.target.value)}
+                                    value={fname}
+                                    class="form-control mb-4"></input>
+                            </div>
+                            <label>Profile Photo</label>
+                            <input type='button' onClick={uploadWidget.open} value='Profile Image' />
+                            <img src={photo} class="rounded-circle img-responsive"></img>
+                            <input type='button' onClick={closeModal} value='Save' />
+                            <input type='button' onClick={cancel} value='Cancel' />'
+                </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }
 

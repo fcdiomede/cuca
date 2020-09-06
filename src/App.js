@@ -52,9 +52,9 @@ function App() {
 
     <Router>
       <div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg cuca-nav">
 
-          <img src="https://res.cloudinary.com/deglaze/image/upload/v1599369799/cuca/cuca-transparent_rckcei.png"
+          <img src="https://res.cloudinary.com/deglaze/image/upload/v1599409078/cuca/cuca-transparent-inverted_dpchsa.png"
             alt="Cuca Logo"
             class="navbar-brand img-fluid"
             id="Cuca-Navbar-Logo" />
@@ -66,13 +66,10 @@ function App() {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-                <Link to={`/homepage/${userData.user_id}`} class="nav-link"> Home </Link>
+                <Link to={`/homepage/${userData.user_id}`} class="nav-link cuca-nav-item"> Home </Link>
               </li>
-              {/* <li class="nav-item">
-              <Link to='/login' onClick={handleLogout} class="nav-link"> {loggedIn ? "Logout" : "Login"} </Link>
-            </li > */}
               <li class="nav-item">
-                <Link to='/' class="nav-link"> Explore </Link>
+                <Link to='/' class="nav-link cuca-nav-item"> Explore </Link>
               </li>
             </ul>
             <ul class="navbar-nav mx-auto">
@@ -85,12 +82,9 @@ function App() {
                 {loggedIn ? <ProfilePicture userData={userData}
                   setShowUserModal={setShowUserModal}
                   setLoggedIn={setLoggedIn} /> :
-                  <Link to='/login' class="nav-link">Login</Link>}
+                  <Link to='/login' class="nav-link cuca-nav-item">Login</Link>}
               </li>
             </ul>
-            {showUserModal ? <UserProfileModal userData={userData}
-              setShowUserModal={setShowUserModal}
-              setUserData={setUserData} /> : null}
 
           </div>
 
@@ -110,6 +104,11 @@ function App() {
         </Switch>
       </div>
     </Router>
+
+    {showUserModal ? <UserProfileModal userData={userData}
+              setShowUserModal={setShowUserModal}
+              setUserData={setUserData} /> : null}
+
   </React.Fragment>;
 }
 

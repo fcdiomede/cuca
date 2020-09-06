@@ -8,3 +8,14 @@
   width: auto;
   border-radius: 50%;
 }
+
+.cuca-nav {
+  background-color:#465C8B;
+}
+
+.cuca-nav-item{
+  color:#DFDCE3;
+  font-family: 'Roboto', sans-serif;
+}
+
+.nav-link:hover { color:#93C178;}
