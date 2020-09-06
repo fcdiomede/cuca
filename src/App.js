@@ -54,7 +54,7 @@ function App() {
       <div>
         <nav class="navbar navbar-expand-lg cuca-nav">
 
-          <img src="https://res.cloudinary.com/deglaze/image/upload/v1599409078/cuca/cuca-transparent-inverted_dpchsa.png"
+          <img src="https://res.cloudinary.com/deglaze/image/upload/v1599416508/cuca/Cuca_jxo6ty.svg"
             alt="Cuca Logo"
             class="navbar-brand img-fluid"
             id="Cuca-Navbar-Logo" />
@@ -66,10 +66,10 @@ function App() {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-                <Link to={`/homepage/${userData.user_id}`} class="nav-link cuca-nav-item"> Home </Link>
+                <Link to={`/homepage/${userData.user_id}`} class="nav-link cuca-white-text"> Home </Link>
               </li>
               <li class="nav-item">
-                <Link to='/' class="nav-link cuca-nav-item"> Explore </Link>
+                <Link to='/' class="nav-link cuca-white-text"> Explore </Link>
               </li>
             </ul>
             <ul class="navbar-nav mx-auto">
@@ -82,7 +82,7 @@ function App() {
                 {loggedIn ? <ProfilePicture userData={userData}
                   setShowUserModal={setShowUserModal}
                   setLoggedIn={setLoggedIn} /> :
-                  <Link to='/login' class="nav-link cuca-nav-item">Login</Link>}
+                  <Link to='/login' class="nav-link cuca-white-text">Login</Link>}
               </li>
             </ul>
 

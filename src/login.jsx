@@ -111,14 +111,26 @@ function Login(props) {
 
     //login form
     return (
-        <div>
-            <h1>Mestre Cuca</h1>
-            <p>[ˈmɛstɾi-ˈkuka] noun informal</p>
-            <p>Brazilian phrase meaning highly skilled home cook. </p>
-            <p> "Can you believe the delicious dishes
-                Aunt Claudia served for dinner? Look at her go, all
-                Mestre Cuca."
-            </p>
+        <div class="about-page container-fluid">
+
+            <div class="row d-flex justify-content-center">
+                <div class="col-12">
+                    <img src="https://res.cloudinary.com/deglaze/image/upload/v1599414510/cuca/mcuca_rfsqum.svg"
+                        class="cuca-banner">
+                    </img>
+                </div>
+            </div>
+
+            <div class="row d-flex justify-content-center">
+            <div class="col-6">
+                <p>[ˈmɛstɾi-ˈkuka] noun informal</p>
+                <p>Brazilian phrase meaning highly skilled home cook. </p>
+                <p> "Can you believe the delicious dishes
+                    Aunt Claudia served for dinner? Look at her go, all
+                    Mestre Cuca."
+                </p>
+            </div>
+         </div>
         <form>
             <label>Email:</label>
             <input type='text'

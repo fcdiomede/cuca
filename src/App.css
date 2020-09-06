@@ -13,9 +13,20 @@
   background-color:#465C8B;
 }
 
-.cuca-nav-item{
+.cuca-white-text{
   color:#DFDCE3;
   font-family: 'Roboto', sans-serif;
 }
 
 .nav-link:hover { color:#93C178;}
+
+.about-page{
+  background-color:#465C8B;
+  color:#DFDCE3;
+  font-family: 'Roboto', sans-serif;
+}
+
+.cuca-banner{
+  height: 400px;
+  width: auto;
+}
