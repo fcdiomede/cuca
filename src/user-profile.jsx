@@ -10,7 +10,27 @@ export function ProfilePicture(props) {
         props.setShowUserModal(true);
     };
 
-    return (<img src={props.userData.profile_picture} onClick={editProfile} />);
+    const handleLogout = () => {
+        props.setLoggedIn(false);
+      };
+    
+
+    return (
+        <div class="nav-item dropdown dropleft">
+            <img src={props.userData.profile_picture}
+                class="profile-pic nav-link dropdown-toggle"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false" />
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <p class="dropdown-item" onClick={editProfile}>Edit Profile</p>
+                <div class="dropdown-divider"></div>
+                <p class="dropdown-item" onClick={handleLogout}>Logout</p>
+            </div>
+        </div>
+    );
 }
 
 export function UserProfileModal(props) {
@@ -28,14 +48,14 @@ export function UserProfileModal(props) {
     });
 
     const closeModal = () => {
-        
+
         const user = {
             'fname': fname,
             'photo': photo
         };
 
         fetch('/api/update-user-profile', {
-            method:'POST',
+            method: 'POST',
             body: JSON.stringify(user),
             headers: {
                 'Accept': 'application/json',
@@ -46,11 +66,11 @@ export function UserProfileModal(props) {
             .then((data) => {
                 props.setUserData(data);
                 props.setShowUserModal(false);
-            })
-        };
+            });
+    };
 
 
-    const cancel = () => props.setShowUserModal(false)
+    const cancel = () => props.setShowUserModal(false);
 
     return (
         <form>
@@ -73,82 +93,82 @@ function FollowUserButton(props) {
 
     const followUser = () => {
         fetch('/api/follow-user', {
-            method:'POST',
+            method: 'POST',
             body: JSON.stringify(props.userId),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
         })
-        .then((res) => res.json())
-        .then((data) => props.setCurrentlyFollowed(true))
-    }
+            .then((res) => res.json())
+            .then((data) => props.setCurrentlyFollowed(true));
+    };
 
-    return(<button onClick={followUser}>Follow</button>)
+    return (<button onClick={followUser}>Follow</button>);
 }
 
 function UnfollowUserButton(props) {
 
     const unfollowUser = () => {
         fetch('/api/unfollow-user', {
-            method:'POST',
+            method: 'POST',
             body: JSON.stringify(props.userId),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
         })
-        .then((res) => res.json())
-        .then((data) => props.setCurrentlyFollowed(false))
-    }
+            .then((res) => res.json())
+            .then((data) => props.setCurrentlyFollowed(false));
+    };
 
-    return(<button onClick={unfollowUser}>Unfollow</button>)
+    return (<button onClick={unfollowUser}>Unfollow</button>);
 }
 
 
 //other user's profile view only
 export function UserProfile(props) {
-    const [user, setUser] = React.useState('')
-    const [currentlyFollowed, setCurrentlyFollowed] = React.useState('')
+    const [user, setUser] = React.useState('');
+    const [currentlyFollowed, setCurrentlyFollowed] = React.useState('');
 
     let { userId } = useParams();
 
     React.useEffect(() => {
         fetch(`/api/user/${userId}`)
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data);
-            setUser(data);
-        })
-    },[userId])
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                setUser(data);
+            });
+    }, [userId]);
 
     React.useEffect(() => {
         fetch('/api/check-connection', {
-            method:'POST',
+            method: 'POST',
             body: JSON.stringify(userId),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
         })
-        .then((res) => res.json())
-        .then((data) => {
-            setCurrentlyFollowed(data);
-        })
-    },[userId])    
+            .then((res) => res.json())
+            .then((data) => {
+                setCurrentlyFollowed(data);
+            });
+    }, [userId]);
 
-    return(
+    return (
         <React.Fragment>
             <h1>Chef {user.name}</h1>
             <img src={user.profile_picture} />
-            { currentlyFollowed ? <UnfollowUserButton userId={userId}
-                                    setCurrentlyFollowed={setCurrentlyFollowed} /> :
-                                    <FollowUserButton userId={userId}
-                                    setCurrentlyFollowed={setCurrentlyFollowed} />}
-            <CookbookContainer userId={props.userId}/>
-            <FollowedUsers userId={userId}/>
+            {currentlyFollowed ? <UnfollowUserButton userId={userId}
+                setCurrentlyFollowed={setCurrentlyFollowed} /> :
+                <FollowUserButton userId={userId}
+                    setCurrentlyFollowed={setCurrentlyFollowed} />}
+            <CookbookContainer userId={props.userId} />
+            <FollowedUsers userId={userId} />
         </React.Fragment>
-    )
+    );
 
 
 }
@@ -157,32 +177,32 @@ export function UserProfile(props) {
 function FollowedUserCard(props) {
 
     let history = useHistory();
-  
+
     const goToUserPage = () => {
         // console.log('Sure would be nice to see your friends page, huh?')
-        history.push(`/user/${props.friendId}`)
-    }
+        history.push(`/user/${props.friendId}`);
+    };
 
-    return(
+    return (
         <div onClick={goToUserPage}>
-                <h2>{props.name}</h2>
-                <img src={props.profilePicture} />
+            <h2>{props.name}</h2>
+            <img src={props.profilePicture} />
         </div>
-    )
+    );
 }
 
 
 function FollowedUsers(props) {
 
-    const [followedUsers, setFollowedUsers] = React.useState('Checking who is in the kitchen...')
+    const [followedUsers, setFollowedUsers] = React.useState('Checking who is in the kitchen...');
 
     React.useEffect(() => {
         fetch(`/api/connections/${props.userId}`)
-        .then((res) => res.json())
-        .then((data) => {
-            setFollowedUsers(data);
-        })
-    }, [props.userId])
+            .then((res) => res.json())
+            .then((data) => {
+                setFollowedUsers(data);
+            });
+    }, [props.userId]);
 
     const connections = [];
     for (const user of followedUsers) {
@@ -193,7 +213,7 @@ function FollowedUsers(props) {
                 name={user.friend_name}
                 profilePicture={user.friend_picture}
             />
-        )
+        );
     }
 
     return (
@@ -201,28 +221,28 @@ function FollowedUsers(props) {
             <h2>Sous Chefs</h2>
             <div>{connections}</div>
         </div>
-    )
+    );
 }
 
 
 //main page component
 function Homepage(props) {
 
-                    const [showCookbookCreation, setShowCookbookCreation] = React.useState(false);
+    const [showCookbookCreation, setShowCookbookCreation] = React.useState(false);
 
-                    return (
-                        <React.Fragment>
-                            <h1>Welcome, Chef {props.name}!</h1>
-                            {showCookbookCreation ? <NewCookbookForm setShowCookbookCreation={setShowCookbookCreation} 
-                                                    mode='new' /> :
-                                <div>
-                                    <CreateNewCookbook setShowCookbookCreation={setShowCookbookCreation} />
-                                    <CookbookContainer showCookbookCreation={showCookbookCreation}
-                                                        userId={props.userId} />
-                                </div>}
-                            <FollowedUsers userId={props.userId}/>
-                        </React.Fragment>
-                    );
-                }
+    return (
+        <React.Fragment>
+            <h1>Welcome, Chef {props.name}!</h1>
+            {showCookbookCreation ? <NewCookbookForm setShowCookbookCreation={setShowCookbookCreation}
+                mode='new' /> :
+                <div>
+                    <CreateNewCookbook setShowCookbookCreation={setShowCookbookCreation} />
+                    <CookbookContainer showCookbookCreation={showCookbookCreation}
+                        userId={props.userId} />
+                </div>}
+            <FollowedUsers userId={props.userId} />
+        </React.Fragment>
+    );
+}
 
 export default Homepage;

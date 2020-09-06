@@ -31,19 +31,21 @@ export function SearchBar(props) {
     };
 
     return (
-        <form>
-            <input type='text'
+        <form class="form-inline my-2 my-lg-0">
+            <input type='search'
                 placeholder='Search...'
                 value={searchTerm}
                 onChange={(evt) => setSearchTerm(evt.target.value)}>
             </input>
-            <select name="search for" onChange={(evt) => setSearchItem(evt.target.value)}>
+            <select name="search for" onChange={(evt) => setSearchItem(evt.target.value)}
+                    class="custom-select">
                 <option value="users" selected>Users</option>
                 <option value="recipes">Recipes</option>
             </select>
             <input type='submit'
-                value='Search!'
-                onClick={handleSearch} />
+                value='Search'
+                onClick={handleSearch}
+                class="btn btn-outline-success my-2 my-sm-0" />
         </form>
     );
 }
