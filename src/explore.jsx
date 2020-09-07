@@ -36,7 +36,7 @@ export function SearchBar(props) {
             <i class="fas fa-search" aria-hidden="true"></i>
             <input class="form-control form-control-sm ml-3 w-75 cuca-white-text"
                 type='text'
-                aria-label="Search"
+                id="search-bar"
                 placeholder='Search...'
                 value={searchTerm}
                 onChange={(evt) => setSearchTerm(evt.target.value)}>

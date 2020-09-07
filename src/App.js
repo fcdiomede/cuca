@@ -44,7 +44,6 @@ function App() {
 
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [userData, setUserData] = React.useState({});
-  const [showUserModal, setShowUserModal] = React.useState(false);
   const [searchResults, setSearchResults] = React.useState('');
 
 
@@ -80,7 +79,7 @@ function App() {
             <ul class="navbar-nav ml-auto">
               <li class="nav-item">
                 {loggedIn ? <ProfilePicture userData={userData}
-                  setShowUserModal={setShowUserModal}
+                  setUserData={setUserData}
                   setLoggedIn={setLoggedIn} /> :
                   <Link to='/login' class="nav-link cuca-white-text">Login</Link>}
               </li>
@@ -104,10 +103,6 @@ function App() {
         </Switch>
       </div>
     </Router>
-
-    {showUserModal ? <UserProfileModal userData={userData}
-              setShowUserModal={setShowUserModal}
-              setUserData={setUserData} /> : null}
 
   </React.Fragment>;
 }

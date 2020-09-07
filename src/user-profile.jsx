@@ -7,11 +7,6 @@ import { useParams, useHistory } from 'react-router-dom';
 export function ProfilePicture(props) {
 
 
-
-    const editProfile = () => {
-        props.setShowUserModal(true);
-    };
-
     const handleLogout = () => {
         props.setLoggedIn(false);
     };
@@ -41,6 +36,8 @@ export function UserProfileModal(props) {
 
     const [fname, setFName] = React.useState(props.userData.name);
     const [photo, setPhoto] = React.useState(props.userData.profile_picture);
+
+
 
     //cloudinary config
     const uploadWidget = window.cloudinary.createUploadWidget({
@@ -76,39 +73,74 @@ export function UserProfileModal(props) {
 
     // const cancel = () => props.setShowUserModal(false);
 
-    return (
-        <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="UserProfileModal"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
+    return(
+        <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+            <div class="modal-dialog cascading-modal modal-avatar" role="document">
                 <div class="modal-content">
-                    <div class="modal-header text-center">
-                        <h4 class="modal-title w-100 font-weight-bold">Update Your Information</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                    
+                    <div class="modal-header">
+                        <img src="https://res.cloudinary.com/deglaze/image/upload/v1599464833/chef_hat_lixke7.png" alt="avatar" class="rounded-circle img-responsive"></img>
                     </div>
+
+
                     <div class="modal-body mx-3">
-                        <form class="text-center border border-light p-5" action="#!">
-                            <label>First Name:</label>
-                            <div class="md-form mb-5">
-                                <i class="fas fa-user prefix grey-text"></i>
+                        <div class="md-form md-form mb-4">
+                        <i class="fas fa-user prefix grey-text"></i>
                                 <input type='text'
                                     id='fname'
+                                    class="form-control validate"
+                                    placeholder="Your First Name"
                                     onChange={(evt) => setFName(evt.target.value)}
-                                    value={fname}
-                                    class="form-control mb-4"></input>
+                                    value={fname}></input>
                             </div>
-                            <label>Profile Photo</label>
-                            <input type='button' onClick={uploadWidget.open} value='Profile Image' />
-                            <img src={photo} class="rounded-circle img-responsive"></img>
-                            <input type='button' onClick={closeModal} value='Save' />
-                            {/* <input type='button' onClick={cancel} value='Cancel' />' */}
-                </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    );
+    )
+
+    // return (
+    //     // <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="UserProfileModal"
+    //     //     aria-hidden="true">
+    //     //     <div class="modal-dialog cascading-modal modal-avatar" role="document">
+
+    //     //         <div class="modal-content">
+
+    //     //         <div class="modal-header">
+    //     //             <img src={photo}  alt="profile picture" 
+    //     //                 class="rounded-circle img-responsive"
+    //     //                 onClick={uploadWidget.open}></img>
+    //     //             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    //     //                 <span aria-hidden="true">&times;</span>
+    //     //             </button>
+    //     //             </div>
+
+    //     //             <div class="modal-body text-center mb-1">
+
+    //     //                 <form>
+    //     //                 <div class="md-form mb-4">
+    //     //                     <i class="fas fa-user prefix grey-text"></i>
+    //     //                     <label>First Name:</label>
+    //     //                     <div class="md-form mb-5">
+    //     //                         <i class="fas fa-user prefix grey-text"></i>
+    //     //                         <input type='text'
+    //     //                             id='fname'
+    //     //                             onChange={(evt) => setFName(evt.target.value)}
+    //     //                             value={fname}
+    //     //                             class="form-control mb-4"></input>
+    //     //                     </div>
+    //     //                     <label>Profile Photo</label>
+    //     //                     <input type='button' onClick={uploadWidget.open} value='Profile Image' />
+    //     //                     <img src={photo} class="rounded-circle img-responsive"></img>
+    //     //                     <input type='button' onClick={closeModal} value='Save' />
+    //     //                     {/* <input type='button' onClick={cancel} value='Cancel' />' */}
+    //     //         </form>
+    //     //             </div>
+    //     //     </div>
+    //     // </div>
+    //     // </div>
+    // );
 }
 
 
