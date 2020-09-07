@@ -18,9 +18,6 @@ app.secret_key = "outofthefryingpan"
 def root():
     return render_template("root.html")
 
-@app.route('/hello')
-def hello():
-    return jsonify("hello")
 
 @app.route('/api/user-cookbooks/<user_id>')
 def get_user_cookbooks(user_id):
@@ -144,6 +141,7 @@ def create_user():
 
     if user:
         status = "error"
+        user_id = ""
     else:
         status = "success"
         new_user = crud.create_user(
@@ -151,9 +149,11 @@ def create_user():
                         lname=lname,
                         email=email,
                         password=password)
-        session["user_id"] = new_user.user_id
+        user_id = new_user.user_id
+        session["user_id"] = user_id
+        
     
-    return jsonify({'status':status})
+    return jsonify({'status':status, 'user_id':user_id})
 
 
 @app.route('/api/save', methods=['POST'])

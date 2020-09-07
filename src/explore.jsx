@@ -32,23 +32,28 @@ export function SearchBar(props) {
 
     return (
         <form class="form-inline d-flex justify-content-center md-form form-sm active-green mt-0">
+            <div class="col">
             <i class="fas fa-search" aria-hidden="true"></i>
-            <input class="form-control form-control-sm ml-3 w-75"
+            <input class="form-control form-control-sm ml-3 w-75 cuca-white-text"
                 type='text'
                 aria-label="Search"
                 placeholder='Search...'
                 value={searchTerm}
                 onChange={(evt) => setSearchTerm(evt.target.value)}>
             </input>
+            </div>
+            <div class="col">
             <select name="search for" onChange={(evt) => setSearchItem(evt.target.value)}
                     class="custom-select">
                 <option value="users" selected>Users</option>
                 <option value="recipes">Recipes</option>
             </select>
+            </div>
             <input type='submit'
+                id="search-button"
                 value='Search'
                 onClick={handleSearch}
-                class="btn btn-success" />
+                class="btn btn-success btn-sm" />
         </form>
     );
 }

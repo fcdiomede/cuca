@@ -65,7 +65,7 @@ function App() {
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
+              <li class="nav-item active">
                 <Link to={`/homepage/${userData.user_id}`} class="nav-link cuca-white-text"> Home </Link>
               </li>
               <li class="nav-item">
