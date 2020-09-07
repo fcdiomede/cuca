@@ -31,8 +31,11 @@ export function SearchBar(props) {
     };
 
     return (
-        <form class="form-inline my-2 my-lg-0">
-            <input type='search'
+        <form class="form-inline d-flex justify-content-center md-form form-sm active-green mt-0">
+            <i class="fas fa-search" aria-hidden="true"></i>
+            <input class="form-control form-control-sm ml-3 w-75"
+                type='text'
+                aria-label="Search"
                 placeholder='Search...'
                 value={searchTerm}
                 onChange={(evt) => setSearchTerm(evt.target.value)}>
@@ -45,7 +48,7 @@ export function SearchBar(props) {
             <input type='submit'
                 value='Search'
                 onClick={handleSearch}
-                class="btn btn-outline-success my-2 my-sm-0" />
+                class="btn btn-success" />
         </form>
     );
 }

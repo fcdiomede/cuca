@@ -134,6 +134,20 @@ function Login(props) {
                 </p>
             </div>
          </div>
+
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <h5>Ready to get cooking?</h5>
+            </div>
+        </div>
+
+         <div class="row">
+             <div class="col d-flex justify-content-center">
+                <button class="btn btn-success mr-3">Login</button>
+                <button class="btn btn-warning">Sign Up</button>
+             </div>
+         </div>
+
         <form>
             <label>Email:</label>
             <input type='text'

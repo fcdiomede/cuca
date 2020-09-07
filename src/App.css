@@ -11,6 +11,8 @@
 
 .cuca-nav {
   background-color:#465C8B;
+  font-weight: bold;
+  font-size: large;
 }
 
 .cuca-white-text{
@@ -18,7 +20,11 @@
   font-family: 'Roboto', sans-serif;
 }
 
-.nav-link:hover { color:#93C178;}
+.nav-link:hover { 
+  color:#93C178;
+  box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+}
 
 .about-page{
   background-color:#465C8B;
@@ -37,4 +43,38 @@
 
 .dictionary-ex-phrase {
   opacity: 0.7;
+}
+
+.active-green input.form-control[type=text]:focus:not([readonly]) {
+  border-bottom: 1px solid #93C178;
+  box-shadow: 0 1px 0 0 #93C178;
+}
+
+.active-green  i {
+  color: #93C178;
+}
+
+.btn.btn-success,
+.btn.btn-success:focus,
+.btn.btn-success:active,
+.btn.btn-success.active {
+  color:white;
+  background-color: #93C178;
+  border-color: #93C178;
+}
+
+.btn.btn-warning,
+.btn.btn-warning:focus,
+.btn.btn-warning:active,
+.btn.btn-warning.active {
+  color:black;
+  background-color: #F7EF6A;
+  border-color: #F7EF6A;
+}
+
+.btn.btn-success:hover,
+.btn.btn-warning:hover {
+  box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
+  color: #465C8B;
+  font-weight:bold;
 }
