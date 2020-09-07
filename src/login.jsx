@@ -57,10 +57,10 @@ function LoginForm(props) {
                                 <input type='text'
                                     id="defaultForm-email"
                                     class="form-control validate"
+                                    placeholder="Your Email"
                                     onChange={(evt) => setEmail(evt.target.value)}
                                     value={email}>
                                 </input>
-                                <label data-error="wrong" data-success="right" for="defaultForm-email">Your Email</label>
                             </div>
 
                             <div class="md-form mb-4">
@@ -68,10 +68,10 @@ function LoginForm(props) {
                                 <input type='password'
                                     id="defaultForm-pass" 
                                     class="form-control validate"
+                                    placeholder="Your password"
                                     onChange={(evt) => setPassword(evt.currentTarget.value)}
                                     value={password}>
                                 </input>
-                                <label data-error="wrong" data-success="right" for="defaultForm-pass">Your Password</label>
                             </div>
                         </form>
                     </div>
@@ -146,9 +146,9 @@ function SignUpModal(props) {
                                 <input type='text'
                                     id='fname'
                                     class="form-control validate"
+                                    placeholder="Your First Name"
                                     onChange={(evt) => setFName(evt.target.value)}
                                     value={fname}></input>
-                                <label data-error="wrong" data-success="right" for="orangeForm-name">Your First Name</label>
                             </div>
 
                             <div class="md-form mb-4">
@@ -156,9 +156,9 @@ function SignUpModal(props) {
                                 <input type='text'
                                     id='lname'
                                     class="form-control validate"
+                                    placeholder="Your Last Name"
                                     onChange={(evt) => setLName(evt.target.value)}
                                     value={lname}></input>
-                                <label data-error="wrong" data-success="right" for="orangeForm-name">Your Last Name</label>
                             </div>
 
                             <div class="md-form mb-5">
@@ -166,10 +166,10 @@ function SignUpModal(props) {
                                 <input type='text'
                                     id="defaultForm-email"
                                     class="form-control validate"
+                                    placeholder="Your email"
                                     onChange={(evt) => setEmail(evt.target.value)}
                                     value={email}>
                                 </input>
-                                <label data-error="wrong" data-success="right" for="defaultForm-email">Your Email</label>
                             </div>
 
                             <div class="md-form mb-5">
@@ -177,10 +177,10 @@ function SignUpModal(props) {
                                 <input type='password'
                                     id="defaultForm-pass" 
                                     class="form-control validate"
+                                    placeholder="Your Password"
                                     onChange={(evt) => setPassword(evt.currentTarget.value)}
                                     value={password}>
                                 </input>
-                                <label data-error="wrong" data-success="right" for="defaultForm-pass">Your Password</label>
                             </div>
 
                         </form>
@@ -205,8 +205,8 @@ function Login(props) {
     return (
         <div class="about-page container-fluid">
 
-            <div class="row d-flex justify-content-center">
-                <div class="col-12">
+            <div class="row">
+                <div class="col d-flex justify-content-center">
                     <img src="https://res.cloudinary.com/deglaze/image/upload/v1599414510/cuca/mcuca_rfsqum.svg"
                         class="cuca-banner">
                     </img>
