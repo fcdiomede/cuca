@@ -27,10 +27,12 @@ export function ProfilePicture(props) {
                 aria-haspopup="true"
                 aria-expanded="false" />
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <p class="dropdown-item" onClick={editProfile}>Edit Profile</p>
+                <p class="dropdown-item" data-toggle="modal" data-target="#profileModal">Edit Profile</p>
                 <div class="dropdown-divider"></div>
                 <p class="dropdown-item" onClick={handleLogout}>Logout</p>
             </div>
+
+            <UserProfileModal userData={props.userData}/>
         </div>
     );
 }
@@ -72,10 +74,10 @@ export function UserProfileModal(props) {
     };
 
 
-    const cancel = () => props.setShowUserModal(false);
+    // const cancel = () => props.setShowUserModal(false);
 
     return (
-        <div class="modal fade" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="UserProfileModal"
+        <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="UserProfileModal"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -100,7 +102,7 @@ export function UserProfileModal(props) {
                             <input type='button' onClick={uploadWidget.open} value='Profile Image' />
                             <img src={photo} class="rounded-circle img-responsive"></img>
                             <input type='button' onClick={closeModal} value='Save' />
-                            <input type='button' onClick={cancel} value='Cancel' />'
+                            {/* <input type='button' onClick={cancel} value='Cancel' />' */}
                 </form>
                     </div>
                 </div>
