@@ -30,3 +30,11 @@
   height: 400px;
   width: auto;
 }
+
+.dictionary-border{
+  border-color: #DFDCE3;
+}
+
+.dictionary-ex-phrase {
+  opacity: 0.7;
+}

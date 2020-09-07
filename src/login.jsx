@@ -123,9 +123,12 @@ function Login(props) {
 
             <div class="row d-flex justify-content-center">
             <div class="col-6">
-                <p>[ˈmɛstɾi-ˈkuka] noun informal</p>
+                <p class="border-bottom dictionary_border">
+                    [ˈmɛstɾi-ˈkuka] 
+                    <i> noun informal</i>
+                </p>
                 <p>Brazilian phrase meaning highly skilled home cook. </p>
-                <p> "Can you believe the delicious dishes
+                <p class="dictionary-ex-phrase"> "Can you believe the delicious dishes
                     Aunt Claudia served for dinner? Look at her go, all
                     Mestre Cuca."
                 </p>
