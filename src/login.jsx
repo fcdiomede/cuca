@@ -60,7 +60,7 @@ function LoginForm(props) {
                                     onChange={(evt) => setEmail(evt.target.value)}
                                     value={email}>
                                 </input>
-                                <label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>
+                                <label data-error="wrong" data-success="right" for="defaultForm-email">Your Email</label>
                             </div>
 
                             <div class="md-form mb-4">
@@ -71,7 +71,7 @@ function LoginForm(props) {
                                     onChange={(evt) => setPassword(evt.currentTarget.value)}
                                     value={password}>
                                 </input>
-                                <label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>
+                                <label data-error="wrong" data-success="right" for="defaultForm-pass">Your Password</label>
                             </div>
                         </form>
                     </div>
@@ -130,43 +130,65 @@ function SignUpModal(props) {
 
     return (
         <div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="signUpModalLabel">Sign Up</h5>
+                    <div class="modal-header text-center">
+                        <h5 class="modal-title modal-text w-100 font-weight-bold" id="loginModalLabel">Sign Up</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
+
+                    <div class="modal-body mx-3">
                         <form>
-                            <label>Email:</label>
-                            <input type='text'
-                                id='email'
-                                onChange={(evt) => setEmail(evt.target.value)}
-                                value={email}>
-                            </input>
-                            <label>Password:</label>
-                            <input type='password'
-                                id='password'
-                                onChange={(evt) => setPassword(evt.currentTarget.value)}
-                                value={password}>
-                            </input>
-                            <label>First Name:</label>
-                            <input type='text'
-                                id='fname'
-                                onChange={(evt) => setFName(evt.target.value)}
-                                value={fname}></input>
-                            <label>Last Name:</label>
-                            <input type='text'
-                                id='lname'
-                                onChange={(evt) => setLName(evt.target.value)}
-                                value={lname}></input>
+                            <div class="md-form mb-4">
+                                <i class="fas fa-user prefix grey-text"></i>
+                                <input type='text'
+                                    id='fname'
+                                    class="form-control validate"
+                                    onChange={(evt) => setFName(evt.target.value)}
+                                    value={fname}></input>
+                                <label data-error="wrong" data-success="right" for="orangeForm-name">Your First Name</label>
+                            </div>
+
+                            <div class="md-form mb-4">
+                                <i class="fas fa-user prefix grey-text"></i>
+                                <input type='text'
+                                    id='lname'
+                                    class="form-control validate"
+                                    onChange={(evt) => setLName(evt.target.value)}
+                                    value={lname}></input>
+                                <label data-error="wrong" data-success="right" for="orangeForm-name">Your Last Name</label>
+                            </div>
+
+                            <div class="md-form mb-5">
+                                <i class="fas fa-envelope prefix grey-text"></i>
+                                <input type='text'
+                                    id="defaultForm-email"
+                                    class="form-control validate"
+                                    onChange={(evt) => setEmail(evt.target.value)}
+                                    value={email}>
+                                </input>
+                                <label data-error="wrong" data-success="right" for="defaultForm-email">Your Email</label>
+                            </div>
+
+                            <div class="md-form mb-5">
+                                <i class="fas fa-lock prefix grey-text"></i>
+                                <input type='password'
+                                    id="defaultForm-pass" 
+                                    class="form-control validate"
+                                    onChange={(evt) => setPassword(evt.currentTarget.value)}
+                                    value={password}>
+                                </input>
+                                <label data-error="wrong" data-success="right" for="defaultForm-pass">Your Password</label>
+                            </div>
+
                         </form>
                     </div>
-                    <div class="modal-footer">
+                    
+                    <div class="modal-footer d-flex justify-content-center">
                         <button type="button"
-                            class="btn btn-primary"
+                            class="btn  btn-warning"
                             onClick={addUser}
                             data-dismiss="modal">Create Account</button>
                     </div>
