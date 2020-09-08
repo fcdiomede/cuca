@@ -45,7 +45,7 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [userData, setUserData] = React.useState({});
   const [searchResults, setSearchResults] = React.useState('');
-
+  
 
   return <React.Fragment>
 

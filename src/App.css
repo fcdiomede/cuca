@@ -118,6 +118,7 @@ footer {
 }
 
 .icon-button{
+  color: black;
   cursor: pointer;
   font-size: large;
 }

@@ -333,21 +333,53 @@ function RecipieForm(props) {
 
 function RecipeNav(props) {
 
-    console.log(props.recipes);
-
     let { path, url } = useRouteMatch();
+
+    let history = useHistory();
+
+    const deleteCookbook = () => {
+        let confirmDelete = window.confirm(
+            `This will delete your entire cookbook.
+            You will lose access to all of its contents. 
+            This action cannot be undone. 
+            
+            Are you sure you wish to continue?`)
+    
+    if (confirmDelete) {
+        fetch('/api/delete-cookbook')
+        .then((res) => {
+            console.log(res);
+            history.push('/');
+        })
+    }
+    }
 
     return (
         <Router>
             <div>
-                <h2>Recipes</h2>
+                <nav class="nav flex-column">
+                    <div>
+                        <span class="navbar-brand mb-0 h1">{props.cookbookTitle} Recipes</span>
+                        { props.viewOnly ? null :
+                            <React.Fragment>
+                                <Link to={`${url}/new`}>
+                                    <span class="mr-3">
+                                    <i class="fas fa-plus icon-button"></i>
+                                    </span>
+                                </Link>
+                                <span class="icon-button mr-3" onClick={deleteCookbook}>
+                                     <i class="fas fa-trash" aria-hidden="true"></i>
+                                </span>
+                            </React.Fragment>}
+                    </div>
                 <ul>
                 {props.recipes?.map(recipe => {
-                        return (<li key={recipe.recipe_id}>
-                                <Link to={`${url}/${recipe.recipe_id}`}>{recipe.title}</Link>
+                        return (<li class="nav-item" key={recipe.recipe_id}>
+                                <Link to={`${url}/${recipe.recipe_id}`} class="nav-link">{recipe.title}</Link>
                             </li>);
                         })}
                 </ul>
+
                 { props.viewOnly ? <FavoriteRecipe recipeDetails={props.recipeDetails}/> :
                     <Link to={`${url}/edit`}>
                         <button type="button">Edit</button>
@@ -356,6 +388,7 @@ function RecipeNav(props) {
                     <Link to={`${url}/new`}>
                         <button type="button">New</button>
                     </Link> }
+                </nav>
 
                 <Switch>
                     <Route exact path={`${path}/new`}>
@@ -383,6 +416,8 @@ function Recipes(props) {
     const [recipeDetails, setRecipeDetails] = React.useState(null);
     const [recipeEditCount, setRecipeEditCount] = React.useState(0);
 
+    let { recipeId } = useParams();
+
     React.useEffect(() => {
         fetch('/api/cookbook-details')
             .then((res) => res.json())
@@ -396,39 +431,29 @@ function Recipes(props) {
 
     const viewOnly = (props.userId !== creatorId)
 
-    let history = useHistory();
-
-    const deleteCookbook = () => {
-        let confirmDelete = window.confirm(
-            `This will delete your entire cookbook.
-            You will lose access to all of its contents. 
-            This action cannot be undone. 
-            
-            Are you sure you wish to continue?`)
-    
-    if (confirmDelete) {
-        fetch('/api/delete-cookbook')
-        .then((res) => {
-            console.log(res);
-            history.push('/');
-        })
-    }
-    }
 
 
     return (
         <React.Fragment>
-            <h2>{cookbookDetails.title}</h2>
-            <img src={cookbookDetails.cover_img} />
-            { viewOnly ? null :
-                        <button onClick={deleteCookbook}>Delete Cookbook</button>}
-            <RecipeNav recipes={cookbookDetails.recipes}
+            <div class="cuca-standard-page container-fluid">
+
+           
+                <RecipeNav recipes={cookbookDetails.recipes}
                         recipeDetails={recipeDetails}
                         setRecipeDetails={setRecipeDetails}
                         recipeEditCount={recipeEditCount}
                         setRecipeEditCount={setRecipeEditCount}
-                        viewOnly={viewOnly} />
-
+                        viewOnly={viewOnly} 
+                        cookbookTitle={cookbookDetails.title}/>
+                
+                { recipeId ? null :
+                            <div>
+                                <h2>{cookbookDetails.title}</h2>
+                                <img src={cookbookDetails.cover_img} />
+                                
+                            </div>}
+           
+            </div>
         </React.Fragment>
     );
 }
