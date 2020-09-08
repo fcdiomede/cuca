@@ -9,6 +9,12 @@
   border-radius: 50%;
 }
 
+.large-profile-pic{
+  height:120px;
+  width: auto;
+  border-radius: 50%;
+}
+
 .cuca-nav {
   background-color:#465C8B;
   font-weight: bold;

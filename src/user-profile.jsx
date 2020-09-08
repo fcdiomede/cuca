@@ -6,6 +6,7 @@ import { useParams, useHistory } from 'react-router-dom';
 
 export function ProfilePicture(props) {
 
+    console.log(props);
 
     const handleLogout = () => {
         props.setLoggedIn(false);
@@ -37,7 +38,7 @@ export function UserProfileModal(props) {
     const [fname, setFName] = React.useState(props.userData.name);
     const [photo, setPhoto] = React.useState(props.userData.profile_picture);
 
-
+    console.log(props);
 
     //cloudinary config
     const uploadWidget = window.cloudinary.createUploadWidget({
@@ -66,7 +67,6 @@ export function UserProfileModal(props) {
             .then((res) => res.json())
             .then((data) => {
                 props.setUserData(data);
-                props.setShowUserModal(false);
             });
     };
 
@@ -78,9 +78,11 @@ export function UserProfileModal(props) {
         aria-hidden="true">
             <div class="modal-dialog cascading-modal modal-avatar" role="document">
                 <div class="modal-content">
-                    
+
                     <div class="modal-header">
-                        <img src="https://res.cloudinary.com/deglaze/image/upload/v1599464833/chef_hat_lixke7.png" alt="avatar" class="rounded-circle img-responsive"></img>
+                        <img src={photo} alt="profile-picture" 
+                            class="rounded-circle img-responsive"
+                            onClick={uploadWidget.open}></img>
                     </div>
 
 
@@ -95,52 +97,18 @@ export function UserProfileModal(props) {
                                     value={fname}></input>
                             </div>
                         </div>
+
+                        <div class="d-flex justify-content-center">
+                        <button type="button"
+                            class="btn btn-success"
+                            onClick={closeModal}
+                            data-dismiss="modal">Save</button>
                     </div>
+                    </div>
+
                 </div>
             </div>
     )
-
-    // return (
-    //     // <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="UserProfileModal"
-    //     //     aria-hidden="true">
-    //     //     <div class="modal-dialog cascading-modal modal-avatar" role="document">
-
-    //     //         <div class="modal-content">
-
-    //     //         <div class="modal-header">
-    //     //             <img src={photo}  alt="profile picture" 
-    //     //                 class="rounded-circle img-responsive"
-    //     //                 onClick={uploadWidget.open}></img>
-    //     //             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    //     //                 <span aria-hidden="true">&times;</span>
-    //     //             </button>
-    //     //             </div>
-
-    //     //             <div class="modal-body text-center mb-1">
-
-    //     //                 <form>
-    //     //                 <div class="md-form mb-4">
-    //     //                     <i class="fas fa-user prefix grey-text"></i>
-    //     //                     <label>First Name:</label>
-    //     //                     <div class="md-form mb-5">
-    //     //                         <i class="fas fa-user prefix grey-text"></i>
-    //     //                         <input type='text'
-    //     //                             id='fname'
-    //     //                             onChange={(evt) => setFName(evt.target.value)}
-    //     //                             value={fname}
-    //     //                             class="form-control mb-4"></input>
-    //     //                     </div>
-    //     //                     <label>Profile Photo</label>
-    //     //                     <input type='button' onClick={uploadWidget.open} value='Profile Image' />
-    //     //                     <img src={photo} class="rounded-circle img-responsive"></img>
-    //     //                     <input type='button' onClick={closeModal} value='Save'  data-dismiss="modal" />
-    //     //                     {/* <input type='button' onClick={cancel} value='Cancel' />' */}
-    //     //         </form>
-    //     //             </div>
-    //     //     </div>
-    //     // </div>
-    //     // </div>
-    // );
 }
 
 
@@ -159,7 +127,7 @@ function FollowUserButton(props) {
             .then((data) => props.setCurrentlyFollowed(true));
     };
 
-    return (<button onClick={followUser}>Follow</button>);
+    return (<button class="btn btn-success btn-sm d-block" onClick={followUser}>Follow</button>);
 }
 
 function UnfollowUserButton(props) {
@@ -177,7 +145,7 @@ function UnfollowUserButton(props) {
             .then((data) => props.setCurrentlyFollowed(false));
     };
 
-    return (<button onClick={unfollowUser}>Unfollow</button>);
+    return (<button class="btn btn-warning btn-sm d-block" onClick={unfollowUser}>Unfollow</button>);
 }
 
 
@@ -214,14 +182,22 @@ export function UserProfile(props) {
 
     return (
         <React.Fragment>
-            <h1>Chef {user.name}</h1>
-            <img src={user.profile_picture} />
-            {currentlyFollowed ? <UnfollowUserButton userId={userId}
-                setCurrentlyFollowed={setCurrentlyFollowed} /> :
-                <FollowUserButton userId={userId}
-                    setCurrentlyFollowed={setCurrentlyFollowed} />}
+            <div class="cuca-standard-page container-fluid">
+            <div class="d-flex">
+                <div class="m-3">
+                    <img src={user.profile_picture} class="large-profile-pic" />
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                    <h1 class="modal-text pt-3 d-block">Chef {user.name}</h1>
+                    {currentlyFollowed ? <UnfollowUserButton userId={userId}
+                    setCurrentlyFollowed={setCurrentlyFollowed} /> :
+                    <FollowUserButton userId={userId}
+                        setCurrentlyFollowed={setCurrentlyFollowed} />}
+                </div>
+            </div>
             <CookbookContainer userId={props.userId} />
             <FollowedUsers userId={userId} />
+            </div>
         </React.Fragment>
     );
 
@@ -239,9 +215,11 @@ function FollowedUserCard(props) {
     };
 
     return (
-        <div onClick={goToUserPage}>
-            <h2>{props.name}</h2>
-            <img src={props.profilePicture} />
+        <div class="d-flex flex-column align-items-center mr-3" onClick={goToUserPage}>
+            <div class="view overlay zoom">
+                <img src={props.profilePicture} class="profile-pic" alt="profile pic"/>
+            </div>
+            <h6 class="d-block">{props.name}</h6>
         </div>
     );
 }
@@ -272,10 +250,17 @@ function FollowedUsers(props) {
     }
 
     return (
-        <div>
-            <h2>Sous Chefs</h2>
-            <div>{connections}</div>
+        <React.Fragment>
+        <div class="row">
+            <div class="col d-flex align-items-center">
+            <h3 class="section-heading mt-5">Sous Chefs</h3>
+            </div>
         </div>
+
+        <div class="d-flex">
+                {connections}
+        </div>
+        </React.Fragment>
     );
 }
 
@@ -283,17 +268,11 @@ function FollowedUsers(props) {
 //main page component
 function Homepage(props) {
 
-    const [showCookbookCreation, setShowCookbookCreation] = React.useState(false);
-
     return (
         <React.Fragment>
             <div class="cuca-standard-page container-fluid">
             <h1 class="modal-text pt-3">Welcome, Chef {props.name}!</h1>
-            {showCookbookCreation ? <NewCookbookForm setShowCookbookCreation={setShowCookbookCreation}
-                mode='new' /> :
-                <div>
-                    <CookbookContainer userId={props.userId} />
-                </div>}
+            <CookbookContainer userId={props.userId} />
             <FollowedUsers userId={props.userId} />
             </div>
         </React.Fragment>

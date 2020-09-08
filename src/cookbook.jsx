@@ -32,14 +32,14 @@ function CookbookCover(props) {
                 <div class="card-body d-flex justify-content-between align-items-center p-3">
                     <h5 class="card-title m-0">{props.title}</h5>
                     <div>
-                    <span onClick={goToCookbook} class="icon-button mr-3">
-                        <i class="fas fa-eye"></i>
-                    </span>
-                    { editAccess ? <span class="icon-button" 
+                    { editAccess ? <span class="icon-button mr-3" 
                                         data-toggle="modal"
                                         data-target="#cookbookFormModal">
                                             <i class="fas fa-pen" aria-hidden="true"></i>
                                     </span> : null}
+                    <span onClick={goToCookbook} class="icon-button">
+                        <i class="fas fa-eye"></i>
+                    </span>
                     </div>
                 </div>
 
@@ -94,7 +94,7 @@ export function CookbookContainer(props) {
         <React.Fragment>
          <div class="row">
              <div class="col d-flex align-items-center justify-content-between">
-                <h3 class="section-heading mr-3">Your Cookbooks</h3>
+                <h3 class="section-heading mr-3">Cookbooks</h3>
                 <CreateNewCookbook cookbookEdits={cookbookEdits}
                                     setCookbookEdits={setCookbookEdits}/>
              </div>
