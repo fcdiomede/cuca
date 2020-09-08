@@ -36,6 +36,8 @@ function FavoriteRecipe(props) {
 
 function RecipeDetails(props) {
 
+    console.log(props);
+
     let { recipeId } = useParams();
 
     console.log(props.recipeDetails)
@@ -58,6 +60,9 @@ function RecipeDetails(props) {
                 <div>
                     <div> Title: {props.recipeDetails.title}</div>
                     <img src={props.recipeDetails.media} />
+                    { props.viewOnly ?
+                         <FavoriteRecipe recipeDetails={props.recipeDetails}/> :
+                        <button type="button">Edit</button> }
                     <div> ingredients: {props.recipeDetails.ingredients}</div>
                     <div>
                         time required: {props.recipeDetails.time_required}
@@ -380,14 +385,10 @@ function RecipeNav(props) {
                         })}
                 </ul>
 
-                { props.viewOnly ? <FavoriteRecipe recipeDetails={props.recipeDetails}/> :
+                {/* { props.viewOnly ? <FavoriteRecipe recipeDetails={props.recipeDetails}/> :
                     <Link to={`${url}/edit`}>
                         <button type="button">Edit</button>
-                    </Link> }
-                { props.viewOnly ? null:
-                    <Link to={`${url}/new`}>
-                        <button type="button">New</button>
-                    </Link> }
+                    </Link> } */}
                 </nav>
 
                 <Switch>
@@ -402,7 +403,8 @@ function RecipeNav(props) {
                     </Route>
                     <Route exact path={`${path}/:recipeId`}>
                         <RecipeDetails recipeDetails={props.recipeDetails}
-                                        setRecipeDetails={props.setRecipeDetails}/>
+                                        setRecipeDetails={props.setRecipeDetails}
+                                        viewOnly={props.viewOnly}/>
                     </Route>
                 </Switch>
             </div>
