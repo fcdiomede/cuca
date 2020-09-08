@@ -99,3 +99,58 @@ footer {
 .modal-text{
   color: #465C8B;
 }
+
+.cuca-standard-page{
+  background-color:#DFDCE3;
+  color:black;
+  font-family: 'Roboto', sans-serif;
+}
+
+.cookbook-card {
+  width: 18rem;
+  display:inline-block;
+}
+
+.icon-button{
+  cursor: pointer;
+  font-size: large;
+}
+
+.icon-button:hover{
+  color:#93C178;
+}
+
+.cb-cover-img {
+  cursor: pointer;
+}
+
+.cb-modal-photo {
+  width: 100%;
+  height: auto;
+}
+
+.section-heading{
+  font-weight: 500;
+}
+
+#edit-overlay-text{
+  font-size: xx-large;
+  font-weight: bolder;
+  color: black;
+  text-shadow: 0 0 3px white, 0 0 3px white, 0 0 3px white, 0 0 3px white;
+}
+
+.btn-circle.btn-md { 
+  width: 50px; 
+  height: 50px; 
+  padding: 7px 10px; 
+  border-radius: 25px; 
+  font-size: 10px; 
+  text-align: center; 
+} 
+
+.card-img-top {
+  width:100%;
+  height: 30vh;
+  object-fit: cover;
+}

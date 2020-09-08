@@ -133,7 +133,7 @@ export function UserProfileModal(props) {
     //     //                     <label>Profile Photo</label>
     //     //                     <input type='button' onClick={uploadWidget.open} value='Profile Image' />
     //     //                     <img src={photo} class="rounded-circle img-responsive"></img>
-    //     //                     <input type='button' onClick={closeModal} value='Save' />
+    //     //                     <input type='button' onClick={closeModal} value='Save'  data-dismiss="modal" />
     //     //                     {/* <input type='button' onClick={cancel} value='Cancel' />' */}
     //     //         </form>
     //     //             </div>
@@ -287,15 +287,15 @@ function Homepage(props) {
 
     return (
         <React.Fragment>
-            <h1>Welcome, Chef {props.name}!</h1>
+            <div class="cuca-standard-page container-fluid">
+            <h1 class="modal-text pt-3">Welcome, Chef {props.name}!</h1>
             {showCookbookCreation ? <NewCookbookForm setShowCookbookCreation={setShowCookbookCreation}
                 mode='new' /> :
                 <div>
-                    <CreateNewCookbook setShowCookbookCreation={setShowCookbookCreation} />
-                    <CookbookContainer showCookbookCreation={showCookbookCreation}
-                        userId={props.userId} />
+                    <CookbookContainer userId={props.userId} />
                 </div>}
             <FollowedUsers userId={props.userId} />
+            </div>
         </React.Fragment>
     );
 }

@@ -22,24 +22,35 @@ function CookbookCover(props) {
             .then(() => history.push('/recipes'));
     };
 
-    const editCover = () => {
-        props.setShowCBModal(true);
-    };
 
     return (
         <React.Fragment>
-            <div className="cookbook" onClick={goToCookbook}>
-                <p>Name: {props.title}</p>
-                <img src={props.imgUrl} />
-            </div>
-            { props.showCBModal ?
-                            <NewCookbookForm setShowCookbookCreation={props.setShowCBModal}
-                                            cookbookId={props.cookbookId}
-                                            title={props.title} imgUrl={props.imgUrl}
-                                            mode='edit' /> :
-            editAccess ? 
-                        <button onClick={editCover}>Edit Cookbook Cover</button> : 
-                        null}
+            <span class="card cookbook-card mr-2">
+                <div class="view overlay zoom">
+                <img src={props.imgUrl} class="card-img-top cb-cover-img" alt="cookbook-img" onClick={goToCookbook}></img>
+                </div>
+                <div class="card-body d-flex justify-content-between align-items-center p-3">
+                    <h5 class="card-title m-0">{props.title}</h5>
+                    <div>
+                    <span onClick={goToCookbook} class="icon-button mr-3">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                    { editAccess ? <span class="icon-button" 
+                                        data-toggle="modal"
+                                        data-target="#cookbookFormModal">
+                                            <i class="fas fa-pen" aria-hidden="true"></i>
+                                    </span> : null}
+                    </div>
+                </div>
+
+                <NewCookbookForm cookbookId={props.cookbookId} 
+                                title={props.title} 
+                                imgUrl={props.imgUrl} 
+                                cookbookEdits={props.cookbookEdits}
+                                setCookbookEdits={props.setCookbookEdits}
+                                mode='edit' />
+            </span>
+            
         </React.Fragment>
     );
 }
@@ -52,7 +63,7 @@ export function CookbookContainer(props) {
     //user's personal cookbooks to appear
 
     const [cookbooks, updateCookbooks] = React.useState([]);
-    const [showCBModal, setShowCBModal] = React.useState(false);
+    const [cookbookEdits, setCookbookEdits] = React.useState(0);
 
     let { userId } = useParams();
 
@@ -61,7 +72,7 @@ export function CookbookContainer(props) {
         fetch(`/api/user-cookbooks/${userId}`)
             .then((res) => res.json())
             .then((data) => updateCookbooks(data));
-    }, [props.showCookbookCreation, showCBModal]);
+    }, [cookbookEdits]);
 
     const userCookbooks = [];
     for (const cookbook of cookbooks) {
@@ -71,33 +82,50 @@ export function CookbookContainer(props) {
                 cookbookId={cookbook.key}
                 title={cookbook.title}
                 imgUrl={cookbook.imgUrl}
-                showCBModal={showCBModal}
-                setShowCBModal={setShowCBModal}
                 userId={props.userId}
                 creator_id={userId}
+                cookbookEdits={cookbookEdits}
+                setCookbookEdits={setCookbookEdits}
             />
         );
     }
 
     return (
-        <div>{userCookbooks}</div>
+        <React.Fragment>
+         <div class="row">
+             <div class="col d-flex align-items-center justify-content-between">
+                <h3 class="section-heading mr-3">Your Cookbooks</h3>
+                <CreateNewCookbook cookbookEdits={cookbookEdits}
+                                    setCookbookEdits={setCookbookEdits}/>
+             </div>
+            
+        </div>
+        <div class="row">
+            <div class="card-group mx-3">
+            {userCookbooks}
+            </div>
+        </div>
+        </React.Fragment>
     );
 }
 
 export function CreateNewCookbook(props) {
 
-    // let history = useHistory();
-
-    const goToCreateCookbookForm = () => {
-        props.setShowCookbookCreation(true);
-    };
-
     return (
-        <button onClick={goToCreateCookbookForm}>Create New Cookbook</button>
+        <React.Fragment>
+        <button data-toggle="modal" data-target="#cookbookFormModal"
+                class="btn btn-success btn-circle btn-md">
+                    <i class="fas fa-plus icon-button"></i>
+        </button>
+
+        <NewCookbookForm mode="new" imgUrl="https://res.cloudinary.com/deglaze/image/upload/v1599528712/cuca/dinner-plate-icon-png-7_gdchhk.png" 
+                    cookbookEdits={props.cookbookEdits} setCookbookEdits={props.setCookbookEdits}/>
+        </React.Fragment>
     );
 }
 
 export function NewCookbookForm(props) {
+
 
     //track what user is entering in fields
     const [title, setTitle] = React.useState(props.title);
@@ -131,30 +159,55 @@ export function NewCookbookForm(props) {
                 'Content-Type': 'application/json'
             }
         })
-            .then((res) => res.json())
-            .then((data) => {
-                props.setShowCookbookCreation(false);
-            });
+        .then(()=> props.setCookbookEdits(props.cookbookEdits + 1))
     };
 
-    const cancel = (evt) => {
-        evt.preventDefault();
-        props.setShowCookbookCreation(false);
-    };
 
     //newcookbook form
     return (
-        <form>
-            <label>Title</label>
-            <input type='text'
-                id='title'
-                onChange={(evt) => setTitle(evt.target.value)}
-                value={title}></input>
-            <label>Cover Photo</label>
-            <input type='button' onClick={uploadWidget.open} value='Add Cover Image' />
-            <img src={photo}></img>
-            <button onClick={saveCookbook}>Submit</button>
-            <button onClick={cancel}>Cancel</button>
-        </form>
+        <div class="modal fade" id="cookbookFormModal" tabindex="-1" role="dialog" aria-labelledby="CookbookCoverModal"
+        aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h5 class="modal-title modal-text w-100 font-weight-bold" id="loginModalLabel">
+                            Edit Cookbook Cover
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body text-center mb-0">
+                        <form>
+
+                            <div class="md-form mb-5 view overlay" onClick={uploadWidget.open}>
+                                <img src={photo} class="cb-modal-photo"></img>
+                                <div class="mask flex-center waves-effect waves-light rgba-green-light">
+                                <p id="edit-overlay-text">Edit Cover Photo</p>
+                                </div>
+                            </div>
+
+                            <div class="md-form mb-5">
+                                <input type="text"
+                                id="cb-title"
+                                class="form-control validate"
+                                placeholder="Cookbook Title"
+                                value={title}
+                                onChange={(evt) => setTitle(evt.target.value)}></input>
+                            </div>
+
+                            <div class="md-form mb-5 d-flex justify-content-center">
+                                <button class="btn btn-success btn-lg" 
+                                        onClick={saveCookbook}  
+                                        data-dismiss="modal"> Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>
     );
 }
