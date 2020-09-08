@@ -31,7 +31,9 @@ function FavoriteRecipe(props) {
             .then((data) => console.log(data))
     }
 
-    return <button onClick={favoriteRecipe}>Favorite</button>
+    return (<span class="icon-button ml-3" onClick={favoriteRecipe}>
+                <i class="fas fa-heart"></i>
+            </span>)
 }
 
 function RecipeDetails(props) {
@@ -54,15 +56,26 @@ function RecipeDetails(props) {
             .then(data => props.setRecipeDetails(data));
     }, [recipeId]);
 
+    let history = useHistory();
+
+    const goToRecipe = () => {
+        history.push(`/recipes/edit`)
+    }
+
     return (
         <React.Fragment>
             {props.recipeDetails ?
                 <div>
-                    <div> Title: {props.recipeDetails.title}</div>
-                    <img src={props.recipeDetails.media} />
-                    { props.viewOnly ?
+                    <div>
+                        {props.recipeDetails.title}
+                        { props.viewOnly ?
                          <FavoriteRecipe recipeDetails={props.recipeDetails}/> :
-                        <button type="button">Edit</button> }
+                        <span class=" icon-button ml-3" onClick={goToRecipe}>
+                            <i class="fas fa-pen" aria-hidden="true"></i>
+                        </span> }
+                    </div>
+                    <img src={props.recipeDetails.media} />
+                    
                     <div> ingredients: {props.recipeDetails.ingredients}</div>
                     <div>
                         time required: {props.recipeDetails.time_required}
@@ -384,11 +397,7 @@ function RecipeNav(props) {
                             </li>);
                         })}
                 </ul>
-
-                {/* { props.viewOnly ? <FavoriteRecipe recipeDetails={props.recipeDetails}/> :
-                    <Link to={`${url}/edit`}>
-                        <button type="button">Edit</button>
-                    </Link> } */}
+                
                 </nav>
 
                 <Switch>
