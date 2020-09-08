@@ -67,11 +67,13 @@ function UserCard(props) {
     };
 
     return (
-        <p onClick={goToUserPage}>
-            <h2>{props.fname} {props.lname}</h2>
-            <img src={props.profilePicture} />
-        email : {props.email}
-        </p>
+        <div class="media m-5 cb-cover-img" onClick={goToUserPage}>
+            <img class="d-flex mr-3 large-profile-pic" src={props.profilePicture} alt="User Icon"></img>
+            <div class="media-body align-self-center">
+                <h5 class="mt-0 font-weight-bold">{props.fname} {props.lname}</h5>
+                <p>{props.email}</p>
+            </div>
+        </div>
     );
 }
 
@@ -93,7 +95,7 @@ export function UserSearchResults(props) {
     console.log(results);
 
     return (<div>
-        <h1>Search Results</h1>
+        <h1 class="modal-text m-3">User Search Results</h1>
         <div>{results}</div>
     </div>);
 }
@@ -107,12 +109,14 @@ function RecipeCard(props) {
     };
 
     return (
-        <p onClick={goToRecipePage}>
-            <h2>{props.title}</h2>
-            <img src={props.coverPhoto} />
-        time required:{props.timeReq}
-        ingredients:{props.ingredients}
-        </p>
+        <div class="media m-5 cb-cover-img" onClick={goToRecipePage}>
+            <img class="d-flex mr-3" src={props.coverPhoto} alt="Search Image"></img>
+            <div class="media-body">
+                <h5 class="mt-0 font-weight-bold">{props.title}</h5>
+                <p>time required:{props.timeReq}</p>
+                <p>ingredients:{props.ingredients}</p>
+            </div>
+        </div>
     );
 }
 
@@ -131,7 +135,7 @@ export function RecipeSearchResults(props) {
     }
 
     return (<div>
-        <h1>Search Results</h1>
+        <h1 class="modal-text m-3">Recipe Search Results</h1>
         <div>{results}</div>
     </div>);
 }
@@ -205,7 +209,7 @@ function Explore() {
 
     return (
         <React.Fragment>
-            <h1>What's cooking?</h1>
+            <h1 class="modal-text pt-3">What's cooking?</h1>
             <CookbookContainer />
         </React.Fragment>
     );
