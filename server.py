@@ -16,11 +16,78 @@ app = Flask(__name__)
 app.secret_key = "outofthefryingpan"
 bcrypt = Bcrypt()
 
+
 @app.route('/')
 def root():
     return render_template("root.html")
 
 
+#User registration/authentication roots---------------------------------------#
+@app.route('/api/login', methods=['POST'])
+def authenticate_user():
+    data = request.get_json()
+    email = data["email"]
+    password = data["password"]
+
+
+    user = crud.get_user_by_email(email)
+
+    user_data = {"user_id": '', "name":'', "profile_picture":''}
+
+    print(user.password)
+    print(password)
+    print("check password:")
+    print(bcrypt.check_password_hash(user.password, password))
+
+    if user and bcrypt.check_password_hash(user.password, password):
+        session["user_id"] = user.user_id
+        status = "success"
+        user_data["user_id"] = user.user_id
+        user_data["name"] = user.fname
+        user_data["profile_picture"] = user.profile_picture
+    else:
+        status = "error"
+
+
+    return jsonify({'status':status, 'user_data':user_data})
+
+
+@app.route('/api/create-account', methods=['POST'])
+def create_user():
+    data = request.get_json()
+    email = data["email"]
+    password = data["password"]
+    fname = data["fname"]
+    lname = data["lname"]
+
+    user = crud.get_user_by_email(email)
+    
+
+    if user:
+        status = "error"
+        user_data = ""
+    else:
+        status = "success"
+
+        new_user = crud.create_user(
+                        fname=fname,
+                        lname=lname,
+                        email=email,
+                        password= bcrypt.generate_password_hash(password).decode('utf-8')
+                    )
+        session["user_id"] = new_user.user_id
+        print(new_user)
+        user_data = {
+            "user_id": new_user.user_id,
+            "name": new_user.fname,
+            "profile_picture": new_user.profile_picture
+        }
+        
+    
+    return jsonify({'status':status, 'user_data':user_data})
+
+
+#User's homepage routes-------------------------------------------------------#
 @app.route('/api/user-cookbooks/<user_id>')
 def get_user_cookbooks(user_id):
 
@@ -45,7 +112,134 @@ def set_cookbook():
     return jsonify({"cookbook_id":cookbook_id})
 
 
+@app.route('/api/update-user-profile', methods=['POST'])
+def update_user_profile():
+    data = request.get_json()
+    fname = data.get("fname", None)
+    profile_picture = data.get("photo", "/static/img/chef_hat.png")
 
+    user_id = session["user_id"]
+
+    user = crud.update_user(user_id, fname, profile_picture)
+
+    user_data = {"name": user.fname, "profile_picture": user.profile_picture}
+
+    return jsonify(user_data)
+
+
+@app.route('/api/connections/<user_id>')
+def get_user_connections(user_id):
+    user = crud.get_user_by_id(user_id)
+
+    connections = user.connections
+
+    following_list = []
+    for connection in connections:
+        friend_id = connection.friend_id
+        friend = crud.get_user_by_id(friend_id)
+        following_list.append({
+            "friend_id": friend_id,
+            "friend_name" : friend.fname,
+            "friend_picture" : friend.profile_picture
+        })
+
+    return jsonify(following_list)
+
+
+#Viewing another user's profile routes-----------------------------------------#
+@app.route('/api/user/<user_id>')
+def get_user_data(user_id):
+    user = crud.get_user_by_id(user_id)
+
+    user_data = {
+                "user_id":user.user_id,
+                "name": user.fname,
+                "profile_picture": user.profile_picture}
+        
+    return jsonify(user_data)
+
+
+@app.route('/api/favorite/<recipe_id>', methods=['POST'])
+def favorite_recipe(recipe_id):
+
+    recipe = crud.get_recipe_by_id(recipe_id)
+    user_id = session["user_id"]
+
+    title =  recipe.title,
+    ingredients = recipe.ingredients,
+    time_required = recipe.time_required,
+    servings = recipe.servings
+    media = recipe.media
+    steps = []
+    
+    recipe_steps = crud.get_steps_for_recipe(recipe_id)
+
+    for step in recipe_steps:
+        steps.append({"key": step.step_id,
+                    "num": step.step_number, 
+                    "body": step.body,
+                    "photo": step.media})
+
+    user_cookbooks = crud.cookbooks_by_user_id(user_id)
+
+    for cookbook in user_cookbooks:
+        if cookbook.title == "Favorites":
+            cookbook_id = cookbook.cookbook_id
+            break
+    else:
+        favorite_cookbook = crud.create_cookbook(title="Favorites",
+                            cover_img="https://res.cloudinary.com/deglaze/image/upload/v1599161258/Heart_font_awesome_ysrcui.png",
+                            user_id=user_id)
+        cookbook_id = favorite_cookbook.cookbook_id
+    
+    favorite_recipe = crud.create_recipe(title, cookbook_id, ingredients, time_required, servings, media)
+    for index, step in enumerate(steps):
+        crud.create_step(favorite_recipe.recipe_id, index+1, step["body"], step["photo"])
+
+    return jsonify("Success")
+
+
+@app.route('/api/check-connection', methods=['POST'])
+def check_connection():
+    logged_in_user_id = session["user_id"]
+    user_following_id = request.get_json()
+
+    logged_in_user = crud.get_user_by_id(logged_in_user_id)
+    
+    #Get the user's current connections
+    connections = logged_in_user.connections
+    
+    #Get each of the user ids associated with the connections
+    for connection in connections:
+        friend_id = connection.friend_id
+        
+        if int(friend_id) == int(user_following_id):
+            return jsonify(True)
+    
+    return jsonify(False)
+
+
+@app.route('/api/follow-user', methods=['POST'])
+def follow_user():
+    logged_in_user_id = session["user_id"]
+    user_to_follow_id = request.get_json()
+
+    connection = crud.create_connection(logged_in_user_id, user_to_follow_id)
+
+    return jsonify("Success")
+
+
+@app.route('/api/unfollow-user', methods=['POST'])
+def unfollow_user():
+    logged_in_user_id = session["user_id"]
+    user_to_unfollow_id = request.get_json()
+
+    connection = crud.delete_connection(logged_in_user_id, user_to_unfollow_id)
+
+    return jsonify("Deleted")
+
+
+#User cookbook routes----------------------------------------------------------#
 @app.route('/api/cookbook-details')
 def get_cookbook_details():
 
@@ -96,83 +290,7 @@ def get_recipe_steps(recipe_id):
     return jsonify(data)
 
 
-
-@app.route('/api/login', methods=['POST'])
-def authenticate_user():
-    data = request.get_json()
-    email = data["email"]
-    password = data["password"]
-
-
-    user = crud.get_user_by_email(email)
-
-    user_data = {"user_id": '', "name":'', "profile_picture":''}
-
-    print(user.password)
-    print(password)
-    print("check password:")
-    print(bcrypt.check_password_hash(user.password, password))
-
-    if user and bcrypt.check_password_hash(user.password, password):
-        session["user_id"] = user.user_id
-        status = "success"
-        user_data["user_id"] = user.user_id
-        user_data["name"] = user.fname
-        user_data["profile_picture"] = user.profile_picture
-    else:
-        status = "error"
-
-
-    return jsonify({'status':status, 'user_data':user_data})
-
-
-@app.route('/api/user/<user_id>')
-def get_user_data(user_id):
-    user = crud.get_user_by_id(user_id)
-
-    user_data = {
-                "user_id":user.user_id,
-                "name": user.fname,
-                "profile_picture": user.profile_picture}
-        
-    return jsonify(user_data)
-
-@app.route('/api/create-account', methods=['POST'])
-def create_user():
-    data = request.get_json()
-    email = data["email"]
-    password = data["password"]
-    fname = data["fname"]
-    lname = data["lname"]
-
-    user = crud.get_user_by_email(email)
-    
-
-    if user:
-        status = "error"
-        user_data = ""
-    else:
-        status = "success"
-
-        new_user = crud.create_user(
-                        fname=fname,
-                        lname=lname,
-                        email=email,
-                        password= bcrypt.generate_password_hash(password).decode('utf-8')
-                    )
-        session["user_id"] = new_user.user_id
-        print(new_user)
-        user_data = {
-            "user_id": new_user.user_id,
-            "name": new_user.fname,
-            "profile_picture": new_user.profile_picture
-        }
-        
-    
-    return jsonify({'status':status, 'user_data':user_data})
-
-
-
+#Modifying a recipe routes-----------------------------------------------------#
 @app.route('/api/save', methods=['POST'])
 def save_recipe():
     data = request.get_json()
@@ -221,60 +339,6 @@ def save_recipe():
     return jsonify(data)
 
 
-@app.route('/api/favorite/<recipe_id>', methods=['POST'])
-def favorite_recipe(recipe_id):
-
-    recipe = crud.get_recipe_by_id(recipe_id)
-    user_id = session["user_id"]
-
-    title =  recipe.title,
-    ingredients = recipe.ingredients,
-    time_required = recipe.time_required,
-    servings = recipe.servings
-    media = recipe.media
-    steps = []
-    
-    recipe_steps = crud.get_steps_for_recipe(recipe_id)
-
-    for step in recipe_steps:
-        steps.append({"key": step.step_id,
-                    "num": step.step_number, 
-                    "body": step.body,
-                    "photo": step.media})
-
-    user_cookbooks = crud.cookbooks_by_user_id(user_id)
-
-    for cookbook in user_cookbooks:
-        if cookbook.title == "Favorites":
-            cookbook_id = cookbook.cookbook_id
-            break
-    else:
-        favorite_cookbook = crud.create_cookbook(title="Favorites",
-                            cover_img="https://res.cloudinary.com/deglaze/image/upload/v1599161258/Heart_font_awesome_ysrcui.png",
-                            user_id=user_id)
-        cookbook_id = favorite_cookbook.cookbook_id
-    
-    favorite_recipe = crud.create_recipe(title, cookbook_id, ingredients, time_required, servings, media)
-    for index, step in enumerate(steps):
-        crud.create_step(favorite_recipe.recipe_id, index+1, step["body"], step["photo"])
-
-    return jsonify("Success")
-
-
-@app.route('/api/update-user-profile', methods=['POST'])
-def update_user_profile():
-    data = request.get_json()
-    fname = data.get("fname", None)
-    profile_picture = data.get("photo", "/static/img/chef_hat.png")
-
-    user_id = session["user_id"]
-
-    user = crud.update_user(user_id, fname, profile_picture)
-
-    user_data = {"name": user.fname, "profile_picture": user.profile_picture}
-
-    return jsonify(user_data)
-
 @app.route('/api/delete-recipe', methods=['POST'])
 def delete_recipe():
     recipe_id = request.get_json()
@@ -284,6 +348,7 @@ def delete_recipe():
     return jsonify("Deleted")
 
 
+#Modifying a cookbook routes---------------------------------------------------#
 @app.route('/api/save-cookbook', methods=['POST'])
 def save_cookbook():
     data = request.get_json()
@@ -313,6 +378,7 @@ def delete_cookbook():
     return jsonify('cookbook deleted')
 
 
+#Explore page routes-----------------------------------------------------------#
 @app.route('/api/random-data')
 def random_data():
     cookbooks = crud.all_cookbooks()
@@ -367,64 +433,7 @@ def search_recipes():
 
     return jsonify(search_results)
 
-@app.route('/api/connections/<user_id>')
-def get_user_connections(user_id):
-    user = crud.get_user_by_id(user_id)
 
-    connections = user.connections
-
-    following_list = []
-    for connection in connections:
-        friend_id = connection.friend_id
-        friend = crud.get_user_by_id(friend_id)
-        following_list.append({
-            "friend_id": friend_id,
-            "friend_name" : friend.fname,
-            "friend_picture" : friend.profile_picture
-        })
-
-    print(following_list)
-
-    return jsonify(following_list)
-
-
-@app.route('/api/check-connection', methods=['POST'])
-def check_connection():
-    logged_in_user_id = session["user_id"]
-    user_following_id = request.get_json()
-
-    logged_in_user = crud.get_user_by_id(logged_in_user_id)
-    
-    #Get the user's current connections
-    connections = logged_in_user.connections
-    
-    #Get each of the user ids associated with the connections
-    for connection in connections:
-        friend_id = connection.friend_id
-        
-        if int(friend_id) == int(user_following_id):
-            return jsonify(True)
-    
-    return jsonify(False)
-
-@app.route('/api/follow-user', methods=['POST'])
-def follow_user():
-    logged_in_user_id = session["user_id"]
-    user_to_follow_id = request.get_json()
-
-    connection = crud.create_connection(logged_in_user_id, user_to_follow_id)
-
-    return jsonify("Success")
-
-
-@app.route('/api/unfollow-user', methods=['POST'])
-def unfollow_user():
-    logged_in_user_id = session["user_id"]
-    user_to_unfollow_id = request.get_json()
-
-    connection = crud.delete_connection(logged_in_user_id, user_to_unfollow_id)
-
-    return jsonify("Deleted")
 
 if __name__ == '__main__':
     connect_to_db(app)
