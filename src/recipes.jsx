@@ -282,6 +282,8 @@ function RecipieForm(props) {
         setSteps(updatedStepOrder);
     };
 
+
+
     return (
         <React.Fragment>
             <div class="icon-button mr-3 text-right" onClick={deleteRecipe}>
@@ -302,12 +304,18 @@ function RecipieForm(props) {
                     </div>
 
                     <div class="d-inline-flex">
-                    <div class="view overlay" onClick={uploadWidget.open}>
-                        <img src={photo}></img>
-                        <div class="mask flex-center waves-effect waves-light rgba-green-light">
-                            <p id="edit-overlay-text">Edit Cover Photo</p>
-                        </div>
-                    </div>
+                    { photo ?  
+                        <div class="view overlay" onClick={uploadWidget.open}>
+                            <img src={photo}></img>
+                            <div class="mask flex-center waves-effect waves-light rgba-green-light">
+                                <p id="edit-overlay-text">Edit Cover Photo</p>
+                            </div>
+                        </div> : 
+                        <button class="btn btn-success" onClick={(evt) => {
+                                                                    evt.preventDefault();
+                                                                    uploadWidget.open();}}>
+                            Add Photo
+                        </button>}
                     </div>
 
                     <div class="my-3">
