@@ -1,4 +1,4 @@
-/* Profile picture styles */
+/* Profile picture styles --------------------------------------------------*/
 .profile-pic {
   height: 60px;
   width: auto;
@@ -12,7 +12,7 @@
 }
 
 
-/* Navbar styles */
+/* Navbar styles-------------------------------------------------------------- */
 #Cuca-Navbar-Logo {
   height: 60px;
   width: auto;
@@ -57,7 +57,7 @@
   font-weight: 500;
 }
 
-/* Button styles */
+/* Button styles------------------------------------------------------------- */
 .btn.btn-success,
 .btn.btn-success:focus,
 .btn.btn-success:active,
@@ -107,14 +107,14 @@
   text-align: center; 
 } 
 
-/* Standard Cuca Page styles */
+/* Standard Cuca Page styles --------------------------------------------------*/
 .cuca-standard-page{
   background-color:FCFCFC;
   color:100E14;
   font-family: 'Roboto', sans-serif;
 }
 
-/* About/Login Page styles */
+/* About/Login Page styles --------------------------------------------------- */
 .about-page{
   background-color:#a12618;
   background-image: url('/static/img/IMG_1239.jpg');
@@ -155,7 +155,7 @@ footer {
 }
 
 
-/* Cookbook display styles */
+/* Cookbook display styles -----------------------------------------------------*/
 .cookbook-card {
   width: 18rem;
   display:inline-block;
@@ -185,7 +185,7 @@ footer {
 }
 
 
-/* Form display styles */
+/* Form display styles--------------------------------------------------------- */
 .form-label {
   font-size: xx-large;
   color: #a12618;
