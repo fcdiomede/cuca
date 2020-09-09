@@ -6,8 +6,6 @@ import { useParams, useHistory } from 'react-router-dom';
 
 export function ProfilePicture(props) {
 
-    console.log(props);
-
     const handleLogout = () => {
         props.setLoggedIn(false);
     };
@@ -37,8 +35,6 @@ export function UserProfileModal(props) {
 
     const [fname, setFName] = React.useState(props.userData.name);
     const [photo, setPhoto] = React.useState(props.userData.profile_picture);
-
-    console.log(props);
 
     //cloudinary config
     const uploadWidget = window.cloudinary.createUploadWidget({
@@ -160,7 +156,6 @@ export function UserProfile(props) {
         fetch(`/api/user/${userId}`)
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 setUser(data);
             });
     }, [userId]);
@@ -210,7 +205,6 @@ function FollowedUserCard(props) {
     let history = useHistory();
 
     const goToUserPage = () => {
-        // console.log('Sure would be nice to see your friends page, huh?')
         history.push(`/user/${props.friendId}`);
     };
 

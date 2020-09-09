@@ -175,7 +175,7 @@ export function NewCookbookForm(props) {
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header text-center">
-                        <h5 class="modal-title modal-text w-100 font-weight-bold" id="loginModalLabel">
+                        <h5 class="modal-title cuca-red-text w-100 font-weight-bold" id="loginModalLabel">
                             Edit Cookbook Cover
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">

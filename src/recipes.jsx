@@ -17,8 +17,6 @@ function FavoriteRecipe(props) {
 
     let recipeId = props.recipeDetails?.recipe_id;
 
-    console.log(recipeId);
-
     const favoriteRecipe = () => {
         fetch(`/api/favorite/${recipeId}`, {
             method: 'POST',
@@ -26,9 +24,7 @@ function FavoriteRecipe(props) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
-        })
-            .then((res) => res.json())
-            .then((data) => console.log(data));
+        });
     };
 
     return (<span class="icon-button my-auto" onClick={favoriteRecipe}>
@@ -38,11 +34,8 @@ function FavoriteRecipe(props) {
 
 function RecipeDetails(props) {
 
-    console.log(props);
-
     let { recipeId } = useParams();
 
-    console.log(props.recipeDetails);
 
     React.useEffect(() => {
         fetch(`/api/recipe-details/${recipeId}`, {
@@ -129,8 +122,6 @@ function RecipieForm(props) {
     let history = useHistory();
 
     let recipeId = props.recipeDetails?.recipe_id;
-
-    console.log(recipeId);
 
     //track what user is entering in fields
     const [title, setTitle] = React.useState(props.recipeDetails?.title);
@@ -247,7 +238,6 @@ function RecipieForm(props) {
                 }
             })
                 .then((res) => {
-                    console.log(res);
                     props.setRecipeEditCount(props.recipeEditCount + 1);
                     history.push('/recipes');
                 });
@@ -438,7 +428,6 @@ function RecipeNav(props) {
         if (confirmDelete) {
             fetch('/api/delete-cookbook')
                 .then((res) => {
-                    console.log(res);
                     history.push('/');
                 });
         }

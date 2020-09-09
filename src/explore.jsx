@@ -24,7 +24,6 @@ export function SearchBar(props) {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 props.setSearchResults(data);
                 setSearchTerm('');
                 history.push(`/search/${searchItem}`);
@@ -92,8 +91,6 @@ export function UserSearchResults(props) {
             />
         );
     }
-
-    console.log(results);
 
     return (<div>
         <h1 class="cuca-red-text m-3">User Search Results</h1>
