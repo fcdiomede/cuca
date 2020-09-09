@@ -9,12 +9,15 @@ import server
 
 from api import data_for_db
 
+from flask_bcrypt import Bcrypt
+
 os.system('dropdb recipeapp')
 os.system('createdb recipeapp')
 
 model.connect_to_db(server.app)
 model.db.create_all()
 
+bcrypt = Bcrypt()
 fake = Faker()
 
 recipes_for_db = data_for_db()
@@ -24,7 +27,7 @@ for i in range(10):
     fname = fake.first_name()
     lname = fake.last_name()
     email = f"{fname[0]}{lname}@email.com"
-    password = "test"
+    password = bcrypt.generate_password_hash("test").decode('utf-8')
 
     user = crud.create_user(fname, lname, email, password)
 
