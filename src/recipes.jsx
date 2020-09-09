@@ -405,14 +405,14 @@ function RecipieForm(props) {
                     </Droppable>
 
                     <div class="mb-3 ml-4">
-                        <button class="btn btn-success btn-sm" onClick={addStep}>Add Step</button>
+                        <button class="btn btn-warning btn-sm" onClick={addStep}>Add Step</button>
                     </div>
                     </div>
 
 
                     <div class="d-flex justify-content-end my-3">
-                        <button type="button" class="btn btn-warning" onClick={cancel}>Cancel</button>
-                        <input type="submit" class="btn btn-success" value="Save" onClick={save}></input>
+                        <button type="button" class="btn btn-success" onClick={cancel}>Cancel</button>
+                        <input type="submit" class="btn btn-warning" value="Save" onClick={save}></input>
                     </div>
                 </form>
             </DragDropContext>
