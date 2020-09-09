@@ -127,7 +127,7 @@ function FollowUserButton(props) {
             .then((data) => props.setCurrentlyFollowed(true));
     };
 
-    return (<button class="btn btn-success btn-sm d-block" onClick={followUser}>Follow</button>);
+    return (<button class="btn btn-warning btn-sm d-block" onClick={followUser}>Follow</button>);
 }
 
 function UnfollowUserButton(props) {
@@ -145,7 +145,7 @@ function UnfollowUserButton(props) {
             .then((data) => props.setCurrentlyFollowed(false));
     };
 
-    return (<button class="btn btn-warning btn-sm d-block" onClick={unfollowUser}>Unfollow</button>);
+    return (<button class="btn btn-success btn-sm d-block" onClick={unfollowUser}>Unfollow</button>);
 }
 
 
