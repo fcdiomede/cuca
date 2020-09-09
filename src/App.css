@@ -34,6 +34,13 @@
 
 .about-page{
   background-color:#a12618;
+  background-image: url('/static/img/IMG_1239.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   color:#FCFCFC;
   font-family: 'Roboto', sans-serif;
 }
@@ -49,7 +56,7 @@
 }
 
 .dictionary-ex-phrase {
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .dictionary-def{
@@ -98,7 +105,7 @@
 }
 
 footer {
-  background-color: #a12618 !important;
+  background-color: #3C3C3C !important;
   margin-top:20px;
 }
 

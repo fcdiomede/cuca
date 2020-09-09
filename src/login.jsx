@@ -221,11 +221,11 @@ function Login(props) {
                         [ˈmɛstɾi-ˈkuka]
                     <i> noun informal</i>
                     </p>
-                    <p>Brazilian phrase meaning highly skilled home cook. </p>
-                    <p class="dictionary-ex-phrase"> "Can you believe the delicious dishes
-                    Aunt Claudia served for dinner? Look at her go, all
-                    Mestre Cuca."
-                </p>
+                    <p>Brazilian phrase meaning highly skilled cook. </p>
+                    <p class="dictionary-ex-phrase"> 
+                    "Aunt Cláudia always cooks the most delicious dishes. 
+                    She is such a mestre cuca."
+                    </p>
                 </div>
             </div>
 
