@@ -43,7 +43,7 @@
   display: none;
 }
 
-/* Text realted styles */
+/* Text realted styles -------------------------------------------------------*/
 .cuca-white-text{
   color:#FCFCFC !important;
   font-family: 'Roboto', sans-serif;
@@ -89,7 +89,7 @@
 }
 
 .icon-button{
-  color: 100E14;
+  color: #3C3C3C;
   cursor: pointer;
   font-size: large;
 }

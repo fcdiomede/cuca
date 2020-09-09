@@ -453,8 +453,8 @@ function RecipeNav(props) {
                         {props.viewOnly ? null :
                             <React.Fragment>
                                 <Link to={`${url}/new`}>
-                                    <span class="mr-3">
-                                        <i class="fas fa-plus icon-button"></i>
+                                    <span class="icon-button mr-3">
+                                        <i class="fas fa-plus"></i>
                                     </span>
                                 </Link>
                                 <span class="icon-button mr-3" onClick={deleteCookbook}>
