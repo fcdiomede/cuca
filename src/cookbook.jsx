@@ -25,7 +25,7 @@ export function CookbookCover(props) {
 
     return (
         <React.Fragment>
-            <span class="card cookbook-card mr-2">
+            <span class="card cookbook-card m-2">
                 <div class="view overlay zoom">
                 <img src={props.imgUrl} class="card-img-top cb-cover-img" alt="cookbook-img" onClick={goToCookbook}></img>
                 </div>

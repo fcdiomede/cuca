@@ -186,8 +186,10 @@ function Explore() {
 
     return (
         <React.Fragment>
-            <h1 class="modal-text pt-3">What's cooking?</h1>
+            <h1 class="modal-text m-3">What's cooking?</h1>
+            <div class="m-3">
             <CookbookContainer />
+            </div>
         </React.Fragment>
     );
 }
