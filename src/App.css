@@ -33,7 +33,7 @@
 }
 
 .about-page{
-  background-color:#6B1D14;
+  background-color:#a12618;
   color:#FCFCFC;
   font-family: 'Roboto', sans-serif;
 }
@@ -98,7 +98,7 @@
 }
 
 footer {
-  background-color: #6B1D14 !important;
+  background-color: #a12618 !important;
   margin-top:20px;
 }
 
@@ -108,7 +108,7 @@ footer {
 }
 
 .modal-text{
-  color: #6B1D14;
+  color: #a12618;
 }
 
 .cuca-standard-page{
@@ -169,7 +169,7 @@ footer {
 
 .form-label {
   font-size: xx-large;
-  color: #6B1D14;
+  color: #a12618;
 }
 
 .fa-input {

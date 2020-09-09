@@ -207,7 +207,7 @@ function Login(props) {
 
             <div class="row">
                 <div class="col d-flex justify-content-center">
-                    <img src="https://res.cloudinary.com/deglaze/image/upload/v1599631198/cuca/mcuca_greenoutline_pt7zru.svg"
+                    <img src="https://res.cloudinary.com/deglaze/image/upload/v1599665720/mcuca_blackoutline_djrjaw.svg"
                         class="cuca-banner">
                     </img>
                 </div>
