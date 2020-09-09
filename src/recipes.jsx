@@ -31,7 +31,7 @@ function FavoriteRecipe(props) {
             .then((data) => console.log(data));
     };
 
-    return (<span class="icon-button ml-3" onClick={favoriteRecipe}>
+    return (<span class="icon-button my-auto" onClick={favoriteRecipe}>
         <i class="fas fa-heart"></i>
     </span>);
 }
@@ -380,17 +380,16 @@ function RecipieForm(props) {
 
                                                         <div class="d-flex flex-row">
                                                         <input type='button'
-                                                            class="btn btn-success btn-sm"
+                                                            class="btn fa-input"
                                                             data-idx={index}
                                                             name={photoId}
                                                             onClick={handleImgUpload}
-                                                            value='add image'
-                                                            id={photoId} />
+                                                            value="	&#xf03e;" />
                                                         <input type='button'
-                                                            class="btn btn-warning btn-sm"
+                                                            class="btn fa-input"
                                                             data-idx={index}
                                                             onClick={deleteStep}
-                                                            value='Delete Step' />
+                                                            value="&#xf1f8;" />
                                                         </div>
                                                         
                                                         <img src={step.photo}></img>

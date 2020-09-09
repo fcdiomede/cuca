@@ -68,6 +68,8 @@ export function CookbookContainer(props) {
 
     let { userId } = useParams();
 
+    const viewOnly = (props.userId != props.creator_id)
+
 
     React.useEffect(() => {
         fetch(`/api/user-cookbooks/${userId}`)
@@ -96,8 +98,10 @@ export function CookbookContainer(props) {
          <div class="row">
              <div class="col d-flex align-items-center justify-content-between">
                 <h3 class="section-heading mr-3">Cookbooks</h3>
-                <CreateNewCookbook cookbookEdits={cookbookEdits}
-                                    setCookbookEdits={setCookbookEdits}/>
+                { viewOnly ? null: 
+                            <CreateNewCookbook cookbookEdits={cookbookEdits}
+                                            setCookbookEdits={setCookbookEdits}/>
+                }
              </div>
             
         </div>
