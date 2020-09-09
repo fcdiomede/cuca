@@ -1,12 +1,12 @@
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
 
-function CookbookCover(props) {
+export function CookbookCover(props) {
 
     let history = useHistory();
 
 
-    const editAccess = (props.userId == props.creator_id)
+    const viewOnly = (props.userId != props.creator_id)
 
     const data = { 'cookbookId': props.cookbookId };
 
@@ -32,11 +32,12 @@ function CookbookCover(props) {
                 <div class="card-body d-flex justify-content-between align-items-center p-3">
                     <h5 class="card-title m-0">{props.title}</h5>
                     <div>
-                    { editAccess ? <span class="icon-button mr-3" 
+                    { viewOnly ?  null :
+                                <span class="icon-button mr-3" 
                                         data-toggle="modal"
                                         data-target="#cookbookFormModal">
-                                            <i class="fas fa-pen" aria-hidden="true"></i>
-                                    </span> : null}
+                                     <i class="fas fa-pen" aria-hidden="true"></i>
+                                </span>}
                     <span onClick={goToCookbook} class="icon-button">
                         <i class="fas fa-eye"></i>
                     </span>

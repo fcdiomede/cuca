@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { CookbookCover } from "./cookbook";
 
 export function SearchBar(props) {
 
@@ -140,31 +141,6 @@ export function RecipeSearchResults(props) {
     </div>);
 }
 
-function CookbookCover(props) {
-
-    let history = useHistory();
-
-    const data = { 'cookbookId': props.cookbookId };
-
-    const goToCookbook = () => {
-        fetch('/api/set-cookbook', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(() => history.push('/recipes'));
-    };
-
-    return (
-        <div className="cookbook" onClick={goToCookbook}>
-            <p>Name: {props.title}</p>
-            <img src={props.imgUrl} />
-        </div>
-    );
-}
 
 //component to hold all cookbook cards
 export function CookbookContainer(props) {
@@ -187,6 +163,7 @@ export function CookbookContainer(props) {
     for (const cookbook of randomCookbooks) {
         cookbooks.push(
             <CookbookCover
+                creator_id={cookbook.creator_id}
                 key={cookbook.key}
                 cookbookId={cookbook.key}
                 title={cookbook.title}

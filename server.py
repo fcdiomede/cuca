@@ -306,7 +306,8 @@ def random_data():
     for c in random_cookbooks:
         cookbook_data.append({"key": c.cookbook_id,
                             "title": c.title, 
-                            "imgUrl": c.cover_img
+                            "imgUrl": c.cover_img,
+                            "creator_id" : c.user.user_id
                                 })
 
     print(random_cookbooks)
