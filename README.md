@@ -44,7 +44,7 @@ A user can go to the explore page to see a random collection of cookbooks or a u
 A user can follow a specific user for easy access to that user's recipes, or favorite any recipe they wish to save.
 
 ## <a name="future"></a>Future State
-The project roadmap for JobTracker has several features planned out for the next sprint:
+The project roadmap for Cuca has several features planned out for the next sprint:
 * Comments section on recipes for users to ask for clarification on any step
 * Built-in unit conversion for recipe ingredients
 * Saving a grocery list for a recipe, and sending that list to your phone
