@@ -16,25 +16,25 @@
 }
 
 .cuca-nav {
-  background-color:#465C8B;
+  background-color:#456A1D;
   font-weight: bold;
   font-size: large;
 }
 
 .cuca-white-text{
-  color:#DFDCE3 !important;
+  color:#F2F7F2 !important;
   font-family: 'Roboto', sans-serif;
 }
 
 .nav-link:hover { 
-  color:#93C178 !important;
+  color:#E6B439 !important;
   box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
   border-radius: 20px;
 }
 
 .about-page{
-  background-color:#465C8B;
-  color:#DFDCE3;
+  background-color:#456A1D;
+  color:#F2F7F2;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -45,7 +45,7 @@
 
 
 .dictionary-border{
-  border-color: #DFDCE3;
+  border-color: #F2F7F2;
 }
 
 .dictionary-ex-phrase {
@@ -59,12 +59,12 @@
 }
 
 .active-green input.form-control[type=text]:focus:not([readonly]) {
-  border-bottom: 1px solid #93C178;
-  box-shadow: 0 1px 0 0 #93C178;
+  border-bottom: 1px solid #E6B439;
+  box-shadow: 0 1px 0 0 #E6B439;
 }
 
 .active-green  i {
-  color: #93C178;
+  color: #E6B439;
 }
 
 .btn.btn-success,
@@ -72,28 +72,28 @@
 .btn.btn-success:active,
 .btn.btn-success.active {
   color:white;
-  background-color: #93C178 !important;
-  border-color: #93C178;
+  background-color: #E6B439 !important;
+  border-color: #E6B439;
 }
 
 .btn.btn-warning,
 .btn.btn-warning:focus,
 .btn.btn-warning:active,
 .btn.btn-warning.active {
-  color:black;
-  background-color: #F7EF6A !important;
-  border-color: #F7EF6A;
+  color:100E14;
+  background-color: #C03228 !important;
+  border-color: #C03228;
 }
 
 .btn.btn-success:hover,
 .btn.btn-warning:hover {
   box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
-  color: #465C8B;
+  color: #456A1D;
   font-weight:bold;
 }
 
 footer {
-  background-color: #465C8B !important;
+  background-color: #456A1D !important;
   margin-top:20px;
 }
 
@@ -103,12 +103,12 @@ footer {
 }
 
 .modal-text{
-  color: #465C8B;
+  color: #456A1D;
 }
 
 .cuca-standard-page{
-  background-color:#DFDCE3;
-  color:black;
+  background-color:#F2F7F2;
+  color:100E14;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -118,13 +118,13 @@ footer {
 }
 
 .icon-button{
-  color: black;
+  color: 100E14;
   cursor: pointer;
   font-size: large;
 }
 
 .icon-button:hover{
-  color:#93C178;
+  color:#E6B439;
 }
 
 .cb-cover-img {
@@ -143,7 +143,7 @@ footer {
 #edit-overlay-text{
   font-size: xx-large;
   font-weight: bolder;
-  color: black;
+  color: 100E14;
   text-shadow: 0 0 3px white, 0 0 3px white, 0 0 3px white, 0 0 3px white;
 }
 
@@ -164,9 +164,13 @@ footer {
 
 .form-label {
   font-size: xx-large;
-  color: #465C8B;
+  color: #456A1D;
 }
 
 .fa-input {
   font-family: FontAwesome, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.fa-input:hover {
+  color:#E6B439;
 }
