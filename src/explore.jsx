@@ -96,7 +96,7 @@ export function UserSearchResults(props) {
     console.log(results);
 
     return (<div>
-        <h1 class="modal-text m-3">User Search Results</h1>
+        <h1 class="cuca-red-text m-3">User Search Results</h1>
         <div>{results}</div>
     </div>);
 }
@@ -136,7 +136,7 @@ export function RecipeSearchResults(props) {
     }
 
     return (<div>
-        <h1 class="modal-text m-3">Recipe Search Results</h1>
+        <h1 class="cuca-red-text m-3">Recipe Search Results</h1>
         <div>{results}</div>
     </div>);
 }
@@ -186,7 +186,7 @@ function Explore() {
 
     return (
         <React.Fragment>
-            <h1 class="modal-text m-3">What's cooking?</h1>
+            <h1 class="cuca-red-text m-3">What's cooking?</h1>
             <div class="m-3">
             <CookbookContainer />
             </div>

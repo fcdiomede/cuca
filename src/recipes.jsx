@@ -69,7 +69,7 @@ function RecipeDetails(props) {
             {props.recipeDetails ?
                 <div>
                     <div class="d-flex">
-                        <h1 class="modal-text m-3">
+                        <h1 class="cuca-red-text m-3">
                             {props.recipeDetails.title}
                         </h1>
                         {props.viewOnly ?
@@ -83,17 +83,17 @@ function RecipeDetails(props) {
 
                     <div class="my-3">
                         <span class="m-2">
-                            <h7 class="modal-text">time required:</h7>
+                            <h7 class="cuca-red-text">time required:</h7>
                             {props.recipeDetails.time_required}
                         </span>
                         <span class="m-2">
-                            <h7 class="modal-text">servings: </h7>
+                            <h7 class="cuca-red-text">servings: </h7>
                             {props.recipeDetails.servings}
                         </span>
                     </div>
                     
                     <div>
-                    <h4 class="modal-text">Ingredients:</h4>
+                    <h4 class="cuca-red-text">Ingredients:</h4>
                     <ul>
                         {ingredients.map((ingredient,index) => {
                             return (<li key={index}>
@@ -104,7 +104,7 @@ function RecipeDetails(props) {
                     </div>
                     
                     <div>
-                    <h4 class="modal-text">Instructions:</h4>
+                    <h4 class="cuca-red-text">Instructions:</h4>
                     <ol>
                         {props.recipeDetails.steps.map(step => {
                             return (<li key={step.key}>

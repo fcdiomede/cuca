@@ -188,7 +188,7 @@ export function UserProfile(props) {
                     <img src={user.profile_picture} class="large-profile-pic" />
                 </div>
                 <div class="d-flex flex-column justify-content-center">
-                    <h1 class="modal-text pt-3 d-block">Chef {user.name}</h1>
+                    <h1 class="cuca-red-text pt-3 d-block">Chef {user.name}</h1>
                     {currentlyFollowed ? <UnfollowUserButton userId={userId}
                     setCurrentlyFollowed={setCurrentlyFollowed} /> :
                     <FollowUserButton userId={userId}
@@ -271,7 +271,7 @@ function Homepage(props) {
     return (
         <React.Fragment>
             <div class="cuca-standard-page container-fluid">
-            <h1 class="modal-text pt-3">Welcome, Chef {props.name}!</h1>
+            <h1 class="cuca-red-text pt-3">Welcome, Chef {props.name}!</h1>
             <CookbookContainer userId={props.userId} creator_id={props.userId}/>
             <FollowedUsers userId={props.userId} />
             </div>
