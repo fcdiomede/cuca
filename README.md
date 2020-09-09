@@ -5,6 +5,12 @@ Cuca (pronounced Cook-Ah) is a recipe sharing web application that was inspired 
 Fernanda is an engineer with a curious mind. With a MS in Textile Engineering, she started her career as a Supply Chain Manager at a large manufacturer of performance wear. She fell in love with programming when she had to create a database to optimize supply chain decisions. She realized coding was her true calling and decided to change careers. She joined Epic, the healthcare software company, as a Techincal Support Engineer, helping users with system performance and efficiency. The position allowed her to take full advantage of her extensive communications and problem-solving skills, as well as experience firsthand the impact of good and bad code on users and, by extension, thousands of patients. Ultimately, she chose to pursue Hackbright because she wants to be the one writing the code, not just seeing its impact.
 Fernanda is also a puzzle enthusiast and gamer. She loves solving complex problems, learning new concepts, and building solitions. Fernanda is eager to combine her technical skills and creative thinking into a career in Software Engineering.
 
+## Contents
+* [Tech Stack](#tech-stack)
+* [Features](#features)
+* [Future State](#future)
+* [Installation](#installation)
+
 ## <a name="tech-stack"></a>Technologies
 * React
 * Python
