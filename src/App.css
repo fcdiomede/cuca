@@ -161,3 +161,12 @@ footer {
   height: 30vh;
   object-fit: cover;
 }
+
+.form-label {
+  font-size: xx-large;
+  color: #465C8B;
+}
+
+.form-picture {
+  display: inline-block
+}

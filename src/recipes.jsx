@@ -15,25 +15,25 @@ import cloudinaryUploader from "./uploadWidget";
 
 function FavoriteRecipe(props) {
 
-    let recipeId = props.recipeDetails?.recipe_id
+    let recipeId = props.recipeDetails?.recipe_id;
 
     console.log(recipeId);
 
     const favoriteRecipe = () => {
         fetch(`/api/favorite/${recipeId}`, {
-            method:'POST',
+            method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
         })
             .then((res) => res.json())
-            .then((data) => console.log(data))
-    }
+            .then((data) => console.log(data));
+    };
 
     return (<span class="icon-button ml-3" onClick={favoriteRecipe}>
-                <i class="fas fa-heart"></i>
-            </span>)
+        <i class="fas fa-heart"></i>
+    </span>);
 }
 
 function RecipeDetails(props) {
@@ -42,7 +42,7 @@ function RecipeDetails(props) {
 
     let { recipeId } = useParams();
 
-    console.log(props.recipeDetails)
+    console.log(props.recipeDetails);
 
     React.useEffect(() => {
         fetch(`/api/recipe-details/${recipeId}`, {
@@ -56,39 +56,64 @@ function RecipeDetails(props) {
             .then(data => props.setRecipeDetails(data));
     }, [recipeId]);
 
+    const ingredients = props.recipeDetails?.ingredients.split(',');
+
     let history = useHistory();
 
     const goToRecipe = () => {
-        history.push(`/recipes/edit`)
-    }
+        history.push(`/recipes/edit`);
+    };
 
     return (
         <React.Fragment>
             {props.recipeDetails ?
                 <div>
-                    <div>
-                        {props.recipeDetails.title}
-                        { props.viewOnly ?
-                         <FavoriteRecipe recipeDetails={props.recipeDetails}/> :
-                        <span class=" icon-button ml-3" onClick={goToRecipe}>
-                            <i class="fas fa-pen" aria-hidden="true"></i>
-                        </span> }
+                    <div class="d-flex">
+                        <h1 class="modal-text m-3">
+                            {props.recipeDetails.title}
+                        </h1>
+                        {props.viewOnly ?
+                            <FavoriteRecipe recipeDetails={props.recipeDetails} /> :
+                            <div class="icon-button my-auto" onClick={goToRecipe}>
+                                <i class="fas fa-pen" aria-hidden="true"></i>
+                            </div>}
                     </div>
-                    <img src={props.recipeDetails.media} />
                     
-                    <div> ingredients: {props.recipeDetails.ingredients}</div>
-                    <div>
-                        time required: {props.recipeDetails.time_required}
-                        servings: {props.recipeDetails.servings}
+                    <img src={props.recipeDetails.media} />
+
+                    <div class="my-3">
+                        <span class="m-2">
+                            <h7 class="modal-text">time required:</h7>
+                            {props.recipeDetails.time_required}
+                        </span>
+                        <span class="m-2">
+                            <h7 class="modal-text">servings: </h7>
+                            {props.recipeDetails.servings}
+                        </span>
                     </div>
+                    
+                    <div>
+                    <h4 class="modal-text">Ingredients:</h4>
+                    <ul>
+                        {ingredients.map((ingredient,index) => {
+                            return (<li key={index}>
+                                {ingredient}
+                                </li>);
+                        })}
+                    </ul>
+                    </div>
+                    
+                    <div>
+                    <h4 class="modal-text">Instructions:</h4>
                     <ol>
                         {props.recipeDetails.steps.map(step => {
-                        return (<li key={step.key}>
+                            return (<li key={step.key}>
                                 {step.body}
                                 <img src={step.photo} />
                             </li>);
                         })}
                     </ol>
+                    </div>
                 </div> :
                 <p>Loading...</p>}
         </React.Fragment>
@@ -102,10 +127,10 @@ function RecipeDetails(props) {
 function RecipieForm(props) {
 
     let history = useHistory();
-   
-    let recipeId = props.recipeDetails?.recipe_id
 
-    console.log(recipeId)
+    let recipeId = props.recipeDetails?.recipe_id;
+
+    console.log(recipeId);
 
     //track what user is entering in fields
     const [title, setTitle] = React.useState(props.recipeDetails?.title);
@@ -118,12 +143,12 @@ function RecipieForm(props) {
     //for a new recipe, steps needs to be initalized as an empty array
     //so that we can loop through and add steps in the recipe form
     if (steps == null) {
-        setSteps([{'body': '', 'photo': ''}])
+        setSteps([{ 'body': '', 'photo': '' }]);
     }
 
     const addStep = (evt) => {
         evt.preventDefault();
-        setSteps([...steps, {'body': '', 'photo': ''}]);
+        setSteps([...steps, { 'body': '', 'photo': '' }]);
     };
 
     const handleStepChange = (evt) => {
@@ -134,21 +159,22 @@ function RecipieForm(props) {
 
     const handleImgUpload = (evt) => {
 
-        const index = evt.target.dataset.idx
-        
-        const stepUploadWidget = window.cloudinary.createUploadWidget({ 
-            cloudName: "deglaze", uploadPreset: "cuca-preset" }, (error, result) => {
-                if (result.event === 'success') {
-                    const updatedSteps = [...steps];
-                    updatedSteps[index]['photo'] = result.info.url;
-                    setSteps(updatedSteps)
-                    
-                }
-             });
-        
+        const index = evt.target.dataset.idx;
+
+        const stepUploadWidget = window.cloudinary.createUploadWidget({
+            cloudName: "deglaze", uploadPreset: "cuca-preset"
+        }, (error, result) => {
+            if (result.event === 'success') {
+                const updatedSteps = [...steps];
+                updatedSteps[index]['photo'] = result.info.url;
+                setSteps(updatedSteps);
+
+            }
+        });
+
         stepUploadWidget.open();
 
-    }
+    };
 
     const deleteStep = (evt) => {
         const updatedSteps = [...steps];
@@ -182,7 +208,7 @@ function RecipieForm(props) {
             .then((res) => res.json())
             .then((data) => {
                 props.setRecipeEditCount(props.recipeEditCount + 1);
-                history.push(`/recipes/${data.recipe_id}`);       
+                history.push(`/recipes/${data.recipe_id}`);
             });
     };
 
@@ -198,19 +224,19 @@ function RecipieForm(props) {
 
 
     const cancel = () => {
-        history.push('/recipes')
-    }
+        history.push('/recipes');
+    };
 
     const deleteRecipe = () => {
 
         let confirmDelete = window.confirm(
-                `This will delete your recipe ${title}. 
+            `This will delete your recipe ${title}. 
                 This action cannot be undone. 
                 To return to previous screen without saving, 
                 try the cancel button instead.
                 
-                Are you sure you wish to continue?`)
-        
+                Are you sure you wish to continue?`);
+
         if (confirmDelete) {
             fetch('/api/delete-recipe', {
                 method: 'POST',
@@ -220,23 +246,23 @@ function RecipieForm(props) {
                     'Content-Type': 'application/json'
                 }
             })
-            .then((res) => {
-                console.log(res);
-                props.setRecipeEditCount(props.recipeEditCount + 1);
-                history.push('/recipes');
-            })
+                .then((res) => {
+                    console.log(res);
+                    props.setRecipeEditCount(props.recipeEditCount + 1);
+                    history.push('/recipes');
+                });
         }
-    }
+    };
 
     const reorder = (list, startIndex, endIndex) => {
-        const result = Array.from(list)
-        const [removed] = result.splice(startIndex, 1)
-        result.splice(endIndex, 0, removed)
-        return result
-      }
+        const result = Array.from(list);
+        const [removed] = result.splice(startIndex, 1);
+        result.splice(endIndex, 0, removed);
+        return result;
+    };
 
     const handleDragEnd = (result) => {
-        const { destination, source, draggableId} = result;
+        const { destination, source } = result;
 
         //if there is no destination, exit
         if (!destination) {
@@ -252,98 +278,126 @@ function RecipieForm(props) {
         }
 
         const newStepIds = [...steps];
-        const updatedStepOrder = reorder(newStepIds, source.index, destination.index)
+        const updatedStepOrder = reorder(newStepIds, source.index, destination.index);
         setSteps(updatedStepOrder);
     };
 
     return (
         <React.Fragment>
-        <button onClick={cancel}>Cancel</button>
-        <button onClick={deleteRecipe}>Delete Recipe</button>
-        <DragDropContext onDragEnd={handleDragEnd}>
-        <form>
-            <label>Title</label>
-            <input type='text'
-                id='title'
-                onChange={(evt) => setTitle(evt.target.value)}
-                value={title}></input>
-            <label>Cover Photo</label>
-            <input type='button' onClick={uploadWidget.open} value='Add Image' />
-            <img src={photo}></img>
-            <label>Ready in Mins:</label>
-            <input type='text'
-                id='readyMins'
-                onChange={(evt) => setMins(evt.target.value)}
-                value={mins}></input>
-            <label>Servings:</label>
-            <input type='text'
-                id='servings'
-                onChange={(evt) => setServings(evt.target.value)}
-                value={servings}></input>
-            <label>Ingredients (seperate each with comma)</label>
-            <input type='area'
-                id='ingredients'
-                onChange={(evt) => setIngredients(evt.target.value)}
-                value={ingredients}></input>
-                <label>Steps:</label>
-                <Droppable droppableId='step-dnd'>
-                    {(provided) => (
-                        <ol
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}
-                        >
-                            {
-                        steps?.map((step, index) => {
-                            const bodyId = `body-${index}`;
-                            const photoId = `photo-${index}`;
-                                return(
-                                <Draggable draggableId={`step-${index}`}
-                                            index={index}>
-                                {(provided) => (
-                                    <li key={`step-${index}`}
+            <div class="icon-button mr-3 text-right" onClick={deleteRecipe}>
+                <i class="fas fa-trash" aria-hidden="true"></i>
+            </div>
+            <DragDropContext onDragEnd={handleDragEnd}>
+                <form>
+                    <div class="form-group row">
+                    <label class="col-sm-1 col-form-label form-label">Title: </label>
                     
-                                        ref={provided.innerRef}
-                                        {...provided.draggableProps}
-                                        {...provided.dragHandleProps}
-                                        innerRef={provided}
-                                    >
-                                    <input type='area'
-                                        value={step.body}
-                                        id={bodyId}
-                                        name={bodyId}
-                                        data-idx={index}
-                                        className="body"
-                                        onChange={handleStepChange}></input>
-                                    {/* <input type='button'
-                                        data-idx={index}
-                                        onClick={addAbove}
-                                        value='Add Step Above' /> */}
-                                    <input type='button'
-                                        data-idx={index}
-                                        onClick={deleteStep}
-                                        value='Delete' />
-                                    <input type='button' 
-                                        data-idx={index}
-                                        name={photoId} 
-                                        onClick={handleImgUpload}
-                                        value='Add image to this step!' 
-                                        className="photo"
-                                        id={photoId} />
-                                    <img src={step.photo}></img>
-                                </li>
-                                )}
-                                </Draggable>
-                                )
-                        })
-                    }
-                            {provided.placeholder}
-                        </ol>
-                    )}
-                </Droppable>
-            <button onClick={addStep}>Add Step</button>
-            <input type="submit" onClick={save}></input>
-        </form>
-        </DragDropContext>
+                    <div class="col-sm-11 p-0 my-auto">
+                    <input type='text'
+                        id='title'
+                        class="form-control validate"
+                        onChange={(evt) => setTitle(evt.target.value)}
+                        value={title}></input>
+                    </div>
+                    </div>
+
+                    <div class="d-inline-flex">
+                    <div class="view overlay" onClick={uploadWidget.open}>
+                        <img src={photo}></img>
+                        <div class="mask flex-center waves-effect waves-light rgba-green-light">
+                            <p id="edit-overlay-text">Edit Cover Photo</p>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div>
+                    <label>Ready in:</label>
+                    <input type='text'
+                        id='readyMins'
+                        onChange={(evt) => setMins(evt.target.value)}
+                        value={mins}></input>
+                    <label>Servings:</label>
+                    <input type='text'
+                        id='servings'
+                        onChange={(evt) => setServings(evt.target.value)}
+                        value={servings}></input>
+                    </div>
+
+                    <div>
+                    <label>Ingredients (seperate each with comma)</label>
+                    <input type='area'
+                        id='ingredients'
+                        onChange={(evt) => setIngredients(evt.target.value)}
+                        value={ingredients}></input>
+                    </div>
+
+                    <div>
+                    <label>Steps:</label>
+                    <Droppable droppableId='step-dnd'>
+                        {(provided) => (
+                            <ol
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                            >
+                                {
+                                    steps?.map((step, index) => {
+                                        const bodyId = `body-${index}`;
+                                        const photoId = `photo-${index}`;
+                                        return (
+                                            <Draggable draggableId={`step-${index}`}
+                                                index={index}>
+                                                {(provided) => (
+                                                    <li key={`step-${index}`}
+
+                                                        ref={provided.innerRef}
+                                                        {...provided.draggableProps}
+                                                        {...provided.dragHandleProps}
+                                                        innerRef={provided}
+                                                    >
+                                                        <input type='area'
+                                                            value={step.body}
+                                                            id={bodyId}
+                                                            name={bodyId}
+                                                            data-idx={index}
+                                                            className="body"
+                                                            onChange={handleStepChange}></input>
+                                                        <input type='button'
+                                                            class="btn btn-success btn-sm"
+                                                            data-idx={index}
+                                                            name={photoId}
+                                                            onClick={handleImgUpload}
+                                                            value='add image'
+                                                            id={photoId} />
+                                                        <input type='button'
+                                                            class="btn btn-warning btn-sm"
+                                                            data-idx={index}
+                                                            onClick={deleteStep}
+                                                            value='Del' />
+                                                        
+                                                        <img src={step.photo}></img>
+                                                    </li>
+                                                )}
+                                            </Draggable>
+                                        );
+                                    })
+                                }
+                                {provided.placeholder}
+                            </ol>
+                        )}
+                    </Droppable>
+
+                    <div class="mb-3 ml-4">
+                        <button class="btn btn-success btn-sm" onClick={addStep}>Add Step</button>
+                    </div>
+                    </div>
+
+
+                    <div class="my-3">
+                        <input type="submit" class="btn btn-success" value="Save" onClick={save}></input>
+                        <button type="button" class="btn btn-warning" onClick={cancel}>Cancel</button>
+                    </div>
+                </form>
+            </DragDropContext>
         </React.Fragment>
     );
 }
@@ -361,16 +415,16 @@ function RecipeNav(props) {
             You will lose access to all of its contents. 
             This action cannot be undone. 
             
-            Are you sure you wish to continue?`)
-    
-    if (confirmDelete) {
-        fetch('/api/delete-cookbook')
-        .then((res) => {
-            console.log(res);
-            history.push('/');
-        })
-    }
-    }
+            Are you sure you wish to continue?`);
+
+        if (confirmDelete) {
+            fetch('/api/delete-cookbook')
+                .then((res) => {
+                    console.log(res);
+                    history.push('/');
+                });
+        }
+    };
 
     return (
         <Router>
@@ -378,42 +432,42 @@ function RecipeNav(props) {
                 <nav class="nav flex-column">
                     <div>
                         <span class="navbar-brand mb-0 h1">{props.cookbookTitle} Recipes</span>
-                        { props.viewOnly ? null :
+                        {props.viewOnly ? null :
                             <React.Fragment>
                                 <Link to={`${url}/new`}>
                                     <span class="mr-3">
-                                    <i class="fas fa-plus icon-button"></i>
+                                        <i class="fas fa-plus icon-button"></i>
                                     </span>
                                 </Link>
                                 <span class="icon-button mr-3" onClick={deleteCookbook}>
-                                     <i class="fas fa-trash" aria-hidden="true"></i>
+                                    <i class="fas fa-trash" aria-hidden="true"></i>
                                 </span>
                             </React.Fragment>}
                     </div>
-                <ul>
-                {props.recipes?.map(recipe => {
-                        return (<li class="nav-item" key={recipe.recipe_id}>
+                    <ul>
+                        {props.recipes?.map(recipe => {
+                            return (<li class="nav-item" key={recipe.recipe_id}>
                                 <Link to={`${url}/${recipe.recipe_id}`} class="nav-link">{recipe.title}</Link>
                             </li>);
                         })}
-                </ul>
-                
+                    </ul>
+
                 </nav>
 
                 <Switch>
                     <Route exact path={`${path}/new`}>
                         <RecipieForm recipeEditCount={props.recipeEditCount}
-                                    setRecipeEditCount={props.setRecipeEditCount}/>
+                            setRecipeEditCount={props.setRecipeEditCount} />
                     </Route>
                     <Route exact path={`${path}/edit`}>
                         <RecipieForm recipeDetails={props.recipeDetails}
-                                        recipeEditCount={props.recipeEditCount}
-                                        setRecipeEditCount={props.setRecipeEditCount}/>
+                            recipeEditCount={props.recipeEditCount}
+                            setRecipeEditCount={props.setRecipeEditCount} />
                     </Route>
                     <Route exact path={`${path}/:recipeId`}>
                         <RecipeDetails recipeDetails={props.recipeDetails}
-                                        setRecipeDetails={props.setRecipeDetails}
-                                        viewOnly={props.viewOnly}/>
+                            setRecipeDetails={props.setRecipeDetails}
+                            viewOnly={props.viewOnly} />
                     </Route>
                 </Switch>
             </div>
@@ -438,9 +492,9 @@ function Recipes(props) {
     }, [recipeEditCount]);
 
 
-    const creatorId = cookbookDetails.creator_id
+    const creatorId = cookbookDetails.creator_id;
 
-    const viewOnly = (props.userId !== creatorId)
+    const viewOnly = (props.userId !== creatorId);
 
 
 
@@ -448,22 +502,22 @@ function Recipes(props) {
         <React.Fragment>
             <div class="cuca-standard-page container-fluid">
 
-           
+
                 <RecipeNav recipes={cookbookDetails.recipes}
-                        recipeDetails={recipeDetails}
-                        setRecipeDetails={setRecipeDetails}
-                        recipeEditCount={recipeEditCount}
-                        setRecipeEditCount={setRecipeEditCount}
-                        viewOnly={viewOnly} 
-                        cookbookTitle={cookbookDetails.title}/>
-                
-                { recipeId ? null :
-                            <div>
-                                <h2>{cookbookDetails.title}</h2>
-                                <img src={cookbookDetails.cover_img} />
-                                
-                            </div>}
-           
+                    recipeDetails={recipeDetails}
+                    setRecipeDetails={setRecipeDetails}
+                    recipeEditCount={recipeEditCount}
+                    setRecipeEditCount={setRecipeEditCount}
+                    viewOnly={viewOnly}
+                    cookbookTitle={cookbookDetails.title} />
+
+                {recipeId ? null :
+                    <div>
+                        <h2>{cookbookDetails.title}</h2>
+                        <img src={cookbookDetails.cover_img} />
+
+                    </div>}
+
             </div>
         </React.Fragment>
     );
