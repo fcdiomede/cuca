@@ -2,6 +2,7 @@
 
 from model import db, connect_to_db, Cookbook, Recipe, Step, User, Connection
 
+#CRUD ops that return users---------------------------------------------------#
 def create_user(fname, lname, email, password, 
                 profile_picture="/static/img/chef_hat.png"):
     """Create and return a new user"""
@@ -14,10 +15,12 @@ def create_user(fname, lname, email, password,
 
     return user
 
+
 def all_users():
     """Return a list of all users"""
 
     return User.query.all()
+
 
 def get_user_by_email(user_email):
     """Return a specifc user by email address"""
@@ -43,6 +46,36 @@ def update_user(user_id, fname, profile_picture):
     return user
 
 
+def get_user_id_for_cookbook(cookbook_id):
+    """Return user associated with cookbook id"""
+
+    cookbook = Cookbook.query.get(cookbook_id)
+
+    user = cookbook.user
+
+    return user
+
+
+def search_for_user(search_term):
+    """Search for a user based on a search term"""
+
+    users = []
+
+    similar_first_name = User.query.filter(User.fname.ilike(f'%{search_term}%'))
+    similar_last_name =  User.query.filter(User.lname.ilike(f'%{search_term}%'))
+    similar_email = User.query.filter(User.email.ilike(f'%{search_term}%'))
+
+    users.extend(similar_first_name)
+    users.extend(similar_last_name)
+    users.extend(similar_email)
+
+    #eliminate duplicate results
+    users = set(users)
+
+    return users
+
+
+#CRUD ops that return Cookbooks------------------------------------------------#
 def create_cookbook(title, cover_img, user_id, deleted=False):
     """Create and return and new cookbook"""
 
@@ -74,6 +107,7 @@ def all_cookbooks():
 
     return Cookbook.query.filter_by(deleted=False).all() 
 
+
 def cookbooks_by_user_id(user_id):
     """Return a list of all cookbooks for a particular user"""
 
@@ -84,15 +118,6 @@ def cookbooks_by_user_id(user_id):
 
     return user_cookbooks.all()
 
-
-def get_user_id_for_cookbook(cookbook_id):
-    """return user associated with cookbook id"""
-
-    cookbook = Cookbook.query.get(cookbook_id)
-
-    user = cookbook.user
-
-    return user
 
 def get_cookbook_by_id(cookbook_id):
     """Return cookbook object for specific cookbook id"""
@@ -109,18 +134,7 @@ def delete_cookbook(cookbook_id):
     db.session.commit()
 
 
-def get_cookbook_recipes(cookbook_id):
-    """Return all recipes associated with a cookbook"""
-
-    cookbook = get_cookbook_by_id(cookbook_id)
-
-    cookbook_recipes = Recipe.query.filter( (Recipe.cookbook_id == cookbook_id) &
-                                            (Recipe.deleted == False) )
-
-
-    return cookbook_recipes.all()
-
-
+#CRUD ops that return Recipes__------------------------------------------------#
 def create_recipe(title, cookbook_id, ingredients, time_required, servings, 
                     media=None, deleted=False):
     """Create and return a new recipe"""
@@ -162,10 +176,23 @@ def delete_recipe_steps(recipe_id):
     
     db.session.commit()
 
+
 def all_recipes():
     """Returns all recipes not marked as deleted"""
     
     return Recipe.query.filter(Recipe.deleted == False).all()
+
+
+def get_cookbook_recipes(cookbook_id):
+    """Return all recipes associated with a cookbook"""
+
+    cookbook = get_cookbook_by_id(cookbook_id)
+
+    cookbook_recipes = Recipe.query.filter( (Recipe.cookbook_id == cookbook_id) &
+                                            (Recipe.deleted == False) )
+
+
+    return cookbook_recipes.all()
 
 
 def get_recipe_by_id(recipe_id):
@@ -173,12 +200,6 @@ def get_recipe_by_id(recipe_id):
 
     return Recipe.query.get(recipe_id)
 
-def get_steps_for_recipe(recipe_id):
-    """Returns steps for a specific recipe"""
-    
-    recipe = get_recipe_by_id(recipe_id)
-
-    return recipe.steps
 
 def delete_recipe(recipe_id):
     """Marks a recipe as deleted"""
@@ -188,37 +209,6 @@ def delete_recipe(recipe_id):
     print(recipe.deleted)
 
     db.session.commit()
-
-
-def create_step(recipe_id, step_number, body, media=None):
-    """Create and return a recipe step"""
-
-    step = Step(recipe_id=recipe_id, step_number=step_number, 
-                body=body, media=media)
-
-    db.session.add(step)
-    db.session.commit()
-
-    return step
-
-
-def search_for_user(search_term):
-    """Search for a user based on a search term"""
-
-    users = []
-
-    similar_first_name = User.query.filter(User.fname.ilike(f'%{search_term}%'))
-    similar_last_name =  User.query.filter(User.lname.ilike(f'%{search_term}%'))
-    similar_email = User.query.filter(User.email.ilike(f'%{search_term}%'))
-
-    users.extend(similar_first_name)
-    users.extend(similar_last_name)
-    users.extend(similar_email)
-
-    #eliminate duplicate results
-    users = set(users)
-
-    return users
 
 
 def search_for_recipe(search_term):
@@ -235,6 +225,28 @@ def search_for_recipe(search_term):
     return recipes
 
 
+#CRUD ops that return Steps---------------------------------------------------#
+def create_step(recipe_id, step_number, body, media=None):
+    """Create and return a recipe step"""
+
+    step = Step(recipe_id=recipe_id, step_number=step_number, 
+                body=body, media=media)
+
+    db.session.add(step)
+    db.session.commit()
+
+    return step
+
+
+def get_steps_for_recipe(recipe_id):
+    """Returns steps for a specific recipe"""
+    
+    recipe = get_recipe_by_id(recipe_id)
+
+    return recipe.steps
+
+
+#CRUD ops that return Connection between Users--------------------------------#
 def create_connection(user_id, friend_id):
 
     connection = Connection(user_id=user_id, friend_id=friend_id)
@@ -252,6 +264,8 @@ def delete_connection(user_id, friend_id):
 
     db.session.delete(connection)
     db.session.commit()
+
+
 
 
 
