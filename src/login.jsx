@@ -121,7 +121,9 @@ function SignUpModal(props) {
         .then((data) => {
             if (data.status === "success") {
                 alert("Success! Account has been created.");
-                history.push(`/homepage/${data.user_id}`);
+                props.setLoggedIn(true)
+                props.setUserData(data.user_data);
+                history.push(`/homepage/${data.user_data.user_id}`);
             } else {
                 alert('This user already exists. Try logging in.');
             }
@@ -250,7 +252,8 @@ function Login(props) {
 
             <LoginForm setLoggedIn={props.setLoggedIn}
                 setUserData={props.setUserData} />
-            <SignUpModal />
+            <SignUpModal setLoggedIn={props.setLoggedIn}
+                setUserData={props.setUserData}/>
 
             <div class="row">
                 <div class="col">

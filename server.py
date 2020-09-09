@@ -6,6 +6,7 @@ import os
 import time
 import hashlib
 from random import choices
+from flask_bcrypt import Bcrypt
 
 # CLOUDINARY_UPLOAD_URL = "https://api.cloudinary.com/v1_1/deglaze/image/upload"
 # CLOUDINARY_API_KEY = os.environ['API_KEY']
@@ -13,6 +14,7 @@ from random import choices
 
 app = Flask(__name__)
 app.secret_key = "outofthefryingpan"
+bcrypt = Bcrypt()
 
 @app.route('/')
 def root():
@@ -101,11 +103,17 @@ def authenticate_user():
     email = data["email"]
     password = data["password"]
 
+
     user = crud.get_user_by_email(email)
 
     user_data = {"user_id": '', "name":'', "profile_picture":''}
 
-    if user and password == user.password:
+    print(user.password)
+    print(password)
+    print("check password:")
+    print(bcrypt.check_password_hash(user.password, password))
+
+    if user and bcrypt.check_password_hash(user.password, password):
         session["user_id"] = user.user_id
         status = "success"
         user_data["user_id"] = user.user_id
@@ -138,22 +146,31 @@ def create_user():
     lname = data["lname"]
 
     user = crud.get_user_by_email(email)
+    
 
     if user:
         status = "error"
-        user_id = ""
+        user_data = ""
     else:
         status = "success"
+
         new_user = crud.create_user(
                         fname=fname,
                         lname=lname,
                         email=email,
-                        password=password)
-        user_id = new_user.user_id
-        session["user_id"] = user_id
+                        password= bcrypt.generate_password_hash(password).decode('utf-8')
+                    )
+        session["user_id"] = new_user.user_id
+        print(new_user)
+        user_data = {
+            "user_id": new_user.user_id,
+            "name": new_user.fname,
+            "profile_picture": new_user.profile_picture
+        }
         
     
-    return jsonify({'status':status, 'user_id':user_id})
+    return jsonify({'status':status, 'user_data':user_data})
+
 
 
 @app.route('/api/save', methods=['POST'])
