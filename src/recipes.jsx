@@ -310,29 +310,35 @@ function RecipieForm(props) {
                     </div>
                     </div>
 
-                    <div>
-                    <label>Ready in:</label>
+                    <div class="my-3">
+                    <label class="form-label" style={{fontSize: "large"}}>Ready in:</label>
                     <input type='text'
                         id='readyMins'
                         onChange={(evt) => setMins(evt.target.value)}
                         value={mins}></input>
-                    <label>Servings:</label>
+                    <label class="form-label" style={{fontSize: "large"}}>Servings:</label>
                     <input type='text'
                         id='servings'
                         onChange={(evt) => setServings(evt.target.value)}
                         value={servings}></input>
                     </div>
 
-                    <div>
-                    <label>Ingredients (seperate each with comma)</label>
-                    <input type='area'
+                    <div class="mb-3">
+                    <label>
+                        <div class="form-label">Ingredients</div>
+                        (seperate each with comma)
+                    </label>
+                    <textarea class="form-control validate"
                         id='ingredients'
                         onChange={(evt) => setIngredients(evt.target.value)}
-                        value={ingredients}></input>
+                        value={ingredients}></textarea>
                     </div>
 
                     <div>
-                    <label>Steps:</label>
+                    <label>
+                        <div class="form-label">Steps:</div>
+                        (Drag and drop to rearrange)
+                    </label>
                     <Droppable droppableId='step-dnd'>
                         {(provided) => (
                             <ol
@@ -354,13 +360,17 @@ function RecipieForm(props) {
                                                         {...provided.dragHandleProps}
                                                         innerRef={provided}
                                                     >
-                                                        <input type='area'
+                                                        <div class="d-flex flex-row">
+                                                        <textarea
                                                             value={step.body}
                                                             id={bodyId}
                                                             name={bodyId}
                                                             data-idx={index}
                                                             className="body"
-                                                            onChange={handleStepChange}></input>
+                                                            onChange={handleStepChange}></textarea>
+                                                        </div>
+
+                                                        <div class="d-flex flex-row">
                                                         <input type='button'
                                                             class="btn btn-success btn-sm"
                                                             data-idx={index}
@@ -372,7 +382,8 @@ function RecipieForm(props) {
                                                             class="btn btn-warning btn-sm"
                                                             data-idx={index}
                                                             onClick={deleteStep}
-                                                            value='Del' />
+                                                            value='Delete Step' />
+                                                        </div>
                                                         
                                                         <img src={step.photo}></img>
                                                     </li>
@@ -392,9 +403,9 @@ function RecipieForm(props) {
                     </div>
 
 
-                    <div class="my-3">
-                        <input type="submit" class="btn btn-success" value="Save" onClick={save}></input>
+                    <div class="d-flex justify-content-end my-3">
                         <button type="button" class="btn btn-warning" onClick={cancel}>Cancel</button>
+                        <input type="submit" class="btn btn-success" value="Save" onClick={save}></input>
                     </div>
                 </form>
             </DragDropContext>
