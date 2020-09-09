@@ -51,7 +51,7 @@ The project roadmap for Cuca has several features planned out for the next sprin
 * Suggesting a recipe a user could make from their personal and saved recipes based on ingredients the user has on hand
 * Image processing so the user can take a photo of a recipe and populate the recipe form fields automatically
 * Newsfeed for a user to view recent activity by any user's they are following
-* Password hashing
+* Use OAuth for authentication
 
 
 ## Installation
