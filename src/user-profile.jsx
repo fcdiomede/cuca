@@ -272,7 +272,7 @@ function Homepage(props) {
         <React.Fragment>
             <div class="cuca-standard-page container-fluid">
             <h1 class="modal-text pt-3">Welcome, Chef {props.name}!</h1>
-            <CookbookContainer userId={props.userId} />
+            <CookbookContainer userId={props.userId} creator_id={props.userId}/>
             <FollowedUsers userId={props.userId} />
             </div>
         </React.Fragment>

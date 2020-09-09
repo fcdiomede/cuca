@@ -16,25 +16,25 @@
 }
 
 .cuca-nav {
-  background-color:#456A1D;
+  background-color: #3C3C3C;
   font-weight: bold;
   font-size: large;
 }
 
 .cuca-white-text{
-  color:#F2F7F2 !important;
+  color:#FCFCFC !important;
   font-family: 'Roboto', sans-serif;
 }
 
 .nav-link:hover { 
-  color:#E6B439 !important;
+  color: #EAB62F !important;
   box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
   border-radius: 20px;
 }
 
 .about-page{
-  background-color:#456A1D;
-  color:#F2F7F2;
+  background-color:#6B1D14;
+  color:#FCFCFC;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -45,7 +45,7 @@
 
 
 .dictionary-border{
-  border-color: #F2F7F2;
+  border-color: #FCFCFC;
 }
 
 .dictionary-ex-phrase {
@@ -59,21 +59,27 @@
 }
 
 .active-green input.form-control[type=text]:focus:not([readonly]) {
-  border-bottom: 1px solid #E6B439;
-  box-shadow: 0 1px 0 0 #E6B439;
+  border-bottom: 1px solid #EAB62F;
+  box-shadow: 0 1px 0 0 #EAB62F;
 }
 
 .active-green  i {
-  color: #E6B439;
+  color: #EAB62F;
 }
 
 .btn.btn-success,
 .btn.btn-success:focus,
 .btn.btn-success:active,
 .btn.btn-success.active {
-  color:white;
-  background-color: #E6B439 !important;
-  border-color: #E6B439;
+  color:#FCFCFC;
+  background-color: #EAB62F !important;
+  border-color: #EAB62F;
+}
+
+.btn.btn-success:hover {
+  box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
+  color: #939B44;
+  font-weight:bold;
 }
 
 .btn.btn-warning,
@@ -81,19 +87,18 @@
 .btn.btn-warning:active,
 .btn.btn-warning.active {
   color:100E14;
-  background-color: #C03228 !important;
-  border-color: #C03228;
+  background-color: #939B44 !important;
+  border-color: #939B44;
 }
 
-.btn.btn-success:hover,
 .btn.btn-warning:hover {
   box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
-  color: #456A1D;
+  color: #EAB62F;
   font-weight:bold;
 }
 
 footer {
-  background-color: #456A1D !important;
+  background-color: #6B1D14 !important;
   margin-top:20px;
 }
 
@@ -103,11 +108,11 @@ footer {
 }
 
 .modal-text{
-  color: #456A1D;
+  color: #6B1D14;
 }
 
 .cuca-standard-page{
-  background-color:#F2F7F2;
+  background-color:FCFCFC;
   color:100E14;
   font-family: 'Roboto', sans-serif;
 }
@@ -124,7 +129,7 @@ footer {
 }
 
 .icon-button:hover{
-  color:#E6B439;
+  color:#EAB62F;
 }
 
 .cb-cover-img {
@@ -164,7 +169,7 @@ footer {
 
 .form-label {
   font-size: xx-large;
-  color: #456A1D;
+  color: #6B1D14;
 }
 
 .fa-input {
@@ -172,5 +177,5 @@ footer {
 }
 
 .fa-input:hover {
-  color:#E6B439;
+  color:#EAB62F;
 }

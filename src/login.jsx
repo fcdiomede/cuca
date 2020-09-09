@@ -78,7 +78,7 @@ function LoginForm(props) {
 
                     <div class="modal-footer d-flex justify-content-center">
                         <button type="button"
-                            class="btn btn-success"
+                            class="btn btn-warning"
                             onClick={authenticateUser}
                             data-dismiss="modal">Login</button>
                     </div>
@@ -188,7 +188,7 @@ function SignUpModal(props) {
                     
                     <div class="modal-footer d-flex justify-content-center">
                         <button type="button"
-                            class="btn  btn-warning"
+                            class="btn  btn-success"
                             onClick={addUser}
                             data-dismiss="modal">Create Account</button>
                     </div>
@@ -235,13 +235,13 @@ function Login(props) {
 
             <div class="row">
                 <div class="col d-flex justify-content-center">
-                    <button class="btn btn-success mr-3 btn-lg"
+                    <button class="btn btn-warning mr-3 btn-lg"
                         data-toggle="modal"
                         data-target="#modalLoginForm">
                         Login
                     </button>
 
-                    <button class="btn btn-warning btn-lg"
+                    <button class="btn btn-success btn-lg"
                         data-toggle="modal"
                         data-target="#signUpModal">Sign Up
                     </button>
