@@ -374,7 +374,7 @@ function RecipieForm(props) {
                                                             id={bodyId}
                                                             name={bodyId}
                                                             data-idx={index}
-                                                            className="body"
+                                                            className="body step-text"
                                                             onChange={handleStepChange}></textarea>
                                                         </div>
 

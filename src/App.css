@@ -186,3 +186,8 @@ footer {
 .fa-input:hover {
   color:#EAB62F;
 }
+
+.step-text {
+  box-sizing: border-box;
+  width: 100%;
+}
