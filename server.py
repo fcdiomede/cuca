@@ -29,15 +29,9 @@ def authenticate_user():
     email = data["email"]
     password = data["password"]
 
-
     user = crud.get_user_by_email(email)
 
     user_data = {"user_id": '', "name":'', "profile_picture":''}
-
-    print(user.password)
-    print(password)
-    print("check password:")
-    print(bcrypt.check_password_hash(user.password, password))
 
     if user and bcrypt.check_password_hash(user.password, password):
         session["user_id"] = user.user_id
@@ -47,7 +41,6 @@ def authenticate_user():
         user_data["profile_picture"] = user.profile_picture
     else:
         status = "error"
-
 
     return jsonify({'status':status, 'user_data':user_data})
 
@@ -61,7 +54,6 @@ def create_user():
     lname = data["lname"]
 
     user = crud.get_user_by_email(email)
-    
 
     if user:
         status = "error"
@@ -83,7 +75,6 @@ def create_user():
             "profile_picture": new_user.profile_picture
         }
         
-    
     return jsonify({'status':status, 'user_data':user_data})
 
 
@@ -91,7 +82,6 @@ def create_user():
 @app.route('/api/user-cookbooks/<user_id>')
 def get_user_cookbooks(user_id):
 
-    
     cookbooks = crud.cookbooks_by_user_id(user_id)
     cookbook_list = []
 

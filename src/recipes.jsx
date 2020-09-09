@@ -435,10 +435,11 @@ function RecipeNav(props) {
 
     return (
         <Router>
-            <div>
-                <nav class="nav flex-column">
+            <div class="row">
+            <div class="col-3">
+                <nav class="navbar h-100 justify-content-start flex-column" role="navigation">
                     <div>
-                        <span class="navbar-brand mb-0 h1">{props.cookbookTitle} Recipes</span>
+                        <span class="navbar-header mb-0 h1">{props.cookbookTitle} Recipes</span>
                         {props.viewOnly ? null :
                             <React.Fragment>
                                 <Link to={`${url}/new`}>
@@ -451,17 +452,25 @@ function RecipeNav(props) {
                                 </span>
                             </React.Fragment>}
                     </div>
-                    <ul>
+                    <ul class="nav flex-column w-100">
                         {props.recipes?.map(recipe => {
-                            return (<li class="nav-item" key={recipe.recipe_id}>
-                                <Link to={`${url}/${recipe.recipe_id}`} class="nav-link">{recipe.title}</Link>
+                            return (<li class="nav-item text-left" key={recipe.recipe_id}>
+                                <Link to={`${url}/${recipe.recipe_id}`} class="nav-link pl-0">{recipe.title}</Link>
                             </li>);
                         })}
                     </ul>
 
                 </nav>
+            </div>
 
+            <div class="col-9">
                 <Switch>
+                    <Route exact path={`${path}`}>
+                    <div>
+                        <h2>{props.cookbookTitle}</h2>
+                        <img src={props.cookbookImg} />
+                    </div>
+                    </Route>
                     <Route exact path={`${path}/new`}>
                         <RecipieForm recipeEditCount={props.recipeEditCount}
                             setRecipeEditCount={props.setRecipeEditCount} />
@@ -477,6 +486,7 @@ function RecipeNav(props) {
                             viewOnly={props.viewOnly} />
                     </Route>
                 </Switch>
+            </div>
             </div>
         </Router>
     );
@@ -516,14 +526,15 @@ function Recipes(props) {
                     recipeEditCount={recipeEditCount}
                     setRecipeEditCount={setRecipeEditCount}
                     viewOnly={viewOnly}
-                    cookbookTitle={cookbookDetails.title} />
+                    cookbookTitle={cookbookDetails.title}
+                    cookbookImg={cookbookDetails.cover_img} />
 
-                {recipeId ? null :
+                {/* {recipeId ? null :
                     <div>
                         <h2>{cookbookDetails.title}</h2>
                         <img src={cookbookDetails.cover_img} />
 
-                    </div>}
+                    </div>} */}
 
             </div>
         </React.Fragment>
