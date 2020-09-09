@@ -1,4 +1,4 @@
-# <img src="https://res.cloudinary.com/deglaze/image/upload/v1599412059/cuca/mestre_cuca_sexy1w.svg" width="40%" alt="Mestre Cuca">
+# <img src="https://res.cloudinary.com/deglaze/image/upload/v1599619675/cuca/mestre_cuca_color_gdptwp.svg" width="40%" alt="Mestre Cuca">
 Cuca (pronounced Cook-Ah) is a recipe sharing web application that was inspired by the human need for connection, especially during Covid times. And what makes us feel closer to loved ones than enjoying a favorite family recipe? Through this application, users can quickly see anyone’s cookbook collections, save off favorite recipes, and edit recipes to best suit their own tastes. Cuca is a single page web app, built using React, a Python/Flask backend, and PostgresQL database to store user added data.
 
 ## About Me
