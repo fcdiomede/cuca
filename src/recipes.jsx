@@ -440,25 +440,31 @@ function RecipeNav(props) {
                 <nav class="navbar h-100 justify-content-start flex-column" role="navigation">
                     <div>
                         <span class="navbar-header mb-0 h1">{props.cookbookTitle} Recipes</span>
-                        {props.viewOnly ? null :
-                            <React.Fragment>
-                                <Link to={`${url}/new`}>
-                                    <span class="icon-button mr-3">
-                                        <i class="fas fa-plus"></i>
-                                    </span>
-                                </Link>
-                                <span class="icon-button mr-3" onClick={deleteCookbook}>
-                                    <i class="fas fa-trash" aria-hidden="true"></i>
-                                </span>
-                            </React.Fragment>}
                     </div>
-                    <ul class="nav flex-column w-100">
+
+                    <ul class="nav flex-column w-100 flex-grow-1">
                         {props.recipes?.map(recipe => {
                             return (<li class="nav-item text-left" key={recipe.recipe_id}>
                                 <Link to={`${url}/${recipe.recipe_id}`} class="nav-link pl-0">{recipe.title}</Link>
                             </li>);
                         })}
                     </ul>
+
+                    {props.viewOnly ? null :
+                            <div class="d-flex">
+                                <div>
+                                <Link to={`${url}/new`}>
+                                    <div class="icon-button mr">
+                                        <i class="fas fa-plus"></i>
+                                    </div>
+                                </Link>
+                                </div>
+                                <div>
+                                <div class="icon-button mr-3" onClick={deleteCookbook}>
+                                    <i class="fas fa-trash" aria-hidden="true"></i>
+                                </div>
+                                </div>
+                            </div>}
 
                 </nav>
             </div>

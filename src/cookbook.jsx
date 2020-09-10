@@ -34,8 +34,7 @@ export function CookbookCover(props) {
                     <div>
                     { viewOnly ?  null :
                                 <span class="icon-button mr-3" 
-                                        data-toggle="modal"
-                                        data-target="#cookbookFormModal">
+                                        onClick={() => props.setEditedCookbookId(props.cookbookId)}>
                                      <i class="fas fa-pen" aria-hidden="true"></i>
                                 </span>}
                     <span onClick={goToCookbook} class="icon-button">
@@ -44,12 +43,7 @@ export function CookbookCover(props) {
                     </div>
                 </div>
 
-                <NewCookbookForm cookbookId={props.cookbookId} 
-                                title={props.title} 
-                                imgUrl={props.imgUrl} 
-                                cookbookEdits={props.cookbookEdits}
-                                setCookbookEdits={props.setCookbookEdits}
-                                mode='edit' />
+                
             </span>
             
         </React.Fragment>
@@ -65,11 +59,13 @@ export function CookbookContainer(props) {
 
     const [cookbooks, updateCookbooks] = React.useState([]);
     const [cookbookEdits, setCookbookEdits] = React.useState(0);
+    const [editedCookbookId, setEditedCookbookId] = React.useState(''); 
 
     let { userId } = useParams();
 
     const viewOnly = (props.userId != props.creator_id)
 
+    const [editedCBData] = cookbooks.filter(cookbook => cookbook.key === editedCookbookId);
 
     React.useEffect(() => {
         fetch(`/api/user-cookbooks/${userId}`)
@@ -89,6 +85,7 @@ export function CookbookContainer(props) {
                 creator_id={userId}
                 cookbookEdits={cookbookEdits}
                 setCookbookEdits={setCookbookEdits}
+                setEditedCookbookId={setEditedCookbookId}
             />
         );
     }
@@ -110,21 +107,36 @@ export function CookbookContainer(props) {
             {userCookbooks}
             </div>
         </div>
+
+        { editedCookbookId &&        
+        <NewCookbookForm cookbookId={editedCookbookId} 
+                                title={editedCBData.title} 
+                                imgUrl={editedCBData.imgUrl} 
+                                cookbookEdits={cookbookEdits}
+                                setCookbookEdits={setCookbookEdits}
+                                mode='edit' 
+                                closeModal={setEditedCookbookId}/>
+        }
+
         </React.Fragment>
     );
 }
 
 export function CreateNewCookbook(props) {
 
+    const [createNew, setCreateNew] = React.useState('');
     return (
         <React.Fragment>
-        <button data-toggle="modal" data-target="#cookbookFormModal"
-                class="btn btn-success btn-circle btn-md">
+        <button 
+                class="btn btn-success btn-circle btn-md" onClick={() => setCreateNew(true)}>
                     <i class="fas fa-plus icon-button"></i>
         </button>
 
-        <NewCookbookForm mode="new" imgUrl="https://res.cloudinary.com/deglaze/image/upload/v1599528712/cuca/dinner-plate-icon-png-7_gdchhk.png" 
-                    cookbookEdits={props.cookbookEdits} setCookbookEdits={props.setCookbookEdits}/>
+        { createNew && <NewCookbookForm mode='new'
+                        imgUrl="https://res.cloudinary.com/deglaze/image/upload/v1599528712/cuca/dinner-plate-icon-png-7_gdchhk.png"
+                        closeModal={setCreateNew}
+                        cookbookEdits={props.cookbookEdits}
+                        setCookbookEdits={props.setCookbookEdits} />}
         </React.Fragment>
     );
 }
@@ -164,13 +176,15 @@ export function NewCookbookForm(props) {
                 'Content-Type': 'application/json'
             }
         })
-        .then(()=> props.setCookbookEdits(props.cookbookEdits + 1))
+        .then(()=> {
+            props.closeModal('');
+            props.setCookbookEdits(props.cookbookEdits + 1);})
     };
 
 
     //newcookbook form
     return (
-        <div class="modal fade" id="cookbookFormModal" tabindex="-1" role="dialog" aria-labelledby="CookbookCoverModal"
+        <div class="cb-modal" id="cookbookFormModal" role="dialog" aria-labelledby="CookbookCoverModal"
         aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -178,7 +192,7 @@ export function NewCookbookForm(props) {
                         <h5 class="modal-title cuca-red-text w-100 font-weight-bold" id="loginModalLabel">
                             Edit Cookbook Cover
                         </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" aria-label="Close" onClick={() => props.closeModal('')}>
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
