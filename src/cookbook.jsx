@@ -196,10 +196,10 @@ export function NewCookbookForm(props) {
     //newcookbook form
     return (
         <React.Fragment>
-        <div class="cb-modal" tabindex="-1" id="cookbookFormModal" role="dialog" aria-labelledby="CookbookCoverModal"
-        aria-hidden="true">
+        <div class="cb-modal" id="cookbookFormModal" role="dialog">
+            <div class="modal-bg-overlay"></div>
             <div class="modal-dialog" role="document">
-                <div class="modal-content">
+                <div class="modal-content cb-modal-content">
                     <div class="modal-header text-center">
                         <h5 class="modal-title cuca-red-text w-100 font-weight-bold" id="loginModalLabel">
                             Edit Cookbook Cover

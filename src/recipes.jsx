@@ -476,9 +476,9 @@ function RecipeNav(props) {
             <div class="col-9">
                 <Switch>
                     <Route exact path={`${path}`}>
-                    <div>
-                        <h2>{props.cookbookTitle}</h2>
-                        <img src={props.cookbookImg} />
+                    <div class="d-flex flex-column align-items-left">
+                        <h1 class="cuca-red-text m-3 d-block">{props.cookbookTitle}</h1>
+                        <img src={props.cookbookImg} class="cb-title-pg-img"/>
                     </div>
                     </Route>
                     <Route exact path={`${path}/new`}>
@@ -539,12 +539,6 @@ function Recipes(props) {
                     cookbookTitle={cookbookDetails.title}
                     cookbookImg={cookbookDetails.cover_img} />
 
-                {/* {recipeId ? null :
-                    <div>
-                        <h2>{cookbookDetails.title}</h2>
-                        <img src={cookbookDetails.cover_img} />
-
-                    </div>} */}
 
             </div>
         </React.Fragment>
