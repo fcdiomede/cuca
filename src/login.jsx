@@ -33,6 +33,8 @@ function LoginForm(props) {
                 props.setUserData(data.user_data);
                 window.$('#modalLoginForm').modal('hide');
                 history.push(`/homepage/${data.user_data.user_id}`);
+            } else {
+                alert('Incorrect Username/Password')
             }
         })
     }
