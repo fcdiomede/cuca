@@ -198,7 +198,7 @@ export function NewCookbookForm(props) {
         <React.Fragment>
         <div class="cb-modal" id="cookbookFormModal" role="dialog">
             <div class="modal-bg-overlay"></div>
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
                 <div class="modal-content cb-modal-content">
                     <div class="modal-header text-center">
                         <h5 class="modal-title cuca-red-text w-100 font-weight-bold" id="loginModalLabel">
@@ -213,7 +213,7 @@ export function NewCookbookForm(props) {
                         <form>
 
                             <div class="md-form mb-5 view overlay" onClick={uploadWidget.open}>
-                                <img src={photo} class="cb-modal-photo"></img>
+                                <img src={photo} class="cb-modal-photo mx-auto"></img>
                                 <div class="mask flex-center waves-effect waves-light rgba-green-light">
                                 <p id="edit-overlay-text">Edit Cover Photo</p>
                                 </div>
