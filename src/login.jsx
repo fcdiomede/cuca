@@ -10,13 +10,31 @@ function LoginForm(props) {
     // const [email, setEmail] = React.useState('');
     // const [password, setPassword] = React.useState('');
 
-    // let history = useHistory();
+    let history = useHistory();
     const { register, handleSubmit, errors } = useForm({
         mode: "onBlur",
       });
 
     const onSubmit = (data) => {
-        console.log("Data submitted: ", data);
+        console.log(data);
+
+        fetch('api/login', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.status === "success") {
+                props.setLoggedIn(true);
+                props.setUserData(data.user_data);
+                window.$('#modalLoginForm').modal('hide');
+                history.push(`/homepage/${data.user_data.user_id}`);
+            }
+        })
     }
 
     //callback for user login button
@@ -84,21 +102,27 @@ function LoginForm(props) {
                                 <input type='password'
                                     name="password"
                                     id="input-password" 
-                                    class="form-control validate"
+                                    class="form-control"
                                     placeholder="Your password"
-                                    required>
-                                </input>
+                                    style={{borderColor: errors.password && "red" }}
+                                    ref={register({required: {
+                                                        value: true,
+                                                        message: "Enter your password"
+                                                    },
+                                                 })}
+                                />
+                                {errors.passwowrd && <p class="error-message">{errors.password.message}</p>}
                             </div>
+
+                            <div class="modal-footer d-flex justify-content-center">
+                                <button type="submit"
+                                        class="btn btn-warning">Login</button>
+                    </div>
+
                         </form>
                     </div>
 
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button type="submit"
-                            class="btn btn-warning"
-                            // onClick={authenticateUser}
-                            // data-dismiss="modal"
-                            >Login</button>
-                    </div>
+                    
                 </div>
             </div>
         </div>
