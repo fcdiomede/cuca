@@ -221,7 +221,7 @@ function FollowedUserCard(props) {
 
 function FollowedUsers(props) {
 
-    const [followedUsers, setFollowedUsers] = React.useState('Checking who is in the kitchen...');
+    const [followedUsers, setFollowedUsers] = React.useState('');
 
     React.useEffect(() => {
         fetch(`/api/connections/${props.userId}`)
@@ -251,9 +251,17 @@ function FollowedUsers(props) {
             </div>
         </div>
 
-        <div class="d-flex">
-                {connections}
-        </div>
+        { followedUsers ? 
+                        <div class="d-flex">
+                            {connections}
+                        </div> :
+                        <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        </div>
+                        }
+        
         </React.Fragment>
     );
 }

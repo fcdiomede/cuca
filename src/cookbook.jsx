@@ -94,6 +94,7 @@ export function CookbookContainer(props) {
 
     return (
         <React.Fragment>
+        
          <div class="row">
              <div class="col d-flex align-items-center justify-content-between">
                 <h3 class="section-heading mr-3">Cookbooks</h3>
@@ -104,11 +105,19 @@ export function CookbookContainer(props) {
              </div>
             
         </div>
+        
         <div class="row">
-            <div class="card-group mx-3">
-            {userCookbooks}
-            </div>
+        { cookbooks ? 
+                        <div class="card-group mx-3">
+                            {userCookbooks}
+                        </div> : 
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>}
         </div>
+        
 
         { editedCookbookId &&        
         <NewCookbookForm cookbookId={editedCookbookId} 
