@@ -184,7 +184,8 @@ export function NewCookbookForm(props) {
 
     //newcookbook form
     return (
-        <div class="cb-modal" id="cookbookFormModal" role="dialog" aria-labelledby="CookbookCoverModal"
+        <React.Fragment>
+        <div class="cb-modal" tabindex="-1" id="cookbookFormModal" role="dialog" aria-labelledby="CookbookCoverModal"
         aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -228,5 +229,6 @@ export function NewCookbookForm(props) {
                 </div>
             </div>
         </div>
+        </React.Fragment>
     );
 }
