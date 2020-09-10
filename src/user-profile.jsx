@@ -84,6 +84,7 @@ export function UserProfileModal(props) {
                     <div class="modal-header">
                         <img src={photo} alt="profile-picture" 
                             class="rounded-circle img-responsive"
+                            style={{backgroundColor:"white"}}
                             onClick={uploadWidget.open}></img>
                     </div>
 
