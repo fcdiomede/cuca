@@ -59,7 +59,8 @@ function LoginForm(props) {
                                     class="form-control validate"
                                     placeholder="Your Email"
                                     onChange={(evt) => setEmail(evt.target.value)}
-                                    value={email}>
+                                    value={email}
+                                    required>
                                 </input>
                             </div>
 
@@ -70,7 +71,8 @@ function LoginForm(props) {
                                     class="form-control validate"
                                     placeholder="Your password"
                                     onChange={(evt) => setPassword(evt.currentTarget.value)}
-                                    value={password}>
+                                    value={password}
+                                    required>
                                 </input>
                             </div>
                         </form>
@@ -120,7 +122,6 @@ function SignUpModal(props) {
         .then((res) => res.json())
         .then((data) => {
             if (data.status === "success") {
-                alert("Success! Account has been created.");
                 props.setLoggedIn(true)
                 props.setUserData(data.user_data);
                 history.push(`/homepage/${data.user_data.user_id}`);
@@ -141,8 +142,9 @@ function SignUpModal(props) {
                         </button>
                     </div>
 
-                    <div class="modal-body mx-3">
-                        <form>
+                    
+                        <form class="needs-validation" novalidate>
+                        <div class="modal-body mx-3">
                             <div class="md-form mb-4">
                                 <i class="fas fa-user prefix grey-text"></i>
                                 <input type='text'
@@ -150,7 +152,8 @@ function SignUpModal(props) {
                                     class="form-control validate"
                                     placeholder="Your First Name"
                                     onChange={(evt) => setFName(evt.target.value)}
-                                    value={fname}></input>
+                                    value={fname}
+                                    required></input>
                             </div>
 
                             <div class="md-form mb-4">
@@ -170,7 +173,8 @@ function SignUpModal(props) {
                                     class="form-control validate"
                                     placeholder="Your email"
                                     onChange={(evt) => setEmail(evt.target.value)}
-                                    value={email}>
+                                    value={email}
+                                    required>
                                 </input>
                             </div>
 
@@ -181,19 +185,22 @@ function SignUpModal(props) {
                                     class="form-control validate"
                                     placeholder="Your Password"
                                     onChange={(evt) => setPassword(evt.currentTarget.value)}
-                                    value={password}>
+                                    value={password}
+                                    required>
                                 </input>
+                            </div>
+                            </div>
+
+                            <div class="modal-footer d-flex justify-content-center">
+                                <input type="submit"
+                                class="btn  btn-success"
+                                onClick={addUser}
+                                data-dismiss="modal"
+                                value="Create Account" />
                             </div>
 
                         </form>
-                    </div>
-                    
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button type="button"
-                            class="btn  btn-success"
-                            onClick={addUser}
-                            data-dismiss="modal">Create Account</button>
-                    </div>
+                     
                 </div>
             </div>
         </div>
@@ -204,8 +211,10 @@ function SignUpModal(props) {
 //About Page and Login
 function Login(props) {
 
+
     return (
         <div class="about-page container-fluid">
+
 
             <div class="row">
                 <div class="col d-flex justify-content-center">
