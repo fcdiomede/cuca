@@ -214,6 +214,11 @@ footer {
   width: 100%;
 }
 
+.error-message{
+  color: red;
+  margin-left: 2.5rem;
+}
+
 
 /* Cookbook modal style------------------------------------------------------ */
 .cb-modal {

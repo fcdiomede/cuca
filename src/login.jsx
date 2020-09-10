@@ -1,43 +1,52 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 //login page components
 
 //login form modal component
 function LoginForm(props) {
-    //track email and password enters
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
+    // //track email and password enters
+    // const [email, setEmail] = React.useState('');
+    // const [password, setPassword] = React.useState('');
 
-    let history = useHistory();
+    // let history = useHistory();
+    const { register, handleSubmit, errors } = useForm({
+        mode: "onBlur",
+      });
+
+    const onSubmit = (data) => {
+        console.log("Data submitted: ", data);
+    }
 
     //callback for user login button
     //makes a server request to authenticate password typed in
-    const authenticateUser = (event) => {
-        event.preventDefault();
+    // const authenticateUser = (event) => {
+    //     event.preventDefault();
 
-        //format user data to send to server        
-        const user = { 'email': email, 'password': password };
+    //     //format user data to send to server        
+    //     const user = { 'email': email, 'password': password };
 
-        fetch('/api/login', {
-            method: 'POST',
-            body: JSON.stringify(user),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.status === "success") {
-                    props.setLoggedIn(true);
-                    props.setUserData(data.user_data);
-                    history.push(`/homepage/${data.user_data.user_id}`);
-                } else {
-                    alert('Email/Password combination is incorrect.');
-                }
-            });
-    };
+    //     fetch('/api/login', {
+    //         method: 'POST',
+    //         body: JSON.stringify(user),
+    //         headers: {
+    //             'Accept': 'application/json',
+    //             'Content-Type': 'application/json'
+    //         }
+    //     })
+    //         .then((res) => res.json())
+    //         .then((data) => {
+    //             if (data.status === "success") {
+    //                 props.setLoggedIn(true);
+    //                 props.setUserData(data.user_data);
+    //                 history.push(`/homepage/${data.user_data.user_id}`);
+    //             } else {
+    //                 alert('Email/Password combination is incorrect.');
+    //             }
+    //         });
+    // };
+
 
     return (
         <div class="modal fade" id="modalLoginForm" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
@@ -51,27 +60,32 @@ function LoginForm(props) {
                     </div>
 
                     <div class="modal-body mx-3">
-                        <form>
+                        <form onSubmit={handleSubmit(onSubmit)}>
                             <div class="md-form mb-5">
                                 <i class="fas fa-envelope prefix grey-text"></i>
-                                <input type='text'
-                                    id="defaultForm-email"
-                                    class="form-control validate"
+                                <input type='email'
+                                    name="email"
+                                    id="input-email"
+                                    class="form-control"
                                     placeholder="Your Email"
-                                    onChange={(evt) => setEmail(evt.target.value)}
-                                    value={email}
-                                    required>
-                                </input>
+                                    style={{borderColor: errors.email && "red" }}
+                                    ref={register({ required: "Enter your email",
+                                                    pattern: {
+                                                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                                                        message: "Enter a valid e-mail address",
+                                                    },
+                                        })} 
+                                />
+                                {errors.email && <p class="error-message">{errors.email.message}</p>}
                             </div>
 
                             <div class="md-form mb-4">
                                 <i class="fas fa-lock prefix grey-text"></i>
                                 <input type='password'
-                                    id="defaultForm-pass" 
+                                    name="password"
+                                    id="input-password" 
                                     class="form-control validate"
                                     placeholder="Your password"
-                                    onChange={(evt) => setPassword(evt.currentTarget.value)}
-                                    value={password}
                                     required>
                                 </input>
                             </div>
@@ -79,10 +93,11 @@ function LoginForm(props) {
                     </div>
 
                     <div class="modal-footer d-flex justify-content-center">
-                        <button type="button"
+                        <button type="submit"
                             class="btn btn-warning"
-                            onClick={authenticateUser}
-                            data-dismiss="modal">Login</button>
+                            // onClick={authenticateUser}
+                            // data-dismiss="modal"
+                            >Login</button>
                     </div>
                 </div>
             </div>
