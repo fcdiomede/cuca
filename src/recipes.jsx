@@ -49,7 +49,7 @@ function RecipeDetails(props) {
             .then(data => props.setRecipeDetails(data));
     }, [recipeId]);
 
-    const ingredients = props.recipeDetails?.ingredients.split(',');
+    const ingredients = props.recipeDetails?.ingredients?.split(',');
 
     let history = useHistory();
 
@@ -88,7 +88,7 @@ function RecipeDetails(props) {
                     <div>
                     <h4 class="cuca-red-text">Ingredients:</h4>
                     <ul>
-                        {ingredients.map((ingredient,index) => {
+                        {ingredients?.map((ingredient,index) => {
                             return (<li key={index}>
                                 {ingredient}
                                 </li>);
@@ -451,7 +451,7 @@ function RecipeNav(props) {
                     </ul>
 
                     {props.viewOnly ? null :
-                            <div class="d-flex">
+                            <div class="d-flex w-100 justify-content-around border-top pt-2">
                                 <div>
                                 <Link to={`${url}/new`}>
                                     <div class="icon-button mr">
