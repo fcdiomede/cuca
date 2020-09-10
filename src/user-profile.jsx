@@ -35,7 +35,7 @@ export function ProfilePicture(props) {
     );
 }
 
-export function UserProfileModal(props) {
+function UserProfileModal(props) {
 
     const [fname, setFName] = React.useState(props.userData.name);
     const [photo, setPhoto] = React.useState(props.userData.profile_picture);

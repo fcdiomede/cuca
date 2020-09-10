@@ -12,7 +12,6 @@ import Recipes from './recipes';
 import { ProfilePicture, UserProfile } from './user-profile';
 import Explore from './explore';
 import { SearchBar, UserSearchResults, RecipeSearchResults } from './explore';
-// import logo from './logo.svg';
 import './App.css';
 
 

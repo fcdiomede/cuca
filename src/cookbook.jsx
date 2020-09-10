@@ -133,7 +133,7 @@ export function CookbookContainer(props) {
     );
 }
 
-export function CreateNewCookbook(props) {
+function CreateNewCookbook(props) {
 
     const [createNew, setCreateNew] = React.useState('');
     return (
@@ -152,7 +152,7 @@ export function CreateNewCookbook(props) {
     );
 }
 
-export function NewCookbookForm(props) {
+function NewCookbookForm(props) {
 
 
     //track what user is entering in fields
