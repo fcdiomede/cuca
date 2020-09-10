@@ -108,7 +108,7 @@ function RecipeCard(props) {
 
     return (
         <div class="media m-5 cb-cover-img" onClick={goToRecipePage}>
-            <img class="d-flex mr-3" src={props.coverPhoto} alt="Search Image"></img>
+            <img class="d-flex mr-3" src={props.coverPhoto}></img>
             <div class="media-body">
                 <h5 class="mt-0 font-weight-bold">{props.title}</h5>
                 <p>time required:{props.timeReq}</p>

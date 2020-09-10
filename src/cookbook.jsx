@@ -6,7 +6,7 @@ export function CookbookCover(props) {
     let history = useHistory();
 
 
-    const viewOnly = (props.userId != props.creator_id)
+    const viewOnly = (props.userId !== props.creator_id)
 
     const data = { 'cookbookId': props.cookbookId };
 
@@ -63,7 +63,7 @@ export function CookbookContainer(props) {
 
     let { userId } = useParams();
 
-    const viewOnly = (props.userId != props.creator_id)
+    const viewOnly = (props.userId !== props.creator_id)
 
     const [editedCBData] = cookbooks.filter(cookbook => cookbook.key === editedCookbookId);
 
@@ -73,7 +73,7 @@ export function CookbookContainer(props) {
             .then((data) => {
                 updateCookbooks(data)
             });
-    }, [cookbookEdits]);
+    }, [cookbookEdits, userId]);
 
     const userCookbooks = [];
     for (const cookbook of cookbooks) {

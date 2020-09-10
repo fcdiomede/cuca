@@ -8,9 +8,6 @@ import hashlib
 from random import choices
 from flask_bcrypt import Bcrypt
 
-# CLOUDINARY_UPLOAD_URL = "https://api.cloudinary.com/v1_1/deglaze/image/upload"
-# CLOUDINARY_API_KEY = os.environ['API_KEY']
-# CLOUDINARY_API_SECRET = os.environ['API_SECRET']
 
 app = Flask(__name__)
 app.secret_key = "outofthefryingpan"

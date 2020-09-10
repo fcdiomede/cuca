@@ -9,8 +9,6 @@ import {
     useHistory
 } from 'react-router-dom';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import cloudinaryUploader from "./uploadWidget";
-// import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 
 
 function FavoriteRecipe(props) {
@@ -265,7 +263,7 @@ function RecipieForm(props) {
 
         //check to see if the location of the draggable changed
         if (
-            destination.droppableId == source.droppableId &&
+            destination.droppableId === source.droppableId &&
             destination.index === source.index
         ) {
             return;
@@ -508,7 +506,6 @@ function Recipes(props) {
     const [recipeDetails, setRecipeDetails] = React.useState(null);
     const [recipeEditCount, setRecipeEditCount] = React.useState(0);
 
-    let { recipeId } = useParams();
 
     React.useEffect(() => {
         fetch('/api/cookbook-details')
