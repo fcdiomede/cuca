@@ -70,7 +70,9 @@ export function CookbookContainer(props) {
     React.useEffect(() => {
         fetch(`/api/user-cookbooks/${userId}`)
             .then((res) => res.json())
-            .then((data) => updateCookbooks(data));
+            .then((data) => {
+                updateCookbooks(data)
+            });
     }, [cookbookEdits]);
 
     const userCookbooks = [];
