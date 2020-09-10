@@ -6,6 +6,8 @@ import { useParams, useHistory } from 'react-router-dom';
 
 export function ProfilePicture(props) {
 
+    const [editProfile, setEditProfile] = React.useState(false);
+
     const handleLogout = () => {
         props.setLoggedIn(false);
     };
@@ -21,12 +23,14 @@ export function ProfilePicture(props) {
                 aria-haspopup="true"
                 aria-expanded="false" />
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <p class="dropdown-item" data-toggle="modal" data-target="#profileModal">Edit Profile</p>
+                <p class="dropdown-item" onClick={() => setEditProfile(true)}>Edit Profile</p>
                 <div class="dropdown-divider"></div>
                 <p class="dropdown-item" onClick={handleLogout}>Logout</p>
             </div>
 
-            <UserProfileModal userData={props.userData}/>
+            { editProfile &&  <UserProfileModal userData={props.userData}
+                                setEditProfile={setEditProfile}/>}
+           
         </div>
     );
 }
@@ -62,6 +66,7 @@ export function UserProfileModal(props) {
         })
             .then((res) => res.json())
             .then((data) => {
+                props.setEditProfile(false);
                 props.setUserData(data);
             });
     };
@@ -70,11 +75,12 @@ export function UserProfileModal(props) {
     // const cancel = () => props.setShowUserModal(false);
 
     return(
-        <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true">
-            <div class="modal-dialog cascading-modal modal-avatar" role="document">
-                <div class="modal-content">
+        <div class="cb-modal" id="profileModal" role="dialog">
+            <div class="modal-bg-overlay"></div>
+            <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
+                <div class="modal-content cb-modal-content">
 
+                    
                     <div class="modal-header">
                         <img src={photo} alt="profile-picture" 
                             class="rounded-circle img-responsive"
@@ -96,7 +102,11 @@ export function UserProfileModal(props) {
 
                         <div class="d-flex justify-content-center">
                         <button type="button"
-                            class="btn btn-success"
+                                class="btn btn-success"
+                                onClick={() => props.setEditProfile(false)}>Cancel</button>
+
+                        <button type="button"
+                            class="btn btn-warning"
                             onClick={closeModal}
                             data-dismiss="modal">Save</button>
                     </div>

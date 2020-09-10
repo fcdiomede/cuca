@@ -166,10 +166,6 @@ footer {
   cursor: pointer;
 }
 
-.cb-modal-photo {
-  width: 100%;
-  height: auto;
-}
 
 #edit-overlay-text{
   font-size: xx-large;
@@ -241,4 +237,9 @@ footer {
 
 .cb-modal-content {
   z-index: 999 !important;
+}
+
+.cb-modal-photo {
+  width: 80%;
+  height: auto;
 }
