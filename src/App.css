@@ -30,6 +30,7 @@
   border-radius: 20px;
 }
 
+
 .active-green input.form-control[type=text]:focus:not([readonly]) {
   border-bottom: 1px solid #EAB62F;
   box-shadow: 0 1px 0 0 #EAB62F;
@@ -46,6 +47,13 @@
 /* Text realted styles -------------------------------------------------------*/
 .cuca-white-text{
   color:#FCFCFC !important;
+  font-family: 'Roboto', sans-serif;
+}
+
+.cuca-black-text{
+  color: #3C3C3C !important;
+  font-size: large;
+  font-weight: 100;
   font-family: 'Roboto', sans-serif;
 }
 

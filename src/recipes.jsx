@@ -449,7 +449,7 @@ function RecipeNav(props) {
                     <ul class="nav flex-column w-100 flex-grow-1">
                         {props.recipes?.map(recipe => {
                             return (<li class="nav-item text-left" key={recipe.recipe_id}>
-                                <Link to={`${url}/${recipe.recipe_id}`} class="nav-link pl-0">{recipe.title}</Link>
+                                <Link to={`${url}/${recipe.recipe_id}`} class="nav-link pl-0 cuca-black-text">{recipe.title}</Link>
                             </li>);
                         })}
                     </ul>
