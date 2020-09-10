@@ -219,6 +219,11 @@ footer {
   margin-left: 2.5rem;
 }
 
+.form-img {
+  width: 75%;
+  height: auto;
+}
+
 
 /* Cookbook modal style------------------------------------------------------ */
 .cb-modal {

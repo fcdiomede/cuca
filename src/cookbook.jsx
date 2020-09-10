@@ -6,7 +6,7 @@ export function CookbookCover(props) {
     let history = useHistory();
 
 
-    const viewOnly = (props.userId !== props.creator_id)
+    const viewOnly = (props.userId != props.creator_id)
 
     const data = { 'cookbookId': props.cookbookId };
 

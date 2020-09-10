@@ -384,7 +384,7 @@ function RecipieForm(props) {
                                                             value="&#xf1f8;" />
                                                         </div>
                                                         
-                                                        <img src={step.photo}></img>
+                                                        <img src={step.photo} class="form-img mb-4"></img>
                                                     </li>
                                                 )}
                                             </Draggable>
