@@ -6,17 +6,17 @@ import { useForm } from "react-hook-form";
 
 //login form modal component
 function LoginForm(props) {
-    // //track email and password enters
-    // const [email, setEmail] = React.useState('');
-    // const [password, setPassword] = React.useState('');
 
+    //used to push user to homepage on successful login
     let history = useHistory();
+
     const { register, handleSubmit, errors } = useForm({
         mode: "onBlur",
       });
 
+    
+    //sends server data on submit
     const onSubmit = (data) => {
-        console.log(data);
 
         fetch('api/login', {
             method: 'POST',
@@ -36,34 +36,6 @@ function LoginForm(props) {
             }
         })
     }
-
-    //callback for user login button
-    //makes a server request to authenticate password typed in
-    // const authenticateUser = (event) => {
-    //     event.preventDefault();
-
-    //     //format user data to send to server        
-    //     const user = { 'email': email, 'password': password };
-
-    //     fetch('/api/login', {
-    //         method: 'POST',
-    //         body: JSON.stringify(user),
-    //         headers: {
-    //             'Accept': 'application/json',
-    //             'Content-Type': 'application/json'
-    //         }
-    //     })
-    //         .then((res) => res.json())
-    //         .then((data) => {
-    //             if (data.status === "success") {
-    //                 props.setLoggedIn(true);
-    //                 props.setUserData(data.user_data);
-    //                 history.push(`/homepage/${data.user_data.user_id}`);
-    //             } else {
-    //                 alert('Email/Password combination is incorrect.');
-    //             }
-    //         });
-    // };
 
 
     return (
