@@ -100,7 +100,7 @@ function RecipeDetails(props) {
                         {props.recipeDetails.steps.map(step => {
                             return (<li key={step.key}>
                                 {step.body}
-                                <img src={step.photo} />
+                                <img src={step.photo} class="form-img mb-2"/>
                             </li>);
                         })}
                     </ol>
