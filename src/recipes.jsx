@@ -76,7 +76,7 @@ function RecipeDetails(props) {
                             </div>}
                     </div>
                     
-                    <img src={props.recipeDetails.media} />
+                    <img src={props.recipeDetails.media} class="form-img mb-4"/>
 
                     <div class="my-3">
                         <span class="m-2">
@@ -304,7 +304,7 @@ function RecipieForm(props) {
                     <div class="d-inline-flex">
                     { photo ?  
                         <div class="view overlay" onClick={uploadWidget.open}>
-                            <img src={photo}></img>
+                            <img src={photo} class="form-img mb-4"></img>
                             <div class="mask flex-center waves-effect waves-light rgba-green-light">
                                 <p id="edit-overlay-text">Edit Cover Photo</p>
                             </div>

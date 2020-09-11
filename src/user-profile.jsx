@@ -28,7 +28,9 @@ export function ProfilePicture(props) {
                 <p class="dropdown-item" onClick={handleLogout}>Logout</p>
             </div>
 
-            { editProfile &&  <UserProfileModal userData={props.userData}
+            { editProfile &&  <UserProfileModal 
+                                userData={props.userData}
+                                setUserData={props.setUserData}
                                 setEditProfile={setEditProfile}/>}
            
         </div>

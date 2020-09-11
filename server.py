@@ -175,7 +175,7 @@ def favorite_recipe(recipe_id):
             break
     else:
         favorite_cookbook = crud.create_cookbook(title="Favorites",
-                            cover_img="https://res.cloudinary.com/deglaze/image/upload/v1599161258/Heart_font_awesome_ysrcui.png",
+                            cover_img="https://res.cloudinary.com/deglaze/image/upload/v1599794813/cuca/mk97fg3bmftk2zw9fsm0.jpg",
                             user_id=user_id)
         cookbook_id = favorite_cookbook.cookbook_id
     
