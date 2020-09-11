@@ -65,6 +65,7 @@
   font-weight: 500;
 }
 
+
 /* Button styles------------------------------------------------------------- */
 .btn.btn-success,
 .btn.btn-success:focus,
@@ -220,7 +221,7 @@ footer {
 }
 
 .form-img {
-  width: 75%;
+  width: 400px;
   height: auto;
 }
 
@@ -264,3 +265,9 @@ footer {
 }
 
 
+/* search object styles */
+
+.search-img {
+  width: 300px;
+  height: auto;
+}
