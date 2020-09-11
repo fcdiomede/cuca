@@ -25,23 +25,48 @@ Fernanda is also a puzzle enthusiast and gamer. She loves solving complex proble
 
 ## <a name="features"></a>Features
 
-#### Login Page
-Users login or register for an account. 
+#### Landing Page
+The landing page is where users can login or sign up. Cuca uses React Hook Form to implement form validation. The form will not submit until valid input is provided. Once submitted, the front end makes a request to the backend to validate user email and password. Cuca uses Python's BCrypt library to salt and hash passwords stored in the database. 
+
+Cuca 2.0 will use OAuth for more robust security. 
+
+![alt text](https://github.com/fcdiomede/cuca/blob/master/static/Readme-imgs/Login.gif "Cuca landing page")
 
 #### Homepage
 Once a user is logged in, they can view their cookbooks, favorited recipes, and friends list. From here, they can add a new cookbook, edit exisiting cookbook covers, or go into a cookbook to view the contents. 
 
-#### Recipes
-Once a user clicks on a cookbook, they can view the recipes stored in that cookbook. 
+![alt text](https://github.com/fcdiomede/cuca/blob/master/static/Readme-imgs/hp-cuca.gif "Cuca Homepage")
 
-#### Recipe Editor
-If they are the recipe owner, a user can edit or add recipes to the cookbook.
+#### Viewing Friend's Profiles
+A user can easily see what any of their "Sous Chefs" are up to. Access to edit or add addtional cookbooks is restricted using React Conditional Rendering. If the content creator id does not match the logged in user id, the components that would allow editing are not rendered. 
+
+![alt text](https://github.com/fcdiomede/cuca/blob/master/static/Readme-imgs/Screen%20Shot%202020-09-11%20at%204.50.28%20PM.png "User Profile page")
 
 #### Searching
 A user can go to the explore page to see a random collection of cookbooks or a user can search for specific recipes or other users on the app. 
 
-#### Interaction with Other Users
-A user can follow a specific user for easy access to that user's recipes, or favorite any recipe they wish to save.
+![alt text](https://github.com/fcdiomede/cuca/blob/master/static/Readme-imgs/cuca-search.gif "Search Results page")
+
+#### Viewing Recipes and Favoriting
+Once a user clicks on a cookbook, they can view the recipes stored in that cookbook.  The user then has easy access to view and edit that recipe.
+
+The user can favorite a recipe, which prompts the server to make a copy of that recipe and save it into a "Favorites" cookbook that belongs to the logged in user.
+
+![alt text](https://github.com/fcdiomede/cuca/blob/master/static/Readme-imgs/cuca-favoriting.gif "Favorite a recipe")
+
+The user then has easy access to view and edit their copy of that recipe.
+![alt text](https://github.com/fcdiomede/cuca/blob/master/static/Readme-imgs/cuca-see-favorites.gif "View favorites")
+
+#### Recipe Editor
+If they are the recipe owner, a user can edit or add recipes to the cookbook.
+
+The recipe editor features a drag and drop feature:
+
+![alt text](https://github.com/fcdiomede/cuca/blob/master/static/Readme-imgs/cuca-dnd.gif "Drag and drop steps")
+
+The recipe editor also integrates with Cloudinary for image uploading and storage. This allows users to either use pictures saved on their laptop, take pictures with a camera and upload it directly as they are cooking, or pull images from a social media account.
+
+![alt text](https://github.com/fcdiomede/cuca/blob/master/static/Readme-imgs/cuca-img-uploading.gif "Cloudinary Uploader")
 
 ## <a name="future"></a>Future State
 The project roadmap for Cuca has several features planned out for the next sprint:
@@ -50,8 +75,9 @@ The project roadmap for Cuca has several features planned out for the next sprin
 * Saving a grocery list for a recipe, and sending that list to your phone
 * Suggesting a recipe a user could make from their personal and saved recipes based on ingredients the user has on hand
 * Image processing so the user can take a photo of a recipe and populate the recipe form fields automatically
-* Newsfeed for a user to view recent activity by any user's they are following
+* Newsfeed for a user to view recent activity by any users they are following
 * Use OAuth for authentication
+* More complex search capabilities
 
 
 ## Installation
