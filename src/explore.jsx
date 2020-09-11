@@ -103,6 +103,17 @@ function RecipeCard(props) {
     let history = useHistory();
 
     const goToRecipePage = () => {
+
+        const data = { 'cookbookId': props.cookbookId };
+
+        fetch('/api/set-cookbook', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
         history.push(`/recipes/${props.recipeId}`);
     };
 
@@ -128,6 +139,7 @@ export function RecipeSearchResults(props) {
                 coverPhoto={recipe.cover_photo}
                 timeReq={recipe.time_req}
                 ingredients={recipe.ingredients}
+                cookbookId={recipe.cookbook_id}
             />
         );
     }

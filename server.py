@@ -415,7 +415,8 @@ def search_recipes():
                                 "title" : recipe.title,
                                 "cover_photo": recipe.media,
                                 "time_req": recipe.time_required,
-                                "ingredients": recipe.ingredients
+                                "ingredients": recipe.ingredients,
+                                "cookbook_id": recipe.cookbooks.cookbook_id
                                 })
 
     return jsonify(search_results)
