@@ -9,9 +9,12 @@ import {
     useHistory
 } from 'react-router-dom';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { useEffect } from "react";
 
 
 function FavoriteRecipe(props) {
+
+    const [clicked, setClicked] = React.useState('');
 
     let recipeId = props.recipeDetails?.recipe_id;
 
@@ -22,11 +25,14 @@ function FavoriteRecipe(props) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
-        });
+        })
+        .then(() => setClicked('cuca-red-text'))
     };
 
+    React.useEffect(() => setClicked(''), [recipeId])
+
     return (<span class="icon-button my-auto" onClick={favoriteRecipe}>
-        <i class="fas fa-heart"></i>
+        <i class={`fas fa-heart ${clicked}`}></i>
     </span>);
 }
 
