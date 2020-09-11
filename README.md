@@ -35,7 +35,7 @@ Cuca 2.0 will use OAuth for more robust security.
 #### Homepage
 Once a user is logged in, they can view their cookbooks, favorited recipes, and friends list. From here, they can add a new cookbook, edit exisiting cookbook covers, or go into a cookbook to view the contents. 
 
-![alt text](https://github.com/fcdiomede/cuca/blob/master/static/Readme-imgs/hp-cuca.gif "Cuca Homepage")
+![alt text](https://github.com/fcdiomede/cuca/blob/master/static/Readme-imgs/hompage.png "Cuca Homepage")
 
 #### Viewing Friend's Profiles
 A user can easily see what any of their "Sous Chefs" are up to. Access to edit or add addtional cookbooks is restricted using React Conditional Rendering. If the content creator id does not match the logged in user id, the components that would allow editing are not rendered. 
@@ -55,6 +55,7 @@ The user can favorite a recipe, which prompts the server to make a copy of that 
 ![alt text](https://github.com/fcdiomede/cuca/blob/master/static/Readme-imgs/cuca-favoriting.gif "Favorite a recipe")
 
 The user then has easy access to view and edit their copy of that recipe.
+
 ![alt text](https://github.com/fcdiomede/cuca/blob/master/static/Readme-imgs/cuca-see-favorites.gif "View favorites")
 
 #### Recipe Editor
