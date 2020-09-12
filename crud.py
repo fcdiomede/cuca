@@ -241,9 +241,9 @@ def create_step(recipe_id, step_number, body, media=None):
 def get_steps_for_recipe(recipe_id):
     """Returns steps for a specific recipe"""
     
-    recipe = get_recipe_by_id(recipe_id)
+    steps = Step.query.filter(Step.recipe_id == recipe_id).order_by(Step.step_number).all()
 
-    return recipe.steps
+    return steps
 
 
 #CRUD ops that return Connection between Users--------------------------------#
