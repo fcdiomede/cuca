@@ -114,7 +114,7 @@ function RecipeCard(props) {
                 'Content-Type': 'application/json'
             }
         })
-        history.push(`/recipes/${props.recipeId}`);
+        .then(() => history.push(`/recipes/${props.recipeId}`))
     };
 
     return (
