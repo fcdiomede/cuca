@@ -9,14 +9,14 @@ from random import choices
 from flask_bcrypt import Bcrypt
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='build', static_url_path='/')
 app.secret_key = "outofthefryingpan"
 bcrypt = Bcrypt()
 
 
 @app.route('/')
 def root():
-    return render_template("root.html")
+    return app.send_static_file('index.html')
 
 
 #User registration/authentication roots---------------------------------------#
