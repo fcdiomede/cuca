@@ -96,7 +96,8 @@ function RecipeDetails(props) {
                     </div>
                     
                     <div>
-                    <h4 class="cuca-red-text">Ingredients:</h4>
+                    <div class="d-flex">
+                    <h4 class="cuca-red-text mr-3">Ingredients:</h4>
                         <div class="icon-button my-auto" onClick={sendIngredients}>
                             <i class="fas fa-mobile" aria-hidden="true"></i>
                         </div>
@@ -104,6 +105,7 @@ function RecipeDetails(props) {
                                                 toggleViewPhoneNumModal={toggleViewPhoneNumModal}
                                                 title={props.recipeDetails.title}
                                                 ingredients={ingredients} /> }
+                    </div>
 
                     <ul>
                         {ingredients?.map((ingredient,index) => {
