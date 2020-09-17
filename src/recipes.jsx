@@ -195,7 +195,7 @@ function PhoneNumberModal(props) {
                                 class="form-control"
                                 placeholder="Your Phone Number"
                                 style={{borderColor: errors.phone && "red" }}
-                                ref={register({ required: "Enter your email",
+                                ref={register({ required: "Enter your phone",
                                                     pattern: {
                                                         value: /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/i,
                                                         message: "Enter a valid phone number",
