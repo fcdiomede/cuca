@@ -61,6 +61,23 @@ function RecipeDetails(props) {
         history.push(`/recipes/edit`);
     };
 
+    const sendToPhone = () => {
+
+        const data = {'title': props.recipeDetails.title,
+                'ingredients': ingredients}
+
+        fetch('/api/send-ingredients', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => console.log(data));
+    }
+
     return (
         <React.Fragment>
             {props.recipeDetails ?
@@ -91,6 +108,9 @@ function RecipeDetails(props) {
                     
                     <div>
                     <h4 class="cuca-red-text">Ingredients:</h4>
+                        <div class="icon-button my-auto" onClick={sendToPhone}>
+                            <i class="fas fa-mobile" aria-hidden="true"></i>
+                        </div>
                     <ul>
                         {ingredients?.map((ingredient,index) => {
                             return (<li key={index}>

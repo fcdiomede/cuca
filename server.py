@@ -7,11 +7,17 @@ import time
 import hashlib
 from random import choices
 from flask_bcrypt import Bcrypt
+from twilio.rest import Client
 
 
 app = Flask(__name__, static_folder='build', static_url_path='/')
 app.secret_key = "outofthefryingpan"
 bcrypt = Bcrypt()
+
+# Twilio account SID
+TWILIO_SID = os.environ["TWILIO_SID"]
+# Twilio Auth Token
+TWILIO_TOKEN = os.environ["TWILIO_TOKEN"]
 
 
 @app.route('/')
@@ -275,6 +281,27 @@ def get_recipe_steps(recipe_id):
     
     
     return jsonify(data)
+
+
+@app.route('/api/send-ingredients', methods=['POST'])
+def send_ingredients():
+    data = request.get_json()
+    recipe_title = data.get("title", " ")
+    ingredients = data.get("ingredients", " ")
+
+    ingredients = ('\n').join(ingredients)
+
+    client = Client(TWILIO_SID, TWILIO_TOKEN)
+
+    message = client.messages.create(
+        to="+17039530548",
+        from_="+13605260351",
+        body=f'\nReady to get cooking?\n'
+             f'{recipe_title} ingredients:\n'
+             f'{ingredients}'
+             )
+
+    return jsonify('Ingredients sent to your phone!')
 
 
 #Modifying a recipe routes-----------------------------------------------------#
