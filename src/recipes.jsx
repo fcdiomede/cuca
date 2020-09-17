@@ -9,6 +9,8 @@ import {
     useHistory
 } from 'react-router-dom';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { useForm } from "react-hook-form";
+
 
 function FavoriteRecipe(props) {
 
@@ -139,17 +141,22 @@ function RecipeDetails(props) {
 
 function PhoneNumberModal(props) {
 
-    const [phone, setPhone] = React.useState()
+    const { register, handleSubmit, errors } = useForm({
+        mode: "onBlur",
+      });
 
-    const sendToPhone = (evt) => {
-        evt.preventDefault();
 
-        const data = {'title': props.title,
-                    'ingredients': props.ingredients}
+    const sendToPhone = (data) => {
+        
+        const phoneNum = data.phone
+
+        const recipeData = {'title': props.title,
+                    'ingredients': props.ingredients,
+                    'phoneNum':phoneNum}
 
         fetch('/api/send-ingredients', {
             method: 'POST',
-            body: JSON.stringify(data),
+            body: JSON.stringify(recipeData),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -159,6 +166,7 @@ function PhoneNumberModal(props) {
         .then((data) => {
             props.toggleViewPhoneNumModal(false);
             alert(data);
+            window.$('#phoneNumberModal').modal('hide');
         })
     }
 
@@ -177,23 +185,29 @@ function PhoneNumberModal(props) {
                     </div>
 
                     <div class="modal-body mb-0">
-                        <form>
+                        <form onSubmit={handleSubmit(sendToPhone)}>
 
                             <div class="md-form mb-5">
                                 <i class="fas fa-mobile prefix grey-text"></i>
                                 <input type="phone"
                                 name="phone"
-                                id="cb-title"
+                                id="input-phone"
                                 class="form-control"
                                 placeholder="Your Phone Number"
-                                value={phone}
-                                onChange={(evt) => setPhone(evt.target.value)}></input>
+                                style={{borderColor: errors.phone && "red" }}
+                                ref={register({ required: "Enter your email",
+                                                    pattern: {
+                                                        value: /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/i,
+                                                        message: "Enter a valid phone number",
+                                                    },
+                                        })} 
+                                />
+                                {errors.phone && <p class="error-message">{errors.phone.message}</p>}
                             </div>
 
                             <div class="md-form mb-5 d-flex justify-content-center">
-                                <button class="btn btn-success btn-lg" 
-                                        onClick={sendToPhone}  
-                                        data-dismiss="modal"> Submit</button>
+                                <button type="submit"    
+                                        class="btn btn-success btn-lg"> Submit</button>
                             </div>
                         </form>
                     </div>

@@ -288,13 +288,14 @@ def send_ingredients():
     data = request.get_json()
     recipe_title = data.get("title", " ")
     ingredients = data.get("ingredients", " ")
+    phone_number = data["phoneNum"]
 
     ingredients = ('\n').join(ingredients)
 
     client = Client(TWILIO_SID, TWILIO_TOKEN)
 
     message = client.messages.create(
-        to="+17039530548",
+        to=f'{phone_number}',
         from_="+13605260351",
         body=f'\nReady to get cooking?\n'
              f'{recipe_title} ingredients:\n'
