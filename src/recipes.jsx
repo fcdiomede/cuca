@@ -9,8 +9,6 @@ import {
     useHistory
 } from 'react-router-dom';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { useEffect } from "react";
-
 
 function FavoriteRecipe(props) {
 
@@ -38,6 +36,8 @@ function FavoriteRecipe(props) {
 
 function RecipeDetails(props) {
 
+    const [viewPhoneNumModal, toggleViewPhoneNumModal] = React.useState(false);
+
     let { recipeId } = useParams();
 
 
@@ -61,21 +61,8 @@ function RecipeDetails(props) {
         history.push(`/recipes/edit`);
     };
 
-    const sendToPhone = () => {
-
-        const data = {'title': props.recipeDetails.title,
-                'ingredients': ingredients}
-
-        fetch('/api/send-ingredients', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(res => res.json())
-        .then(data => console.log(data));
+    const sendIngredients = () => {
+        toggleViewPhoneNumModal(true)
     }
 
     return (
@@ -108,9 +95,14 @@ function RecipeDetails(props) {
                     
                     <div>
                     <h4 class="cuca-red-text">Ingredients:</h4>
-                        <div class="icon-button my-auto" onClick={sendToPhone}>
+                        <div class="icon-button my-auto" onClick={sendIngredients}>
                             <i class="fas fa-mobile" aria-hidden="true"></i>
                         </div>
+                        { viewPhoneNumModal && <PhoneNumberModal 
+                                                toggleViewPhoneNumModal={toggleViewPhoneNumModal}
+                                                title={props.recipeDetails.title}
+                                                ingredients={ingredients} /> }
+
                     <ul>
                         {ingredients?.map((ingredient,index) => {
                             return (<li key={index}>
@@ -139,11 +131,77 @@ function RecipeDetails(props) {
                     <span class="sr-only">Loading...</span>
                 </div>
                 </div>}
+
         </React.Fragment>
     )
+}
 
 
-        ;
+function PhoneNumberModal(props) {
+
+    const [phone, setPhone] = React.useState()
+
+    const sendToPhone = (evt) => {
+        evt.preventDefault();
+
+        const data = {'title': props.title,
+                    'ingredients': props.ingredients}
+
+        fetch('/api/send-ingredients', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            props.toggleViewPhoneNumModal(false);
+            alert(data);
+        })
+    }
+
+    return(
+        <div class="cb-modal" id="phoneNumberModal" role="dialog">
+            <div class="modal-bg-overlay"></div>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content cb-modal-content">
+                    <div class="modal-header text-center">
+                    <h5 class="modal-title cuca-red-text w-100 font-weight-bold" id="sendToPhoneLabel">
+                        Send Ingredients to Phone
+                    </h5>
+                    <button type="button" class="close" aria-label="Close" onClick={() => props.toggleViewPhoneNumModal(false)}>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+
+                    <div class="modal-body mb-0">
+                        <form>
+
+                            <div class="md-form mb-5">
+                                <i class="fas fa-mobile prefix grey-text"></i>
+                                <input type="phone"
+                                name="phone"
+                                id="cb-title"
+                                class="form-control"
+                                placeholder="Your Phone Number"
+                                value={phone}
+                                onChange={(evt) => setPhone(evt.target.value)}></input>
+                            </div>
+
+                            <div class="md-form mb-5 d-flex justify-content-center">
+                                <button class="btn btn-success btn-lg" 
+                                        onClick={sendToPhone}  
+                                        data-dismiss="modal"> Submit</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    )
 }
 
 
