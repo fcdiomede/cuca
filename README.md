@@ -69,11 +69,17 @@ The recipe editor also integrates with Cloudinary for image uploading and storag
 
 ![alt text](https://github.com/fcdiomede/cuca/blob/master/static/Readme-imgs/cuca-img-uploading.gif "Cloudinary Uploader")
 
+#### Send Ingredients to Phone
+To make shopping for ingredients for a given recipe easy, Twilio's API was used to allow users to quickly send the ingreidents for a recipe 
+
+![alt text](https://github.com/fcdiomede/cuca/blob/master/static/Readme-imgs/gif.gif "Send to phone")
+
 ## <a name="future"></a>Future State
 The project roadmap for Cuca has several features planned out for the next sprint:
 * Comments section on recipes for users to ask for clarification on any step
 * Built-in unit conversion for recipe ingredients
-* Saving a grocery list for a recipe, and sending that list to your phone
+* Saving a grocery list with ingredients across multiple recipes, and sending that list to your phone
+* Suggesting a recipe from user's saved recipes based on ingredients they have.
 * Suggesting a recipe a user could make from their personal and saved recipes based on ingredients the user has on hand
 * Image processing so the user can take a photo of a recipe and populate the recipe form fields automatically
 * Newsfeed for a user to view recent activity by any users they are following
