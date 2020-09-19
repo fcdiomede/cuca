@@ -398,7 +398,7 @@ def delete_cookbook():
 def random_data():
     cookbooks = crud.all_cookbooks()
 
-    random_cookbooks = choices(cookbooks, k=10)
+    random_cookbooks = set(choices(cookbooks, k=10))
 
     cookbook_data = []
     for c in random_cookbooks:
@@ -408,7 +408,6 @@ def random_data():
                             "creator_id" : c.user.user_id
                                 })
 
-    print(random_cookbooks)
 
     return jsonify({'cookbooks':cookbook_data})
 
